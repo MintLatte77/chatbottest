@@ -1,6 +1,7 @@
 from flask import Flask, request
 import sys
 from datetime import datetime, timedelta, timezone
+import os
 
 datetime_utc = datetime.utcnow()
 timezone_kst = timezone(timedelta(hours=9))
@@ -29,7 +30,7 @@ def meal():
             "outputs": [
                 {
                     "simpleText": {
-                        "text": str(datetime_kst) + "  " + str(day)
+                        "text": os.environ.get('NEIS_school')
                     }
                 }
             ]
