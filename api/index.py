@@ -18,7 +18,7 @@ def time():
 	timezone_kst = timezone(timedelta(hours=9))
 	datetime_kst = datetime_utc.astimezone(timezone_kst)
 	
-	return datetime_kst
+	return str(datetime_kst)
 
 @app.route('/meal', methods = ["POST"])
 def meal():
