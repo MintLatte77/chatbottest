@@ -4,7 +4,6 @@ from datetime import datetime, timedelta, timezone
 
 # Timezone 세팅
 TimezoneList = {'Asia/Seoul' : 9}
-datetime_utc = datetime.utcnow()
 
 app = Flask(__name__)
 
@@ -14,8 +13,11 @@ def home():
 
 @app.route('/time')
 def time():
+	datetime_utc = datetime.utcnow()
+	
 	timezone_kst = timezone(timedelta(hours=9))
 	datetime_kst = datetime_utc.astimezone(timezone_kst)
+	
 	return datetime_kst
 
 @app.route('/meal', methods = ["POST"])
@@ -23,6 +25,9 @@ def meal():
 	body = request.get_json()
 	
 	userTimezone = body['userRequest']['timezone']
+
+	datetime_utc = datetime.utcnow()
+	
 	timezone_user = timezone(timedelta(hours=TimezoneList[userTimezone]))
 	datetime_user = datetime_utc.astimezone(timezone_user)
 	
