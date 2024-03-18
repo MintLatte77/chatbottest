@@ -44,8 +44,8 @@ def mealjson():
 	}
 
 	response = requests.get(url, params=params)
-	contents = json.load(response)
-	return json.dumps(contents)
+	contents = json.text
+	return contents
 
 @app.route('/meal', methods = ["POST"])
 def meal():
