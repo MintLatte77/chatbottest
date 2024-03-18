@@ -44,7 +44,7 @@ def meal():
 	}
 
 	response = requests.get(url, params=params)
-	contents = response.text
+	contents = response['mealServiceDietInfo']['row']['DDISH_NM']
 	
 	responseBody = {
         "version": "2.0",
