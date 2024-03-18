@@ -30,6 +30,7 @@ def meal():
 	body = request.get_json()
 	print(body)
 	print(body['userRequest']['timezone'])
-	timezone = TimezoneList[body['userRequest']['timezone']]
+	userTimezone = body['userRequest']['timezone']
+	timezone = TimezoneList[userTimezone]
 	
     KakaoSimpleText(timezone)
