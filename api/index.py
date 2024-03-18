@@ -13,7 +13,7 @@ def home():
     return 'Hello, World!'
 
 @app.route('/time')
-def about():
+def time():
     return datetime_utc
 
 @app.route('/meal', methods = ["POST"])
