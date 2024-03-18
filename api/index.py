@@ -36,7 +36,7 @@ def meal():
             "outputs": [
                 {
                     "simpleText": {
-                        "text": str(day)
+                        "text": datetime_kst.strftime("%Y%m%d")
                     }
                 }
             ]
