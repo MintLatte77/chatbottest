@@ -1,4 +1,5 @@
-from flask import Flask
+from flask import Flask, request
+import sys
 
 app = Flask(__name__)
 
@@ -10,9 +11,23 @@ def home():
 def about():
     return 'About'
 
-@app.route('/meal')
+@app.route('/meal', methods = ["POST"])
 def meal():
-    timezone = "Asia/Seoul"
-    if "timezone" in request.args:
-        timezone = request.args.get("timezone")
-    return {"version": "2.0","template":{"outputs": [{"simpleText": {"text": json_data}}]}}
+    body = request.get_json()
+    print(body)
+    print(body['userRequest']['timezone'])
+
+    responseBody = {
+        "version": "2.0",
+        "template": {
+            "outputs": [
+                {
+                    "simpleText": {
+                        "text": "테스트"
+                    }
+                }
+            ]
+        }
+	}
+    
+    return responseBody
