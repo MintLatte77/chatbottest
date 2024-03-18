@@ -33,4 +33,4 @@ def meal():
 	userTimezone = body['userRequest']['timezone']
 	timezone = TimezoneList[userTimezone]
 	
-    KakaoSimpleText(timezone)
+    return KakaoSimpleText(timezone)
