@@ -16,8 +16,9 @@ def time():
 	
 	timezone_kst = timezone(timedelta(hours=9))
 	datetime_kst = datetime_utc.astimezone(timezone_kst)
+	day = datetime_kst.strftime("%Y%m%d")
 	
-	return str(datetime_kst)
+	return str(datetime_kst) + "  " + str(day)
 
 @app.route('/meal', methods = ["POST"])
 def meal():
@@ -27,6 +28,7 @@ def meal():
 	
 	timezone_kst = timezone(timedelta(hours=9))
 	datetime_kst = datetime_utc.astimezone(timezone_kst)
+	day = datetime_kst.strftime("%Y%m%d")
 	
 	responseBody = {
         "version": "2.0",
@@ -34,7 +36,7 @@ def meal():
             "outputs": [
                 {
                     "simpleText": {
-                        "text": str(datetime_kst)
+                        "text": str(day)
                     }
                 }
             ]
