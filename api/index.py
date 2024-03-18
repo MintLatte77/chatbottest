@@ -31,6 +31,22 @@ def home():
 def time():
 	return str(datetime_kst) + "  " + str(day)
 
+@app.route('/mealjson')
+def mealjson():
+	params = {
+		'KEY' : service_key,
+		'Type' : 'json',
+		'pIndex' : '1',
+		'pSize' : '100',
+		'ATPT_OFCDC_SC_CODE' : edu_code,
+		'SD_SCHUL_CODE' : school_code,
+		'MLSV_YMD' : day
+	}
+
+	response = requests.get(url, params=params)
+	contents = response
+	return response
+
 @app.route('/meal', methods = ["POST"])
 def meal():
 	params = {
