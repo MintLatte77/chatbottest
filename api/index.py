@@ -34,7 +34,7 @@ def meal():
             "outputs": [
                 {
                     "simpleText": {
-                        "text": datetime_kst
+                        "text": str(datetime_kst)
                     }
                 }
             ]
