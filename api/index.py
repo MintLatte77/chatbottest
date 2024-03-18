@@ -44,8 +44,9 @@ def mealjson():
 	}
 
 	response = requests.get(url, params=params)
-	contents = response['mealServiceDietInfo']
-	return contents
+	contents = response['mealServiceDietInfo']['row']
+	context = contents.text
+	return content
 
 @app.route('/meal', methods = ["POST"])
 def meal():
