@@ -47,7 +47,62 @@ def test():
 	
 	return 'test'
 
+@app.route('/timetable', methods = ["POST"])
+def timetable():
+	weekstr = str(week)
+	weekday = weeklist.get(weekstr, "월")
+	passing_timetable = {timetab: teacher for timetab, teacher in timetabledict.items() if not(timetab.find(weekday) == -1)}
+	for key in passing_timetable:
+		timetablelist.append(key[2:])
 
+	for value in passing_timetable.values():
+		teacherlist.append(value)
+	responseBody = {
+        "version": "2.0",
+        "template": {
+            "outputs": [
+                {
+					"listCard": {
+         		 		"header": {
+            				"title": date + " 시간표"
+          						  },
+          				"items": [
+            				{
+              					"title": timetablelist[0],
+              					"description": teacherlist[0]
+            				},
+							{
+              					"title": timetablelist[1],
+              					"description": teacherlist[1]
+            				},
+							{
+              					"title": timetablelist[2],
+              					"description": teacherlist[2]
+            				},
+							{
+              					"title": timetablelist[3],
+              					"description": teacherlist[3]
+            				},
+							{
+              					"title": timetablelist[4],
+              					"description": teacherlist[4]
+            				},
+							{
+              					"title": timetablelist[5],
+              					"description": teacherlist[5]
+            				},
+							{
+              					"title": timetablelist[6],
+              					"description": teacherlist[6]
+            				}
+								  ]
+					}
+					}
+						]
+		}
+	}
+	return responseBody
+	   
 
 @app.route('/service', methods = ["POST"])
 def service():
