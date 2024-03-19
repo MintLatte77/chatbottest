@@ -18,8 +18,9 @@ service_key = os.environ.get('NEIS_Key')
 edu_code = os.environ.get('NEIS_edu')
 school_code = os.environ.get('NEIS_school')
 
-# body = request.get_json()
-# userTimezone = body['userRequest']['timezone']
+# @app.route('/service', methods = ["POST"])
+# 	body = request.get_json()
+# 	userTimezone = body['userRequest']['timezone']
 
 app = Flask(__name__)
 
@@ -50,8 +51,10 @@ def mealjson():
 	content = contents[findstart:findend]
 	return content
 
-@app.route('/meal', methods = ["POST"])
-def meal():
+
+
+@app.route('/service')
+def service():
 	params = {
 		'KEY' : service_key,
 		'Type' : 'json',
@@ -67,15 +70,14 @@ def meal():
 	findstart = contents.find('DDISH_NM') + 11
 	findend = contents.find('ORPLC_INFO') - 3
 	content = contents[findstart:findend]
-	splittext = content.split('<br/>')
-	jointext = splittext.join('₩n')
+	text = "\n".join(content.split('<br/>'))
 	responseBody = {
         "version": "2.0",
         "template": {
             "outputs": [
                 {
                     "simpleText": {
-                        "text": jointext
+                        "text": text
                     }
                 }
             ]
