@@ -45,7 +45,7 @@ def mealjson():
 
 	response = requests.get(url, params=params)
 	contents = response.text
-	findstart = contents.find('DDISH_NM') + 12
+	findstart = contents.find('DDISH_NM') + 11
 	findend = contents.find('ORPLC_INFO') - 3
 	content = contents[findstart:findend]
 	return content
