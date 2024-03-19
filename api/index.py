@@ -68,10 +68,6 @@ def timetable():
           						  },
           				"items": [
             				{
-              					"title": timetablelist[0],
-              					"description": teacherlist[0]
-            				},
-							{
               					"title": timetablelist[1],
               					"description": teacherlist[1]
             				},
@@ -94,7 +90,7 @@ def timetable():
 							{
               					"title": timetablelist[6],
               					"description": teacherlist[6]
-            				}
+							}
 								  ]
 					}
 					}
