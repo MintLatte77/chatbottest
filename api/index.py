@@ -76,18 +76,6 @@ def service():
 
 	# 시간표
 	if week == 0 or week == 6:
-    	timetable = "오늘은 시간표가 없어요"
-	else:
-    	weekday = weeklist.get(str(week), "월")
-    	passing_timetable = {timetab: teacher for timetab, teacher in timetabledict.items() if not(timetab.find(weekday) == -1)}
-
-    for key in passing_timetable:
-        timetablelist.append(key[2:])
-
-    for value in passing_timetable.values():
-        teacherlist.append(value)
-
-	if week == 0 or week == 6:
 		responseBody = {
         "version": "2.0",
         "template": {
@@ -106,7 +94,7 @@ def service():
         						},
 					"textCard": {
           				"title": date + " 시간표",
-          				"description": timetable ,
+          				"description": "오늘은 시간표가 없어요" ,
           				"buttons": [
             				{
               					"action": "webLink",
@@ -119,7 +107,17 @@ def service():
 						]
 		}
 	}
-	elif week == 3:
+	else:
+    	weekday = weeklist.get(str(week), "월")
+    	passing_timetable = {timetab: teacher for timetab, teacher in timetabledict.items() if not(timetab.find(weekday) == -1)}
+
+    for key in passing_timetable:
+        timetablelist.append(key[2:])
+
+    for value in passing_timetable.values():
+        teacherlist.append(value)
+
+	if week == 3:
 	responseBody = {
         "version": "2.0",
         "template": {
