@@ -67,14 +67,15 @@ def meal():
 	findstart = contents.find('DDISH_NM') + 11
 	findend = contents.find('ORPLC_INFO') - 3
 	content = contents[findstart:findend]
-	
+	splittext = content.split('<br/>')
+	jointext = splittext.join('₩n')
 	responseBody = {
         "version": "2.0",
         "template": {
             "outputs": [
                 {
                     "simpleText": {
-                        "text": content
+                        "text": jointext
                     }
                 }
             ]
