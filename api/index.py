@@ -44,7 +44,7 @@ def mealjson():
 	}
 
 	response = requests.get(url, params=params)
-	contents = type(response)
+	contents = response.text()
 	
 	return contents
 
