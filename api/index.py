@@ -43,8 +43,8 @@ def time():
 
 @app.route('/test')
 def test():
-	
-	return table1.all()
+	timetable = table1.all()
+	return str(timetable)
 
 
 
