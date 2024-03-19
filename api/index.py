@@ -11,7 +11,7 @@ datetime_utc = datetime.utcnow()
 timezone_kst = timezone(timedelta(hours=9))
 datetime_kst = datetime_utc.astimezone(timezone_kst)
 day = datetime_kst.strftime("%Y%m%d")
-date = datetime_kst.strftime("%m월 %d일")
+date = str(int(datetime_kst.strftime("%m"))) + "월 "+ str(int(datetime_kst.strftime("%d"))) + "일"
 
 # NEIS 설정
 url = "https://open.neis.go.kr/hub/mealServiceDietInfo"
@@ -78,7 +78,7 @@ def service():
             "outputs": [
                 {
         			"textCard": {
-          				"title": date + "오늘의 급식",
+          				"title": date + " 오늘의 급식",
           				"description": meal ,
           				"buttons": [
             				{
