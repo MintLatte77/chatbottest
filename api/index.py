@@ -63,7 +63,10 @@ def meal():
 	}
 
 	response = requests.get(url, params=params)
-	contents = response['mealServiceDietInfo']['row']['DDISH_NM']
+	contents = response.text
+	findstart = contents.find('DDISH_NM') + 11
+	findend = contents.find('ORPLC_INFO') - 3
+	content = contents[findstart:findend]
 	
 	responseBody = {
         "version": "2.0",
@@ -71,7 +74,7 @@ def meal():
             "outputs": [
                 {
                     "simpleText": {
-                        "text": contents
+                        "text": content
                     }
                 }
             ]
