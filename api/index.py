@@ -108,14 +108,15 @@ def service():
 		}
 	}
 	else:
-    	weekday = weeklist.get(str(week), "월")
-    	passing_timetable = {timetab: teacher for timetab, teacher in timetabledict.items() if not(timetab.find(weekday) == -1)}
+		weekstr = str(week)
+    	weekday = weeklist.get(weekstr, "월")
+		passing_timetable = {timetab: teacher for timetab, teacher in timetabledict.items() if not(timetab.find(weekday) == -1)}
 
-    for key in passing_timetable:
-        timetablelist.append(key[2:])
+	for key in passing_timetable:
+		timetablelist.append(key[2:])
 
-    for value in passing_timetable.values():
-        teacherlist.append(value)
+	for value in passing_timetable.values():
+		teacherlist.append(value)
 
 	if week == 3:
 	responseBody = {
