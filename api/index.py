@@ -77,16 +77,20 @@ def service():
         "template": {
             "outputs": [
                 {
-        "textCard": {
-          "title": date + "오늘의 급식",
-          "description": meal ,
-          "buttons": [
-            {
-              "action": "webLink",
-              "label": "온라인 건의함",
-              "webLinkUrl": "https://m.site.naver.com/1k4Sj"
-            }
-            ]
-        }
+        			"textCard": {
+          				"title": date + "오늘의 급식",
+          				"description": meal ,
+          				"buttons": [
+            				{
+              					"action": "webLink",
+              					"label": "온라인 건의함",
+              					"webLinkUrl": "https://m.site.naver.com/1k4Sj"
+            				}
+            						]
+        						}
+				}
+						]
+		}
 	}
+	
 	return responseBody
