@@ -34,7 +34,7 @@ def home():
 def time():
 	return str(datetime_kst) + "  " + str(day)
 
-@app.route('/mealjson')
+@app.route('/mealjson', methods = ["POST"])
 def mealjson():
 	params = {
 		'KEY' : service_key,
