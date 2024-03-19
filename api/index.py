@@ -74,12 +74,12 @@ def service():
 	find = contents.find('해당하는 데이터가 없습니다.')
 	
 	if find == -1:
-		meal = "오늘은 급식이 없습니다!"
-	else:
 		findstart = contents.find('DDISH_NM') + 11
 		findend = contents.find('ORPLC_INFO') - 3
 		content = contents[findstart:findend]
 		meal ="\n".join(content.split('<br/>'))
+	else:
+		meal = "오늘은 급식이 없습니다!"
 	
 	responseBody = {
         "version": "2.0",
@@ -88,7 +88,7 @@ def service():
                 {
         			"textCard": {
           				"title": date + " 오늘의 급식",
-          				"description": find ,
+          				"description": meal ,
           				"buttons": [
             				{
               					"action": "webLink",
