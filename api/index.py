@@ -11,6 +11,7 @@ datetime_utc = datetime.utcnow()
 timezone_kst = timezone(timedelta(hours=9))
 datetime_kst = datetime_utc.astimezone(timezone_kst)
 day = datetime_kst.strftime("%Y%m%d")
+date = datetime_kst.strftime("%m월 %d일")
 
 # NEIS 설정
 url = "https://open.neis.go.kr/hub/mealServiceDietInfo"
@@ -70,16 +71,21 @@ def service():
 	findstart = contents.find('DDISH_NM') + 11
 	findend = contents.find('ORPLC_INFO') - 3
 	content = contents[findstart:findend]
-	text = "\n".join(content.split('<br/>'))
+	meal ="\n".join(content.split('<br/>'))
 	responseBody = {
         "version": "2.0",
         "template": {
             "outputs": [
                 {
-                    "simpleText": {
-                        "text": text
-                    }
-                }
+        "textCard": {
+          "title": date + "오늘의 급식",
+          "description": meal ,
+          "buttons": [
+            {
+              "action": "webLink",
+              "label": "온라인 건의함",
+              "webLinkUrl": "https://m.site.naver.com/1k4Sj"
+            }
             ]
         }
 	}
