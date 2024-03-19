@@ -45,8 +45,10 @@ def mealjson():
 
 	response = requests.get(url, params=params)
 	contents = response.text
-	
-	return contents
+	findstart = contents.find('DDISH_NM') + 12
+	findend = contents.find('ORPLC_INFO') - 3
+	content = contents[findstart:findend]
+	return content
 
 @app.route('/meal', methods = ["POST"])
 def meal():
