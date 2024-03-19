@@ -53,7 +53,7 @@ def mealjson():
 
 
 
-@app.route('/service')
+@app.route('/service', methods = ["POST"])
 def service():
 	params = {
 		'KEY' : service_key,
