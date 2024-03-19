@@ -44,7 +44,7 @@ def time():
 @app.route('/test')
 def test():
 	
-	return table1
+	return table1.all()
 
 
 
