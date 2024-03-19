@@ -88,7 +88,7 @@ def service():
                 {
         			"textCard": {
           				"title": date + " 오늘의 급식",
-          				"description": meal ,
+          				"description": find ,
           				"buttons": [
             				{
               					"action": "webLink",
