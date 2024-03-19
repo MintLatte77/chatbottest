@@ -4,7 +4,7 @@ from datetime import datetime, timedelta, timezone
 import os
 import requests
 import json
-from pyairtable import Api
+
 
 # 시간 설정
 
@@ -21,10 +21,7 @@ NEISurl = "https://open.neis.go.kr/hub/mealServiceDietInfo"
 service_key = os.environ.get('NEIS_Key')
 edu_code = os.environ.get('NEIS_edu')
 school_code = os.environ.get('NEIS_school')
-airtableAPIKey = os.environ.get('Airtable_Key')
-api = Api(airtableAPIKey)
-userID = os.environ.get('Airtable_user')
-table1ID = os.environ.get('Airtable_table1')
+
 
 
 # @app.route('/service', methods = ["POST"])
@@ -43,9 +40,8 @@ def time():
 
 @app.route('/test')
 def test():
-	table1 = api.table(userID, table1ID)
-	timetable = str(table1.all())
-	return timetable
+	
+	return 'test'
 
 
 
