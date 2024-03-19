@@ -109,7 +109,7 @@ def service():
 	}
 	else:
 		weekstr = str(week)
-    	weekday = weeklist.get(weekstr, "월")
+		weekday = weeklist.get(weekstr, "월")
 		passing_timetable = {timetab: teacher for timetab, teacher in timetabledict.items() if not(timetab.find(weekday) == -1)}
 
 	for key in passing_timetable:
