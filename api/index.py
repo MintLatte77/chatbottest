@@ -64,7 +64,7 @@ def service():
 		'pSize' : '100',
 		'ATPT_OFCDC_SC_CODE' : edu_code,
 		'SD_SCHUL_CODE' : school_code,
-		'MLSV_YMD' : day
+		'MLSV_YMD' : 20240317
 		}
 
 	response = requests.get(url, params=params)
