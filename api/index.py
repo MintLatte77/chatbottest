@@ -26,6 +26,38 @@ timetabledict = {'월1사회2': '박경환 | 2301(1-5)', '월2체육': '강정�
 timetablelist = []
 teacherlist = []
 
+# ,
+					"listCard": {
+         		 		"header": {
+            				"title": date + " 시간표"
+          						  },
+          				"items": [
+            				{
+              					"title": timetablelist[0],
+              					"description": teacherlist[0]
+            				},
+							{
+              					"title": timetablelist[1],
+              					"description": teacherlist[1]
+            				},
+							{
+              					"title": timetablelist[2],
+              					"description": teacherlist[2]
+            				},
+							{
+              					"title": timetablelist[3],
+              					"description": teacherlist[3]
+            				},
+							{
+              					"title": timetablelist[4],
+              					"description": teacherlist[4]
+            				},
+							{
+              					"title": timetablelist[5],
+              					"description": teacherlist[5]
+            				}
+								  ]
+        						}
 
 # @app.route('/service', methods = ["POST"])
 # 	body = request.get_json()
@@ -134,37 +166,6 @@ def service():
               					"webLinkUrl": "https://m.site.naver.com/1k4Sj"
             				}
             						]
-        						},
-					"listCard": {
-         		 		"header": {
-            				"title": date + " 시간표"
-          						  },
-          				"items": [
-            				{
-              					"title": timetablelist[0],
-              					"description": teacherlist[0]
-            				},
-							{
-              					"title": timetablelist[1],
-              					"description": teacherlist[1]
-            				},
-							{
-              					"title": timetablelist[2],
-              					"description": teacherlist[2]
-            				},
-							{
-              					"title": timetablelist[3],
-              					"description": teacherlist[3]
-            				},
-							{
-              					"title": timetablelist[4],
-              					"description": teacherlist[4]
-            				},
-							{
-              					"title": timetablelist[5],
-              					"description": teacherlist[5]
-            				}
-								  ]
         						}
 				}
 						]
