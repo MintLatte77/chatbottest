@@ -25,7 +25,7 @@ airtableAPIKey = os.environ.get('Airtable_Key')
 api = Api(airtableAPIKey)
 userID = os.environ.get('Airtable_user')
 table1ID = os.environ.get('Airtable_table1')
-table1 = api.table(userID, table1ID)
+
 
 # @app.route('/service', methods = ["POST"])
 # 	body = request.get_json()
@@ -43,8 +43,9 @@ def time():
 
 @app.route('/test')
 def test():
-	timetable = table1.all()
-	return str(timetable)
+	table1 = api.table(userID, table1ID)
+	timetable = str(table1.all())
+	return timetable
 
 
 
