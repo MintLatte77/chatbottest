@@ -34,24 +34,9 @@ def home():
 def time():
 	return str(datetime_kst) + "  " + str(day)
 
-@app.route('/mealjson', methods = ["POST"])
-def mealjson():
-	params = {
-		'KEY' : service_key,
-		'Type' : 'json',
-		'pIndex' : '1',
-		'pSize' : '100',
-		'ATPT_OFCDC_SC_CODE' : edu_code,
-		'SD_SCHUL_CODE' : school_code,
-		'MLSV_YMD' : day
-		}
-
-	response = requests.get(url, params=params)
-	contents = response.text
-
-	#급식 미제공 날짜 구별
-	find = contents.find('해당하는 데이터가 없습니다.')
-	return find
+@app.route('/test', methods = ["POST"])
+def test():
+	return 'test'
 
 
 
