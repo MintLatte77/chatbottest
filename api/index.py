@@ -44,14 +44,14 @@ def mealjson():
 		'ATPT_OFCDC_SC_CODE' : edu_code,
 		'SD_SCHUL_CODE' : school_code,
 		'MLSV_YMD' : day
-	}
+		}
 
 	response = requests.get(url, params=params)
 	contents = response.text
-	findstart = contents.find('DDISH_NM') + 11
-	findend = contents.find('ORPLC_INFO') - 3
-	content = contents[findstart:findend]
-	return content
+
+	#급식 미제공 날짜 구별
+	find = contents.find('해당하는 데이터가 없습니다.')
+	return find
 
 
 
