@@ -4,6 +4,7 @@ from datetime import datetime, timedelta, timezone
 import os
 import requests
 import json
+from pyairtable import Api
 
 # 시간 설정
 
@@ -14,11 +15,16 @@ day = datetime_kst.strftime("%Y%m%d")
 date = str(int(datetime_kst.strftime("%m"))) + "월 "+ str(int(datetime_kst.strftime("%d"))) + "일"
 week = int(datetime_kst.strftime("%w"))
 
-# NEIS 설정
-url = "https://open.neis.go.kr/hub/mealServiceDietInfo"
+# 환경변수/시간표 설정
+# table1 - 시간표
+NEISurl = "https://open.neis.go.kr/hub/mealServiceDietInfo"
 service_key = os.environ.get('NEIS_Key')
 edu_code = os.environ.get('NEIS_edu')
 school_code = os.environ.get('NEIS_school')
+api = Api(os.environ.get('Airtable_Key'))
+userID = os.environ.get('Airtable_user')
+table1ID = os.environ.get('Airtable_table1')
+table1 = api.table(userID, table1ID)
 
 # @app.route('/service', methods = ["POST"])
 # 	body = request.get_json()
@@ -34,9 +40,10 @@ def home():
 def time():
 	return str(datetime_kst) + "  " + str(day)
 
-@app.route('/test', methods = ["POST"])
+@app.route('/test')
 def test():
-	return 'test'
+	
+	return table1
 
 
 
@@ -52,7 +59,7 @@ def service():
 		'MLSV_YMD' : day
 		}
 
-	response = requests.get(url, params=params)
+	response = requests.get(NEISurl, params=params)
 	contents = response.text
 
 	#급식 미제공 날짜 구별
