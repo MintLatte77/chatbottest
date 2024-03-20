@@ -44,8 +44,23 @@ def time():
 
 @app.route('/test')
 def test():
-	
 	return 'test'
+
+@app.route('/agree1', methods = ['POST'])
+def agree1():
+	return 'agree'
+
+@app.route('/school', methods = ['POST'])
+def school():
+	return 'agree'
+
+@app.route('/grade', methods = ['POST'])
+def grade():
+	return 'agree'
+
+@app.route('/class1', methods = ['POST'])
+def class1():
+	return 'agree'
 
 @app.route('/timetable', methods = ["POST"])
 def timetable():
