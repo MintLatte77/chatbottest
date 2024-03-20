@@ -238,15 +238,16 @@ def grade():
 def class1():
 	body = request.get_json()
 	userinfo = body['action']['clientExtra']
+	userinfostr = str(userinfo)
 
-	if str(userinfo[0:0]) = "S":
+	if userinfostr[0] = "S":
 		userschool = "삼남중학교 "
-	elif str(userinfo[0:0]) = "E":
+	elif userinfostr[0] = "E":
 		userschool = "언양고등학교 "
 	else:
 		userschool = "지원하지 않는 학교 "
-	usergrade = str(userinfo[1:1]) + "학년 "
-	userclass = str(userinfo[2:2]) + "반"
+	usergrade = str(userinfostr[1]) + "학년 "
+	userclass = str(userinfostr[2]) + "반"
 
 	description = userschool + usergrade + userclass
 	
