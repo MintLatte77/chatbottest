@@ -27,6 +27,9 @@ timetabledict = {'월1사회2': '박경환 | 2301(1-5)', '월2체육': '강정�
 timetablelist = []
 teacherlist = []
 
+data= open("data.txt","w+")
+data.close()
+
 #
 
 # @app.route('/service', methods = ["POST"])
