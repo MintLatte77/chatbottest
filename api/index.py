@@ -99,6 +99,7 @@ def timetable():
 			  ],
 			  "itemListAlignment": "left"
 		}
+	  }
 	]
 	}
 	}
