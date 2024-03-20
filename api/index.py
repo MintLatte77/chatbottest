@@ -88,9 +88,10 @@ def agree2():
 	userID = body['userRequest']['user']['id']
 	useridtable = userIdData.all(formula=match({"userID":userID}))
 	if useridtable == []:
-		userIdData.create({'userId',str(userID)})
+		userIdstr = str(userID)
+		userIdData.create({'userId',userIdstr})
 	
-	description = "현재 삼남중학교, 언양고등학교만 지원합니다. \n학교 추가를 바라신다면 상담직원 연결을 눌러주세요."
+	
 	responesebody = {
   "version": "2.0",
   "template": {
@@ -98,7 +99,7 @@ def agree2():
 	{
 		"basicCard": {
 			"title": "학교를 입력해 주세요",
-			"description": description,
+			"description": "현재 삼남중학교, 언양고등학교만 지원합니다. \n학교 추가를 바라신다면 상담직원 연결을 눌러주세요.",
 			"thumbnail": {
 				"imageUrl": "https://cdn.discordapp.com/attachments/1021364751541997659/1219962349981798431/253206e9ece97e04.png?ex=660d357a&is=65fac07a&hm=7849e04bb18f371d63d376a6b1f64f434683fe9b433dd5cd770167a8d5a58716&"
 			}
