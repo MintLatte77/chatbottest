@@ -61,7 +61,6 @@ def timetable():
   "version": "2.0",
   "template": {
     "outputs": [
-        {
       {
         "carousel": {
           "type": "itemCard",
@@ -101,7 +100,6 @@ def timetable():
 	  ]
 	}
       }
-	}
     ]
   }
 	}
