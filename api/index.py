@@ -84,7 +84,7 @@ def agree2():
 	{
 		"basicCard": {
 			"title": "학교를 입력해 주세요",
-			"description": description
+			"description": description,
 			"thumbnail": {
 				"imageUrl": "https://cdn.discordapp.com/attachments/1021364751541997659/1219962349981798431/253206e9ece97e04.png?ex=660d357a&is=65fac07a&hm=7849e04bb18f371d63d376a6b1f64f434683fe9b433dd5cd770167a8d5a58716&"
 			}
