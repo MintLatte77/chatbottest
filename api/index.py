@@ -112,7 +112,7 @@ def agree2():
 @app.route('/school', methods = ['POST'])
 def school():
 	body = request.get_json()
-	userschool = body['action']['utterance']
+	userschool = body['userRequest']['utterance']
 	userID = body['userRequest']['user']['id']
 
 	if userschool == "삼남중학교":
@@ -177,7 +177,7 @@ def school():
 @app.route('/grade', methods = ['POST'])
 def grade():
 	body = request.get_json()
-	usergrade = body['action']['utterance']
+	usergrade = body['userRequest']['utterance']
 	userID = body['userRequest']['user']['id']
 
 	if usergrade == "1학년":
@@ -286,7 +286,7 @@ def grade():
 @app.route('/class1', methods = ['POST'])
 def class1():
 	body = request.get_json()
-	userclass = body['action']['utterance']
+	userclass = body['userRequest']['utterance']
 	userID = body['userRequest']['user']['id']
 
 	if userclass == "1반":
