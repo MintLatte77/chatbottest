@@ -93,15 +93,15 @@ def agree2():
 	],
 	"quickReplies": [
 		{
-			"label": "삼남중",
+			"label": "삼남중학교",
 			"action": "block",
-			"messageText": "삼남중",
+			"messageText": "삼남중학교",
 			"blockId": "65faa603e8b2137164330ae3"
 		},
 		{
-			"messageText": "언양고",
+			"messageText": "언양고등학교",
 			"action": "block",
-			"label": "언양고",
+			"label": "언양고등학교",
 			"blockId": "65faa603e8b2137164330ae3"
 		}
 					]
@@ -112,11 +112,33 @@ def agree2():
 @app.route('/school', methods = ['POST'])
 def school():
 	body = request.get_json()
-	userschool = body['action']['clientExtra']
+	userschool = body['action']['utterance']
+	userID = body['userRequest']['user']['id']
 
-	userschool1 = str(userschool) + "1"
-	userschool2 = str(userschool) + "2"
-	userschool3 = str(userschool) + "3"
+	if userschool == "삼남중학교":
+		userschoolcode = "S"
+	elif userschool == "언양고등학교":
+		userschoolcode = "E"
+	else:
+		userschoolcode = "0"
+
+	with open('data.txt', 'r') as file:
+    data = file.readlines()
+
+	found = False
+	updated_data = []
+	for i, line in enumerate(data):
+    	if userID in line:
+        	found = True
+        	data[i] = line.strip() + ',' + userschoolcode + '\n'
+        	break
+
+	if not found:
+    	new_entry = userID + ',' + userschoolcode + '\n'
+    	data.append(new_entry)
+
+	with open('data.txt', 'w') as file:
+    	file.writelines(data)
 	
 	responesebody = {
   "version": "2.0",
@@ -133,22 +155,19 @@ def school():
 		"messageText": "1학년",
 		"action": "block",
 		"label": "1학년",
-	"blockId": "65faa61da0a1dd2d9e02e80e",
-	"extra" : userschool1
+	"blockId": "65faa61da0a1dd2d9e02e80e"
 	  },
 	  {
 		"messageText": "2학년",
 		"action": "block",
 		"label": "2학년",
-		"blockId": "65faa61da0a1dd2d9e02e80e",
-		"extra" : userschool2
+		"blockId": "65faa61da0a1dd2d9e02e80e"
 	  },
 	{
 		"messageText": "3학년",
 		"action": "block",
 		"label": "3학년",
-		"blockId": "65faa61da0a1dd2d9e02e80e",
-		"extra" : userschool3
+		"blockId": "65faa61da0a1dd2d9e02e80e"
 	  }
 	]
   }
@@ -158,7 +177,31 @@ def school():
 @app.route('/grade', methods = ['POST'])
 def grade():
 	body = request.get_json()
-	usergrade = body['action']['clientExtra']
+	usergrade = body['action']['utterance']
+	userID = body['userRequest']['user']['id']
+
+	if usergrade == "1학년":
+		usergradecode = "1"
+	elif userschool == "2학년":
+		usergradecode = "2"
+	elif userschool == "3학년":
+		usergradecode = "3"
+	else:
+		usergradecode = "0"
+
+	with open('data.txt', 'r') as file:
+    data = file.readlines()
+
+	found = False
+	updated_data = []
+	for i, line in enumerate(data):
+    	if userID in line:
+        	found = True
+        	data[i] = line.strip() + ',' + usergradecode + '\n'
+        	break
+
+	with open('data.txt', 'w') as file:
+    	file.writelines(data)
 	
 	responesebody = {
   "version": "2.0",
@@ -243,19 +286,81 @@ def grade():
 @app.route('/class1', methods = ['POST'])
 def class1():
 	body = request.get_json()
-	userinfo = body['action']['clientExtra']
-	userinfostr = str(userinfo)
+	userclass = body['action']['utterance']
+	userID = body['userRequest']['user']['id']
 
-	if userinfostr[0] == "S":
-		userschool = "삼남중학교 "
-	elif userinfostr[0] == "E":
-		userschool = "언양고등학교 "
+	if userclass == "1반":
+		userclasscode = "1"
+	elif userclass == "2반":
+		userclasscode = "2"
+	elif userclass == "3반":
+		userclasscode = "3"
+	elif userclass == "4반":
+		userclasscode = "4"
+	elif userclass == "5반":
+		userclasscode = "5"
+	elif userclass == "6반":
+		userclasscode = "6"
+	elif userclass == "7반":
+		userclasscode = "7"
+	elif userclass == "8반":
+		userclasscode = "8"
+	elif userclass == "9반":
+		userclasscode = "9"
 	else:
-		userschool = "지원하지 않는 학교 "
-	usergrade = str(userinfostr[1]) + "학년 "
-	userclass = str(userinfostr[2]) + "반"
+		userclasscode = "0"
 
-	description = userschool + usergrade + userclass
+	with open('data.txt', 'r') as file:
+    data = file.readlines()
+
+	found = False
+	updated_data = []
+	for i, line in enumerate(data):
+    	if userID in line:
+        	found = True
+        	data[i] = line.strip() + ',' + userclasscode + '\n'
+        	break
+
+	with open('data.txt', 'w') as file:
+    	file.writelines(data)
+
+	if data[0] == "S":
+		school = "삼남중학교 "
+	elif data[0] == "E":
+		school = "언양고등학교 "
+	else:
+		school = "지원하지 않는 학교 "
+
+	if data[1] == "1":
+		grade = "1학년 "
+	elif data[1] == "2":
+		grade = "2학년 "
+	elif data[1] == "3":
+		grade = "3학년 "
+	else:
+		grade = "지원하지 않는 학년 "
+
+	if data[2] == "1":
+		class1 = "1반"
+	elif data[2] == "2":
+		class1 = "2반"
+	elif data[2] == "3":
+		class1 = "3반"
+	elif data[2] == "4":
+		class1 = "4반"
+	elif data[2] == "5":
+		class1 = "5반"
+	elif data[2] == "6":
+		class1 = "6반"
+	elif data[2] == "7":
+		class1 = "7반"
+	elif data[2] == "8":
+		class1 = "8반"
+	elif data[2] == "9":
+		class1 = "9반"
+	else:
+		class1 = "지원하지 않는 반반"
+
 	
 	responesebody = {
   "version": "2.0",
@@ -264,7 +369,7 @@ def class1():
 	  {
 		"textCard": {
 		  "title": "입력한 정보가 맞는지 확인해 주세요",
-		  "description": description,
+		  "description": school + grade + class1,
 		"buttons": [
 			{
 			  "action": "block",
@@ -287,13 +392,6 @@ def class1():
 
 @app.route('/check', methods = ['POST'])
 def check():
-	body = request.get_json()
-	userID = body['userRequest']['user']['id']
-	userinfo = body['action']['clientExtra']
-	sign = str(userID) + "," + str(userinfo) + ","
-	with open('data.txt', 'a') as data:
-		data.write(sign)
-	
 	responesebody = {
   "version": "2.0",
   "template": {
