@@ -80,30 +80,30 @@ def agree2():
   "version": "2.0",
   "template": {
 	"outputs": [
-	  {
+	{
 		"textCard": {
-		  "title": "학교를 입력해 주세요",
-		  "description": "현재 삼남중학교, 언양고등학교만 지원합니다. 학교 추가를 바라신다면 상담직원 연결을 눌러주세요."
-		} 
-	  }
+		"title": "학교를 입력해 주세요",
+		"description": "현재 삼남중학교, 언양고등학교만 지원합니다.\n학교 추가를 바라신다면 상담직원 연결을 눌러주세요."
+		}
+	}
 	],
 	"quickReplies": [
-	  {
+	{
 		"label": "삼남중학교",
 		"action": "block",
 		"messageText": "삼남중학교",
 		"blockId": "65faa603e8b2137164330ae3",
 		"extra" : "S"
-	  },
-	  {
+	},
+	{
 		"messageText": "언양고등학교",
 		"action": "block",
 		"label": "언양고등학교",
 		"blockId": "65faa603e8b2137164330ae3",
 		"extra" : "E"
-	  }
-	]
-  }
+	}
+					]
+	}
 }
 	return responesebody
 
