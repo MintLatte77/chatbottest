@@ -190,7 +190,7 @@ def grade():
 		usergradecode = "0"
 
 	with open('data.txt', 'r') as file:
-    data = file.readlines()
+    	data = file.readlines()
 
 	found = False
 	updated_data = []
@@ -311,7 +311,7 @@ def class1():
 		userclasscode = "0"
 
 	with open('data.txt', 'r') as file:
-    data = file.readlines()
+    	data = file.readlines()
 
 	found = False
 	updated_data = []
