@@ -48,6 +48,347 @@ def test():
 	return 'test'
 
 
+# 동의서 작성
+
+@app.route('/agree1', methods = ['POST'])
+def agree1():
+	responesebody = {
+  "version": "2.0",
+  "template": {
+	"outputs": [
+	  {
+		"textCard": {
+		  "title": "개인정보 수집 및 이용 동의서",
+		  "description": "\'오늘 급식 뭐임\'(이하 \'서비스\')은 급식, 시간표, 학사 일정 확인 등을 위해 「개인정보 보호법」 제 15조 1항에 따라 보유 기간(25년 2월 28일)까지 사용자의 개인정보(사용자 ID, 학교, 학년, 반)를 수집 및 이용합니다. 사용자는 서비스 이용에 필요한 최소한의 개인정보 수집 및 이용에 동의하지 않을 수 있으나, 동의를 거부 할 경우 서비스 이용이 불가합니다.\n아래 동의 버튼 클릭 시 해당 내용에 동의한 것으로 간주됩니다.",
+		"buttons": [
+			{
+			  "action": "block",
+			  "label": "동의",
+			  "blockId" : "65faa5ef091618695a7fee9c"
+			}
+		]
+		}
+		  
+	  }
+	]
+  }
+}
+	return responesebody
+
+@app.route('/agree2', methods = ['POST'])
+def agree2():
+	body = request.get_json()
+	userschool = body['userRequest']['utterance']
+	userID = body['userRequest']['user']['id']
+	useridtable = userIdData.all(formula=match({"userID":userID}))
+	if useridtable = []:
+		table.create({'userId',userID})
+	
+	description = "현재 삼남중학교, 언양고등학교만 지원합니다. \n학교 추가를 바라신다면 상담직원 연결을 눌러주세요."
+	responesebody = {
+  "version": "2.0",
+  "template": {
+	"outputs": [
+	{
+		"basicCard": {
+			"title": "학교를 입력해 주세요",
+			"description": description,
+			"thumbnail": {
+				"imageUrl": "https://cdn.discordapp.com/attachments/1021364751541997659/1219962349981798431/253206e9ece97e04.png?ex=660d357a&is=65fac07a&hm=7849e04bb18f371d63d376a6b1f64f434683fe9b433dd5cd770167a8d5a58716&"
+			}
+		}
+	}
+	],
+	"quickReplies": [
+		{
+			"label": "삼남중학교",
+			"action": "block",
+			"messageText": "삼남중학교",
+			"blockId": "65faa603e8b2137164330ae3"
+		},
+		{
+			"messageText": "언양고등학교",
+			"action": "block",
+			"label": "언양고등학교",
+			"blockId": "65faa603e8b2137164330ae3"
+		}
+					]
+	}
+}
+	return responesebody
+
+@app.route('/school', methods = ['POST'])
+def school():
+	body = request.get_json()
+	userschool = body['userRequest']['utterance']
+	userID = body['userRequest']['user']['id']
+	useridtable = userIdData.all(formula=match({"userID":userID}))
+	id1 = useridtable[0]['id']
+	for a in table.all():
+		if id1 == a['id']:
+			if userschool == "삼남중학교":
+				table.update(id1, {"schoolcode": "S"}, replace=True)
+			elif userschool == "언양고등학교":
+				table.update(id1, {"schoolcode": "E"}, replace=True)
+			else:
+				table.update(id1, {"schoolcode": "0"}, replace=True)
+	
+	responesebody = {
+  "version": "2.0",
+  "template": {
+	"outputs": [
+	  {
+		"textCard": {
+		  "title": "학년을 입력해 주세요"
+		} 
+	  }
+	],
+	"quickReplies": [
+	  {
+		"messageText": "1학년",
+		"action": "block",
+		"label": "1학년",
+	"blockId": "65faa61da0a1dd2d9e02e80e"
+	  },
+	  {
+		"messageText": "2학년",
+		"action": "block",
+		"label": "2학년",
+		"blockId": "65faa61da0a1dd2d9e02e80e"
+	  },
+	{
+		"messageText": "3학년",
+		"action": "block",
+		"label": "3학년",
+		"blockId": "65faa61da0a1dd2d9e02e80e"
+	  }
+	]
+  }
+}
+	return responesebody
+
+@app.route('/grade', methods = ['POST'])
+def grade():
+	body = request.get_json()
+	usergrade = body['userRequest']['utterance']
+	userID = body['userRequest']['user']['id']
+	useridtable = userIdData.all(formula=match({"userID":userID}))
+	id1 = useridtable[0]['id']
+	for a in table.all():
+		if id1 == a['id']:
+			if usergrade == "1학년":
+				table.update(id1, {"gradecode": 1}, replace=True)
+			elif userschool == "2학년":
+				table.update(id1, {"gradecode": 2}, replace=True)
+			elif userschool == "3학년":
+				table.update(id1, {"gradecode": 3}, replace=True)
+			else:
+				table.update(id1, {"gradecode": 0}, replace=True)
+	
+	responesebody = {
+  "version": "2.0",
+  "template": {
+	"outputs": [
+	  {
+		"textCard": {
+		  "title": "반을 입력해 주세요"
+		} 
+	  }
+	],
+	"quickReplies": [
+	  {
+		"messageText": "1반",
+		"action": "block",
+		"label": "1반",
+		"blockId": "65faa630d7cbb10c92facd52",
+		"extra" : usergrade + "1"
+	  },
+	{
+		"messageText": "2반",
+		"action": "block",
+		"label": "2반",
+		"blockId": "65faa630d7cbb10c92facd52",
+		"extra" : usergrade + "2"
+	  },
+	{
+		"messageText": "3반",
+		"action": "block",
+		"label": "3반",
+		"blockId": "65faa630d7cbb10c92facd52",
+		"extra" : usergrade + "3"
+	  },
+	{
+		"messageText": "4반",
+		"action": "block",
+		"label": "4반",
+		"blockId": "65faa630d7cbb10c92facd52",
+		"extra" : usergrade + "4"
+	  },
+	{
+		"messageText": "5반",
+		"action": "block",
+		"label": "5반",
+		"blockId": "65faa630d7cbb10c92facd52",
+		"extra" : usergrade + "5"
+	  },
+	{
+		"messageText": "6반",
+		"action": "block",
+		"label": "6반",
+		"blockId": "65faa630d7cbb10c92facd52",
+		"extra" : usergrade + "6"
+	  },
+	{
+		"messageText": "7반",
+		"action": "block",
+		"label": "7반",
+		"blockId": "65faa630d7cbb10c92facd52",
+		"extra" : usergrade + "7"
+	  },
+	{
+		"messageText": "8반",
+		"action": "block",
+		"label": "8반",
+		"blockId": "65faa630d7cbb10c92facd52",
+		"extra" : usergrade + "8"
+	  },
+	{
+		"messageText": "9반",
+		"action": "block",
+		"label": "9반",
+		"blockId": "65faa630d7cbb10c92facd52",
+		"extra" : usergrade + "9"
+	  }
+	  
+	]
+  }
+}
+	return responesebody
+
+@app.route('/class1', methods = ['POST'])
+def class1():
+	body = request.get_json()
+	userclass = body['userRequest']['utterance']
+	userID = body['userRequest']['user']['id']
+	useridtable = userIdData.all(formula=match({"userID":userID}))
+	id1 = useridtable[0]['id']
+	for a in table.all():
+		if id1 == a['id']:
+			data = a['fields']
+			if userclass == "1반":
+				table.update(id1, {"classcode": 1}, replace=True)
+			elif userclass == "2반":
+				table.update(id1, {"classcode": 2}, replace=True)
+			elif userclass == "3반":
+				table.update(id1, {"classcode": 3}, replace=True)
+			elif userclass == "4반":
+				table.update(id1, {"classcode": 4}, replace=True)
+			elif userclass == "5반":
+				table.update(id1, {"classcode": 5}, replace=True)
+			elif userclass == "6반":
+				table.update(id1, {"classcode": 6}, replace=True)
+			elif userclass == "7반":
+				table.update(id1, {"classcode": 7}, replace=True)
+			elif userclass == "8반":
+				table.update(id1, {"classcode": 8}, replace=True)
+			elif userclass == "9반":
+				table.update(id1, {"classcode": 9}, replace=True)
+			else:
+				table.update(id1, {"classcode": 0}, replace=True)
+
+	if data['schoolcode'] == "S":
+		school = "삼남중학교 "
+	elif data['schoolcode'] == "E":
+		school = "언양고등학교 "
+	else:
+		school = "지원하지 않는 학교 "
+
+	if data['gradecode'] == "1":
+		grade = "1학년 "
+	elif data['gradecode'] == "2":
+		grade = "2학년 "
+	elif data['gradecode'] == "3":
+		grade = "3학년 "
+	else:
+		grade = "지원하지 않는 학년 "
+
+	if data['classcode'] == "1":
+		class1 = "1반"
+	elif data['classcode'] == "2":
+		class1 = "2반"
+	elif data['classcode'] == "3":
+		class1 = "3반"
+	elif data['classcode'] == "4":
+		class1 = "4반"
+	elif data['classcode'] == "5":
+		class1 = "5반"
+	elif data['classcode'] == "6":
+		class1 = "6반"
+	elif data['classcode'] == "7":
+		class1 = "7반"
+	elif data['classcode'] == "8":
+		class1 = "8반"
+	elif data['classcode'] == "9":
+		class1 = "9반"
+	else:
+		class1 = "지원하지 않는 반 "
+
+	
+	responesebody = {
+  "version": "2.0",
+  "template": {
+	"outputs": [
+	  {
+		"textCard": {
+		  "title": "입력한 정보가 맞는지 확인해 주세요",
+		  "description": school + grade + class1,
+		"buttons": [
+			{
+			  "action": "block",
+			  "label": "맞아요!",
+			  "blockId" : "65faaca1a64303558477aa63"
+			},
+			{
+			  "action": "block",
+			  "label": "아니에요",
+			  "blockId" : "65faa5ef091618695a7fee9c"
+			}
+		]
+		}
+		  
+	  }
+	]
+  }
+}
+	return responesebody
+
+@app.route('/check', methods = ['POST'])
+def check():
+	responesebody = {
+  "version": "2.0",
+  "template": {
+	"outputs": [
+	  {
+		"textCard": {
+		  "title": "입력한 정보가 등록되었어요",
+		"buttons": [
+			{
+			  "action": "message",
+			  "label": "오늘 급식 뭐임?"
+			},
+			{
+			  "action": "message",
+			  "label": "오늘 시간표 뭐임?"
+			}
+		]
+		}
+		  
+	  }
+	]
+  }
+}
+	return responesebody
+
 @app.route('/timetable', methods = ["POST"])
 def timetable():
 	weekstr = str(week)
