@@ -58,44 +58,52 @@ def timetable():
 	for value in passing_timetable.values():
 		teacherlist.append(value)
 	responseBody = {
-        "version": "2.0",
-        "template": {
-            "outputs": [
+  "version": "2.0",
+  "template": {
+    "outputs": [
+        {
+      {
+        "carousel": {
+          "type": "itemCard",
+          "items": [
+            {
+              "imageTitle": {
+                "title": date + " 시간표" 
+              },
+              "itemList": [
                 {
-					"listCard": {
-         		 		"header": {
-            				"title": date + " 시간표"
-          						  },
-          				"items": [
-            				{
-              					"title": timetablelist[1],
-              					"description": teacherlist[1]
-            				},
-							{
-              					"title": timetablelist[2],
-              					"description": teacherlist[2]
-            				},
-							{
-              					"title": timetablelist[3],
-              					"description": teacherlist[3]
-            				},
-							{
-              					"title": timetablelist[4],
-              					"description": teacherlist[4]
-            				},
-							{
-              					"title": timetablelist[5],
-              					"description": teacherlist[5]
-            				},
-							{
-              					"title": timetablelist[6],
-              					"description": teacherlist[6]
-							}
-								  ]
-					}
-					}
-						]
-		}
+                  "title": '1교시',
+                  "description": timetablelist[1] + ' | ' + teacherlist[1]
+                 },
+		{
+                  "title": '2교시',
+                  "description": timetablelist[2] + ' | ' + teacherlist[2]
+                 },
+		{
+                  "title": '3교시',
+                  "description": timetablelist[3] + ' | ' + teacherlist[3]
+                 },
+		{
+                  "title": '4교시',
+                  "description": timetablelist[4] + ' | ' + teacherlist[4]
+                 },
+		{
+                  "title": '5교시',
+                  "description": timetablelist[5] + ' | ' + teacherlist[5]
+                 },
+		{
+                  "title": '6교시',
+                  "description": timetablelist[6] + ' | ' + teacherlist[6]
+                 }
+              ],
+              "itemListAlignment": "left"
+	    }
+	  ]
+	}
+      }
+	}
+    ]
+  }
 	}
 	return responseBody
 	   
