@@ -92,14 +92,14 @@ def agree2():
         "messageText": "삼남중학교",
         "action": "block",
         "label": "삼남중학교"
-		"blockId": "65faa603e8b2137164330ae3"
+		"blockId": "65faa603e8b2137164330ae3",
 		"extra" : "S"
       },
       {
         "messageText": "언양고등학교",
         "action": "block",
         "label": "언양고등학교"
-		"blockId": "65faa603e8b2137164330ae3"
+		"blockId": "65faa603e8b2137164330ae3",
 		"extra" : "E"
       }
     ]
@@ -127,21 +127,21 @@ def school():
         "messageText": "1학년",
         "action": "block",
         "label": "1학년"
-		"blockId": "65faa61da0a1dd2d9e02e80e"
+		"blockId": "65faa61da0a1dd2d9e02e80e",
 		"extra" : userschool + "1"
       },
       {
         "messageText": "2학년",
         "action": "block",
         "label": "2학년"
-		"blockId": "65faa61da0a1dd2d9e02e80e"
+		"blockId": "65faa61da0a1dd2d9e02e80e",
 		"extra" : userschool + "2"
       },
 	{
         "messageText": "3학년",
         "action": "block",
         "label": "3학년"
-		"blockId": "65faa61da0a1dd2d9e02e80e"
+		"blockId": "65faa61da0a1dd2d9e02e80e",
 		"extra" : userschool + "3"
       }
     ]
@@ -169,63 +169,63 @@ def grade():
         "messageText": "1반",
         "action": "block",
         "label": "1반"
-		"blockId": "65faa630d7cbb10c92facd52"
+		"blockId": "65faa630d7cbb10c92facd52",
 		"extra" : usergrade + "1"
       },
 	{
         "messageText": "2반",
         "action": "block",
         "label": "2반"
-		"blockId": "65faa630d7cbb10c92facd52"
+		"blockId": "65faa630d7cbb10c92facd52",
 		"extra" : usergrade + "2"
       },
 	{
         "messageText": "3반",
         "action": "block",
         "label": "3반"
-		"blockId": "65faa630d7cbb10c92facd52"
+		"blockId": "65faa630d7cbb10c92facd52",
 		"extra" : usergrade + "3"
       },
 	{
         "messageText": "4반",
         "action": "block",
         "label": "4반"
-		"blockId": "65faa630d7cbb10c92facd52"
+		"blockId": "65faa630d7cbb10c92facd52",
 		"extra" : usergrade + "4"
       },
 	{
         "messageText": "5반",
         "action": "block",
         "label": "5반"
-		"blockId": "65faa630d7cbb10c92facd52"
+		"blockId": "65faa630d7cbb10c92facd52",
 		"extra" : usergrade + "5"
       },
 	{
         "messageText": "6반",
         "action": "block",
         "label": "6반"
-		"blockId": "65faa630d7cbb10c92facd52"
+		"blockId": "65faa630d7cbb10c92facd52",
 		"extra" : usergrade + "6"
       },
 	{
         "messageText": "7반",
         "action": "block",
         "label": "7반"
-		"blockId": "65faa630d7cbb10c92facd52"
+		"blockId": "65faa630d7cbb10c92facd52",
 		"extra" : usergrade + "7"
       },
 	{
         "messageText": "8반",
         "action": "block",
         "label": "8반"
-		"blockId": "65faa630d7cbb10c92facd52"
+		"blockId": "65faa630d7cbb10c92facd52",
 		"extra" : usergrade + "8"
       },
 	{
         "messageText": "9반",
         "action": "block",
         "label": "9반"
-		"blockId": "65faa630d7cbb10c92facd52"
+		"blockId": "65faa630d7cbb10c92facd52",
 		"extra" : usergrade + "9"
       }
       
@@ -294,7 +294,6 @@ def check():
       {
         "textCard": {
           "title": "입력한 정보가 등록되었어요",
-          "description": description,
         "buttons": [
             {
               "action": "message",
