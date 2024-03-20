@@ -4,7 +4,8 @@ from datetime import datetime, timedelta, timezone
 import os
 import requests
 import json
-
+from pyairtable import Table, Base
+from pyairtable.formulas import match
 
 # 시간 설정
 
