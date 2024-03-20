@@ -64,44 +64,44 @@ def timetable():
 	"outputs": [
 	  {
 		"itemCard":{
-			  "imageTitle": {
+			  "head": {
 				"title": date + " 시간표" 
-			  },
-			  "itemList": [
+			  	},
+			  	"itemList": [
 				{
-				  "title": '1교시',
-				  "description": timetablelist[1] + ' | ' + teacherlist[1]
-				 },
-		{
-				  "title": '2교시',
-				  "description": timetablelist[2] + ' | ' + teacherlist[2]
-				 },
-		{
-				  "title": '3교시',
-				  "description": timetablelist[3] + ' | ' + teacherlist[3]
-				 },
-		{
-				  "title": '4교시',
-				  "description": timetablelist[4] + ' | ' + teacherlist[4]
-				 },
-		{
-				  "title": '5교시',
-				  "description": timetablelist[5] + ' | ' + teacherlist[5]
-				 },
-		{
-				  "title": '6교시',
-				  "description": timetablelist[6] + ' | ' + teacherlist[6]
-				 },
-				 {
-				  "title": '7교시',
-				  "description": timetablelist[7] + ' | ' + teacherlist[7]
-				 }
+				"title": '1교시',
+				"description": timetablelist[1] + ' | ' + teacherlist[1]
+				},
+				{
+				"title": '2교시',
+				"description": timetablelist[2] + ' | ' + teacherlist[2]
+				},
+				{
+				"title": '3교시',
+				"description": timetablelist[3] + ' | ' + teacherlist[3]
+				},
+				{
+				"title": '4교시',
+				"description": timetablelist[4] + ' | ' + teacherlist[4]
+				},
+				{
+				"title": '5교시',
+				"description": timetablelist[5] + ' | ' + teacherlist[5]
+				},
+				{
+				"title": '6교시',
+				"description": timetablelist[6] + ' | ' + teacherlist[6]
+				},
+				{
+				"title": '7교시',
+				"description": timetablelist[7] + ' | ' + teacherlist[7]
+				}
 			  ],
 			  "itemListAlignment": "left"
 		}
-	  ]
+	]
 	}
-	  }
+	}
 	return responseBody
 	   
 
