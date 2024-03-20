@@ -31,7 +31,7 @@ teacherlist = []
 airtable_token = os.environ.get('Airtable_Key')
 BASE_ID = 'appehbq0HhoF3Rk62'
 TABLE_NAME = 'tblnxuLnQ0t4qPlox'
-table = Table(airtable_token, BASE_ID, TABLE_NAME)
+userIdData = Table(airtable_token, BASE_ID, TABLE_NAME)
 
 #
 
