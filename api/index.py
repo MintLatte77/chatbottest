@@ -93,16 +93,16 @@ def agree2():
 	],
 	"quickReplies": [
 		{
-			"label": "삼남중학교",
+			"label": "삼남중",
 			"action": "block",
-			"messageText": "삼남중학교",
+			"messageText": "삼남중",
 			"blockId": "65faa603e8b2137164330ae3",
 			"extra" : "S"
 		},
 		{
-			"messageText": "언양고등학교",
+			"messageText": "언양고",
 			"action": "block",
-			"label": "언양고등학교",
+			"label": "언양고",
 			"blockId": "65faa603e8b2137164330ae3",
 			"extra" : "E"
 		}
