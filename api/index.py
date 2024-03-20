@@ -123,22 +123,22 @@ def school():
 		userschoolcode = "0"
 
 	with open('data.txt', 'r') as file:
-    	data = file.readlines()
+		data = file.readlines()
 
 	found = False
 	updated_data = []
 	for i, line in enumerate(data):
-    	if userID in line:
-        	found = True
-        	data[i] = line.strip() + ',' + userschoolcode + '\n'
-        	break
+		if userID in line:
+			found = True
+			data[i] = line.strip() + ',' + userschoolcode + '\n'
+			break
 
 	if not found:
-    	new_entry = userID + ',' + userschoolcode + '\n'
-    	data.append(new_entry)
+		new_entry = userID + ',' + userschoolcode + '\n'
+		data.append(new_entry)
 
 	with open('data.txt', 'w') as file:
-    	file.writelines(data)
+		file.writelines(data)
 	
 	responesebody = {
   "version": "2.0",
@@ -190,18 +190,18 @@ def grade():
 		usergradecode = "0"
 
 	with open('data.txt', 'r') as file:
-    	data = file.readlines()
+		data = file.readlines()
 
 	found = False
 	updated_data = []
 	for i, line in enumerate(data):
-    	if userID in line:
-        	found = True
-        	data[i] = line.strip() + ',' + usergradecode + '\n'
-        	break
+		if userID in line:
+			found = True
+			data[i] = line.strip() + ',' + usergradecode + '\n'
+			break
 
 	with open('data.txt', 'w') as file:
-    	file.writelines(data)
+		file.writelines(data)
 	
 	responesebody = {
   "version": "2.0",
@@ -311,18 +311,18 @@ def class1():
 		userclasscode = "0"
 
 	with open('data.txt', 'r') as file:
-    	data = file.readlines()
+		data = file.readlines()
 
 	found = False
 	updated_data = []
 	for i, line in enumerate(data):
-    	if userID in line:
-        	found = True
-        	data[i] = line.strip() + ',' + userclasscode + '\n'
-        	break
+		if userID in line:
+			found = True
+			data[i] = line.strip() + ',' + userclasscode + '\n'
+			break
 
 	with open('data.txt', 'w') as file:
-    	file.writelines(data)
+		file.writelines(data)
 
 	if data[0] == "S":
 		school = "삼남중학교 "
