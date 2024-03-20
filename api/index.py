@@ -63,7 +63,7 @@ def timetable():
   "template": {
 	"outputs": [
 	  {
-		"itemCard",
+		"itemCard":{
 		  "items": [
 			{
 			  "imageTitle": {
