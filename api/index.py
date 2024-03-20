@@ -240,9 +240,9 @@ def class1():
 	userinfo = body['action']['clientExtra']
 	userinfostr = str(userinfo)
 
-	if userinfostr[0] = "S":
+	if userinfostr[0] == "S":
 		userschool = "삼남중학교 "
-	elif userinfostr[0] = "E":
+	elif userinfostr[0] == "E":
 		userschool = "언양고등학교 "
 	else:
 		userschool = "지원하지 않는 학교 "
