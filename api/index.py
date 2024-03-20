@@ -132,7 +132,7 @@ def service():
 	else:
 		meal = "오늘은 급식이 없습니다!"
 
-		responseBody = {
+	responseBody = {
 		"version": "2.0",
 		"template": {
 			"outputs": [
