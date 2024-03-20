@@ -74,7 +74,7 @@ def agree1():
 }
 	return responesebody
 
-@app.route('/agree2')
+@app.route('/agree2', methods = ['POST'])
 def agree2():
 	description = "현재 삼남중학교, 언양고등학교만 지원합니다. \n학교 추가를 바라신다면 상담직원 연결을 눌러주세요."
 	responesebody = {
