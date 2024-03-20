@@ -64,8 +64,6 @@ def timetable():
 	"outputs": [
 	  {
 		"itemCard":{
-		  "items": [
-			{
 			  "imageTitle": {
 				"title": date + " 시간표" 
 			  },
@@ -104,9 +102,6 @@ def timetable():
 	  ]
 	}
 	  }
-	]
-  }
-	}
 	return responseBody
 	   
 
