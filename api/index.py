@@ -28,6 +28,11 @@ timetabledict = {'월1사회2': '박경환 | 2301(1-5)', '월2체육': '강정�
 timetablelist = []
 teacherlist = []
 
+airtable_token = os.environ.get('Airtable_Key')
+BASE_ID = 'appehbq0HhoF3Rk62'
+TABLE_NAME = 'tblnxuLnQ0t4qPlox'
+table = Table(airtable_token, BASE_ID, TABLE_NAME)
+
 #
 
 # @app.route('/service', methods = ["POST"])
