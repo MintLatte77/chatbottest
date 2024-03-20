@@ -76,6 +76,7 @@ def agree1():
 
 @app.route('/agree2', methods = ['POST'])
 def agree2():
+	description = "현재 삼남중학교, 언양고등학교만 지원합니다. \n학교 추가를 바라신다면 상담직원 연결을 눌러주세요."
 	responesebody = {
   "version": "2.0",
   "template": {
@@ -83,7 +84,7 @@ def agree2():
 	{
 		"textCard": {
 		"title": "학교를 입력해 주세요",
-		"description": "현재 삼남중학교, 언양고등학교만 지원합니다. \n학교 추가를 바라신다면 상담직원 연결을 눌러주세요."
+		"description": description
 		}
 	}
 	],
