@@ -88,7 +88,7 @@ def agree2():
 	userID = body['userRequest']['user']['id']
 	useridtable = userIdData.all(formula=match({"userID":userID}))
 	if useridtable == []:
-		table.create({'userId',userID})
+		userIdData.create({'userId',userID})
 	
 	description = "현재 삼남중학교, 언양고등학교만 지원합니다. \n학교 추가를 바라신다면 상담직원 연결을 눌러주세요."
 	responesebody = {
