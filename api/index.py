@@ -89,18 +89,18 @@ def agree2():
 	],
 	"quickReplies": [
 	  {
-		"messageText": "삼남중학교",
-		"action": "block",
 		"label": "삼남중학교",
-	"blockId": "65faa603e8b2137164330ae3",
-	"extra" : "S"
+		"action": "block",
+		"messageText": "삼남중학교",
+		"blockId": "65faa603e8b2137164330ae3",
+		"extra" : "S"
 	  },
 	  {
 		"messageText": "언양고등학교",
 		"action": "block",
 		"label": "언양고등학교",
-	"blockId": "65faa603e8b2137164330ae3",
-	"extra" : "E"
+		"blockId": "65faa603e8b2137164330ae3",
+		"extra" : "E"
 	  }
 	]
   }
@@ -111,6 +111,10 @@ def agree2():
 def school():
 	body = request.get_json()
 	userschool = body['action']['clientExtra']
+
+	userschool1 = str(userschool) + "1"
+	userschool2 = str(userschool) + "2"
+	userschool3 = str(userschool) + "3"
 	
 	responesebody = {
   "version": "2.0",
@@ -128,21 +132,21 @@ def school():
 		"action": "block",
 		"label": "1학년",
 	"blockId": "65faa61da0a1dd2d9e02e80e",
-	"extra" : userschool + "1"
+	"extra" : userschool1
 	  },
 	  {
 		"messageText": "2학년",
 		"action": "block",
 		"label": "2학년",
 		"blockId": "65faa61da0a1dd2d9e02e80e",
-		"extra" : userschool + "2"
+		"extra" : userschool2
 	  },
 	{
 		"messageText": "3학년",
 		"action": "block",
 		"label": "3학년",
 		"blockId": "65faa61da0a1dd2d9e02e80e",
-		"extra" : userschool + "3"
+		"extra" : userschool3
 	  }
 	]
   }
