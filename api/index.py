@@ -90,14 +90,14 @@ def agree2():
 	"quickReplies": [
 	{
 		"label": "삼남중학교",
-		"action": "block",
+		"action": "Block",
 		"messageText": "삼남중학교",
 		"blockId": "65faa603e8b2137164330ae3",
 		"extra" : "S"
 	},
 	{
 		"messageText": "언양고등학교",
-		"action": "block",
+		"action": "Block",
 		"label": "언양고등학교",
 		"blockId": "65faa603e8b2137164330ae3",
 		"extra" : "E"
