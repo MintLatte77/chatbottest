@@ -200,7 +200,8 @@ def grade():
 					table.update(id1, {"gradecode": 3}, replace=True)
 				else:
 					table.update(id1, {"gradecode": 0}, replace=True)
-	
+	except:
+		print("error")
 	responesebody = {
   "version": "2.0",
   "template": {
@@ -343,6 +344,8 @@ def class1():
 					class1 = "9반"
 				else:
 					class1 = "지원하지 않는 반 "
+	except:
+		print("error")
 
 	
 
