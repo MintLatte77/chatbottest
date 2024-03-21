@@ -282,68 +282,71 @@ def class1():
 	body = request.get_json()
 	userclass = body['userRequest']['utterance']
 	userID = body['userRequest']['user']['id']
-	useridtable = userIdData.all(formula=match({"userID":userID}))
-	id1 = useridtable[0]['id']
-	for a in table.all():
-		if id1 == a['id']:
-			data = a['fields']
-			if userclass == "1반":
-				table.update(id1, {"classcode": 1}, replace=True)
-			elif userclass == "2반":
-				table.update(id1, {"classcode": 2}, replace=True)
-			elif userclass == "3반":
-				table.update(id1, {"classcode": 3}, replace=True)
-			elif userclass == "4반":
-				table.update(id1, {"classcode": 4}, replace=True)
-			elif userclass == "5반":
-				table.update(id1, {"classcode": 5}, replace=True)
-			elif userclass == "6반":
-				table.update(id1, {"classcode": 6}, replace=True)
-			elif userclass == "7반":
-				table.update(id1, {"classcode": 7}, replace=True)
-			elif userclass == "8반":
-				table.update(id1, {"classcode": 8}, replace=True)
-			elif userclass == "9반":
-				table.update(id1, {"classcode": 9}, replace=True)
-			else:
-				table.update(id1, {"classcode": 0}, replace=True)
+	try:
+		useridtable = userIdData.all(formula=match({"userID":userID}))
+		id1 = useridtable[0]['id']
+		for a in table.all():
+			if id1 == a['id']:
+				data = a['fields']
+				if userclass == "1반":
+					table.update(id1, {"classcode": 1}, replace=True)
+				elif userclass == "2반":
+					table.update(id1, {"classcode": 2}, replace=True)
+				elif userclass == "3반":
+					table.update(id1, {"classcode": 3}, replace=True)
+				elif userclass == "4반":
+					table.update(id1, {"classcode": 4}, replace=True)
+				elif userclass == "5반":
+					table.update(id1, {"classcode": 5}, replace=True)
+				elif userclass == "6반":
+					table.update(id1, {"classcode": 6}, replace=True)
+				elif userclass == "7반":
+					table.update(id1, {"classcode": 7}, replace=True)
+				elif userclass == "8반":
+					table.update(id1, {"classcode": 8}, replace=True)
+				elif userclass == "9반":
+					table.update(id1, {"classcode": 9}, replace=True)
+				else:
+					table.update(id1, {"classcode": 0}, replace=True)
 
-	if data['schoolcode'] == "S":
-		school = "삼남중학교 "
-	elif data['schoolcode'] == "E":
-		school = "언양고등학교 "
-	else:
-		school = "지원하지 않는 학교 "
+				if data['schoolcode'] == "S":
+					school = "삼남중학교 "
+				elif data['schoolcode'] == "E":
+								school = "언양고등학교 "
+				else:
+					school = "지원하지 않는 학교 "
+			
+				if data['gradecode'] == "1":
+					grade = "1학년 "
+				elif data['gradecode'] == "2":
+					grade = "2학년 "
+				elif data['gradecode'] == "3":
+					grade = "3학년 "
+				else:
+					grade = "지원하지 않는 학년 "
 
-	if data['gradecode'] == "1":
-		grade = "1학년 "
-	elif data['gradecode'] == "2":
-		grade = "2학년 "
-	elif data['gradecode'] == "3":
-		grade = "3학년 "
-	else:
-		grade = "지원하지 않는 학년 "
+				if data['classcode'] == "1":
+					class1 = "1반"
+				elif data['classcode'] == "2":
+					class1 = "2반"
+				elif data['classcode'] == "3":
+					class1 = "3반"
+				elif data['classcode'] == "4":
+					class1 = "4반"
+				elif data['classcode'] == "5":
+					class1 = "5반"
+				elif data['classcode'] == "6":
+					class1 = "6반"
+				elif data['classcode'] == "7":
+					class1 = "7반"
+				elif data['classcode'] == "8":
+					class1 = "8반"
+				elif data['classcode'] == "9":
+					class1 = "9반"
+				else:
+					class1 = "지원하지 않는 반 "
 
-	if data['classcode'] == "1":
-		class1 = "1반"
-	elif data['classcode'] == "2":
-		class1 = "2반"
-	elif data['classcode'] == "3":
-		class1 = "3반"
-	elif data['classcode'] == "4":
-		class1 = "4반"
-	elif data['classcode'] == "5":
-		class1 = "5반"
-	elif data['classcode'] == "6":
-		class1 = "6반"
-	elif data['classcode'] == "7":
-		class1 = "7반"
-	elif data['classcode'] == "8":
-		class1 = "8반"
-	elif data['classcode'] == "9":
-		class1 = "9반"
-	else:
-		class1 = "지원하지 않는 반 "
+	
 
 	
 	responesebody = {
