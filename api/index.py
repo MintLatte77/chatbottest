@@ -87,6 +87,7 @@ def agree1():
 def agree2():
 	body = request.get_json()
 	userID = body['userRequest']['user']['id']
+	print(userID)
 	try:
 		useridtable = userIdData.all(formula=match({"userID":userID}))
 	except:
