@@ -280,7 +280,7 @@ def grade():
 
 @app.route('/class1', methods = ['POST'])
 def class1():
-	global description
+	global userIdData
 	body = request.get_json()
 	userclass = body['userRequest']['utterance']
 	userID = body['userRequest']['user']['id']
