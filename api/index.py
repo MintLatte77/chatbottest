@@ -87,8 +87,8 @@ def agree2():
 	body = request.get_json()
 	userschool = body['userRequest']['utterance']
 	userID = body['userRequest']['user']['id']
-	useridtable = userIdData.all(formula=match({"userID":userID}))
-	if useridtable == []:
+	try useridtable = userIdData.all(formula=match({"userID":userID}))
+	if useridtable == "":
 		userIdstr = str(userID)
 		userIdData.create({'userId':userIdstr})
 	
