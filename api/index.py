@@ -190,8 +190,7 @@ def grade():
 	body = request.get_json()
 	usergrade = body['userRequest']['utterance']
 	userID = body['userRequest']['user']['id']
-	try:
-		useridtable = userIdData.all(formula=match({"userID":userID}))
+	useridtable = userIdData.all(formula=match({"userID":userID}))
 		id1 = useridtable[0]['id']
 		for a in userIdData.all():
 			if id1 == a['id']:
@@ -203,8 +202,6 @@ def grade():
 					userIdData.update(id1, {"gradecode": 3}, replace=True)
 				else:
 					userIdData.update(id1, {"gradecode": 0}, replace=True)
-	except:
-		print("error")
 	responesebody = {
   "version": "2.0",
   "template": {
@@ -284,51 +281,51 @@ def class1():
 	body = request.get_json()
 	userclass = body['userRequest']['utterance']
 	userID = body['userRequest']['user']['id']
-	try:
-		useridtable = userIdData.all(formula=match({"userID":userID}))
-		id1 = useridtable[0]['id']
-		for a in userIdData.all():
-			if id1 == a['id']:
-				data = a['fields']
-				uclass = userclass
-				if userclass == "1반":
-					userIdData.update(id1, {"classcode": 1}, replace=True)
-				elif userclass == "2반":
-					userIdData.update(id1, {"classcode": 2}, replace=True)
-				elif userclass == "3반":
-					userIdData.update(id1, {"classcode": 3}, replace=True)
-				elif userclass == "4반":
-					userIdData.update(id1, {"classcode": 4}, replace=True)
-				elif userclass == "5반":
-					userIdData.update(id1, {"classcode": 5}, replace=True)
-				elif userclass == "6반":
-					userIdData.update(id1, {"classcode": 6}, replace=True)
-				elif userclass == "7반":
-					userIdData.update(id1, {"classcode": 7}, replace=True)
-				elif userclass == "8반":
-					userIdData.update(id1, {"classcode": 8}, replace=True)
-				elif userclass == "9반":
-					userIdData.update(id1, {"classcode": 9}, replace=True)
-				else:
-					userIdData.update(id1, {"classcode": 0}, replace=True)
+	useridtable = userIdData.all(formula=match({"userID":userID}))
+	id1 = useridtable[0]['id']
+	for a in userIdData.all():
+		if id1 == a['id']:
+			data = a['fields']
+			uclass = userclass
+			if userclass == "1반":
+				userIdData.update(id1, {"classcode": 1}, replace=True)
+			elif userclass == "2반":
+				userIdData.update(id1, {"classcode": 2}, replace=True)
+			elif userclass == "3반":
+				userIdData.update(id1, {"classcode": 3}, replace=True)
+			elif userclass == "4반":
+				userIdData.update(id1, {"classcode": 4}, replace=True)
+			elif userclass == "5반":
+				userIdData.update(id1, {"classcode": 5}, replace=True)
+			elif userclass == "6반":
+				userIdData.update(id1, {"classcode": 6}, replace=True)
+			elif userclass == "7반":
+				userIdData.update(id1, {"classcode": 7}, replace=True)
+			elif userclass == "8반":
+				userIdData.update(id1, {"classcode": 8}, replace=True)
+			elif userclass == "9반":
+				userIdData.update(id1, {"classcode": 9}, replace=True)
+			else:
+				userIdData.update(id1, {"classcode": 0}, replace=True)
 
-				if data['schoolcode'] == "S":
-					uschool = "삼남중학교 "
-				elif data['schoolcode'] == "E":
-					uschool = "언양고등학교 "
-				else:
-					uschool = "지원하지 않는 학교 "
-			
-				if data['gradecode'] == "1":
-					ugrade = "1학년 "
-				elif data['gradecode'] == "2":
-					ugrade = "2학년 "
-				elif data['gradecode'] == "3":
-					ugrade = "3학년 "
-				else:
-					ugrade = "지원하지 않는 학년 "
+			if data['schoolcode'] == "S":
+				uschool = "삼남중학교 "
+			elif data['schoolcode'] == "E":
+				uschool = "언양고등학교 "
+			else:
+				uschool = "지원하지 않는 학교 "
+		
+			if data['gradecode'] == "1":
+				ugrade = "1학년 "
+			elif data['gradecode'] == "2":
+				ugrade = "2학년 "
+			elif data['gradecode'] == "3":
+				ugrade = "3학년 "
+			else:
+				ugrade = "지원하지 않는 학년 "
 				
-				description = str(uschool) + str(ugrade) + str(uclass)
+			description = str(uschool) + str(ugrade) + str(uclass)
+			print(description)
 	
 				responesebody = {
   "version": "2.0",
