@@ -288,7 +288,7 @@ def class1():
 		for a in userIdData.all():
 			if id1 == a['id']:
 				data = a['fields']
-				class1 = userclass
+				uclass = userclass
 				if userclass == "1반":
 					userIdData.update(id1, {"classcode": 1}, replace=True)
 				elif userclass == "2반":
@@ -311,26 +311,26 @@ def class1():
 					userIdData.update(id1, {"classcode": 0}, replace=True)
 
 				if data['schoolcode'] == "S":
-					school = "삼남중학교 "
+					uschool = "삼남중학교 "
 				elif data['schoolcode'] == "E":
-					school = "언양고등학교 "
+					uschool = "언양고등학교 "
 				else:
-					school = "지원하지 않는 학교 "
+					uschool = "지원하지 않는 학교 "
 			
 				if data['gradecode'] == "1":
-					grade = "1학년 "
+					ugrade = "1학년 "
 				elif data['gradecode'] == "2":
-					grade = "2학년 "
+					ugrade = "2학년 "
 				elif data['gradecode'] == "3":
-					grade = "3학년 "
+					ugrade = "3학년 "
 				else:
-					grade = "지원하지 않는 학년 "
+					ugrade = "지원하지 않는 학년 "
 	
 
 	except:
 		print("error")
 	
-	description = str(school) + str(grade) + str(class1)
+	description = str(uschool) + str(ugrade) + str(uclass)
 	
 	responesebody = {
   "version": "2.0",
