@@ -87,14 +87,14 @@ def agree1():
 def agree2():
 	body = request.get_json()
 	userID = body['userRequest']['user']['id']
-	print(userID)
+	
 	try:
 		useridtable = userIdData.all(formula=match({"userID":userID}))
 	except:
 		userIdstr = str(userID)
 		Newdata = {'userId': userIdstr, 'schoolcode': 0, 'gradecode': 0, 'gradecode': 0}
 		userIdData.create(Newdata)
-	
+		print(Newdata)
 	
 	responesebody = {
   "version": "2.0",
