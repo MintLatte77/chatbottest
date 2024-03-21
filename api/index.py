@@ -139,7 +139,7 @@ def school():
 	userID = body['userRequest']['user']['id']
 	useridtable = userIdData.all(formula=match({"userID":userID}))
 	id1 = useridtable[0]['id']
-	for a in table.all():
+	for a in userIdData.all():
 		if id1 == a['id']:
 			if userschool == "삼남중학교":
 				userIdData.update(id1, {"schoolcode": "S"})
