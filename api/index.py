@@ -51,7 +51,8 @@ def time():
 
 @app.route('/test')
 def test():
-	return 'test'
+	
+	return userIdData.all()
 
 
 # 동의서 작성
