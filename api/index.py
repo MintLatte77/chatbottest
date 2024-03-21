@@ -311,7 +311,7 @@ def class1():
 				if data['schoolcode'] == "S":
 					school = "삼남중학교 "
 				elif data['schoolcode'] == "E":
-								school = "언양고등학교 "
+					school = "언양고등학교 "
 				else:
 					school = "지원하지 않는 학교 "
 			
@@ -346,8 +346,7 @@ def class1():
 					class1 = "지원하지 않는 반 "
 	except:
 		print("error")
-
-	
+	description = str(school) + str(grade) + str(class1)
 
 	
 	responesebody = {
@@ -357,7 +356,7 @@ def class1():
 	  {
 		"textCard": {
 		  "title": "입력한 정보가 맞는지 확인해 주세요",
-		  "description": school + grade + class1,
+		  "description": description,
 		"buttons": [
 			{
 			  "action": "block",
