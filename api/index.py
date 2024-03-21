@@ -328,10 +328,11 @@ def class1():
 					grade = "3학년 "
 				else:
 					grade = "지원하지 않는 학년 "
+				description = str(school) + str(grade) + str(class1)
+
 	except:
 		print("error")
-	description = str(school) + str(grade) + str(class1)
-
+	
 	
 	responesebody = {
   "version": "2.0",
