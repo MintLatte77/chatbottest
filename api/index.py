@@ -86,13 +86,13 @@ def agree1():
 @app.route('/agree2', methods = ['POST'])
 def agree2():
 	body = request.get_json()
-	userschool = body['userRequest']['utterance']
 	userID = body['userRequest']['user']['id']
 	try:
 		useridtable = userIdData.all(formula=match({"userID":userID}))
 	except:
 		userIdstr = str(userID)
-		userIdData.create({'userId':userIdstr})
+		Newdata = {'userId': userIdstr, 'schoolcode': 0, 'gradecode': 0, 'gradecode': 0}
+		userIdData.create()
 	
 	
 	responesebody = {
