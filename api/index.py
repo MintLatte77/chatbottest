@@ -191,17 +191,17 @@ def grade():
 	usergrade = body['userRequest']['utterance']
 	userID = body['userRequest']['user']['id']
 	useridtable = userIdData.all(formula=match({"userID":userID}))
-		id1 = useridtable[0]['id']
-		for a in userIdData.all():
-			if id1 == a['id']:
-				if usergrade == "1학년":
-					userIdData.update(id1, {"gradecode": 1})
-				elif userschool == "2학년":
-					userIdData.update(id1, {"gradecode": 2})
-				elif userschool == "3학년":
-					userIdData.update(id1, {"gradecode": 3})
-				else:
-					userIdData.update(id1, {"gradecode": 0})
+	id1 = useridtable[0]['id']
+	for a in userIdData.all():
+		if id1 == a['id']:
+			if usergrade == "1학년":
+				userIdData.update(id1, {"gradecode": 1})
+			elif userschool == "2학년":
+				userIdData.update(id1, {"gradecode": 2})
+			elif userschool == "3학년":
+				userIdData.update(id1, {"gradecode": 3})
+			else:
+				userIdData.update(id1, {"gradecode": 0})
 	responesebody = {
   "version": "2.0",
   "template": {
