@@ -92,7 +92,7 @@ def agree2():
 	except:
 		userIdstr = str(userID)
 		Newdata = {'userId': userIdstr, 'schoolcode': 0, 'gradecode': 0, 'gradecode': 0}
-		userIdData.create()
+		userIdData.create(Newdata)
 	
 	
 	responesebody = {
