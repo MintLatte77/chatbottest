@@ -325,14 +325,10 @@ def class1():
 					ugrade = "3학년 "
 				else:
 					ugrade = "지원하지 않는 학년 "
+				
+				description = str(uschool) + str(ugrade) + str(uclass)
 	
-
-	except:
-		print("error")
-	
-	description = str(uschool) + str(ugrade) + str(uclass)
-	
-	responesebody = {
+				responesebody = {
   "version": "2.0",
   "template": {
 	"outputs": [
@@ -358,7 +354,39 @@ def class1():
 	]
   }
 }
-	return responesebody
+				return responesebody
+	
+
+	except:
+		responesebody = {
+  "version": "2.0",
+  "template": {
+	"outputs": [
+	  {
+		"textCard": {
+		  "title": "입력한 정보가 맞는지 확인해 주세요",
+		  "description": "오류 발생, 아니에요 버튼을 눌러 다시 확인해 주세요",
+		"buttons": [
+			{
+			  "action": "block",
+			  "label": "맞아요!",
+			  "blockId" : "65faaca1a64303558477aa63"
+			},
+			{
+			  "action": "block",
+			  "label": "아니에요",
+			  "blockId" : "65faa5ef091618695a7fee9c"
+			}
+		]
+		}
+		  
+	  }
+	]
+  }
+}
+	
+	
+		return responesebody
 
 @app.route('/check', methods = ['POST'])
 def check():
