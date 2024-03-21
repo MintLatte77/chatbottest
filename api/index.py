@@ -183,18 +183,19 @@ def grade():
 	body = request.get_json()
 	usergrade = body['userRequest']['utterance']
 	userID = body['userRequest']['user']['id']
-	useridtable = userIdData.all(formula=match({"userID":userID}))
-	id1 = useridtable[0]['id']
-	for a in table.all():
-		if id1 == a['id']:
-			if usergrade == "1학년":
-				table.update(id1, {"gradecode": 1}, replace=True)
-			elif userschool == "2학년":
-				table.update(id1, {"gradecode": 2}, replace=True)
-			elif userschool == "3학년":
-				table.update(id1, {"gradecode": 3}, replace=True)
-			else:
-				table.update(id1, {"gradecode": 0}, replace=True)
+	try:
+		useridtable = userIdData.all(formula=match({"userID":userID}))
+		id1 = useridtable[0]['id']
+		for a in table.all():
+			if id1 == a['id']:
+				if usergrade == "1학년":
+					table.update(id1, {"gradecode": 1}, replace=True)
+				elif userschool == "2학년":
+					table.update(id1, {"gradecode": 2}, replace=True)
+				elif userschool == "3학년":
+					table.update(id1, {"gradecode": 3}, replace=True)
+				else:
+					table.update(id1, {"gradecode": 0}, replace=True)
 	
 	responesebody = {
   "version": "2.0",
