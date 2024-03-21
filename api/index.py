@@ -327,7 +327,7 @@ def class1():
 			description = str(uschool) + str(ugrade) + str(uclass)
 			print(description)
 	
-				responesebody = {
+			responesebody = {
   "version": "2.0",
   "template": {
 	"outputs": [
@@ -353,7 +353,7 @@ def class1():
 	]
   }
 }
-				return responesebody
+			return responesebody
 	
 
 	except:
