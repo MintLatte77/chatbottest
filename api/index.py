@@ -91,12 +91,12 @@ def agree2():
 	try:
 		useridtable = userIdData.all(formula=match({"userID":userID}))
 	except:
-		Newdata = {'userId': userId, 'schoolcode': "E", 'gradecode': 0, 'gradecode': 0}
+		Newdata = {'userId': userID, 'schoolcode': "E", 'gradecode': 0, 'gradecode': 0}
 		userIdData.create(Newdata)
 		print(Newdata)
 
 	if useridtable == 0 or useridtable == "false" or useridtable == "" or useridtable == "NaN" or useridtable == []:
-		Newdata = {'userId': userId, 'schoolcode': "E", 'gradecode': 0, 'gradecode': 0}
+		Newdata = {'userId': userID, 'schoolcode': "E", 'gradecode': 0, 'gradecode': 0}
 		userIdData.create(Newdata)
 		print(Newdata)
 	
