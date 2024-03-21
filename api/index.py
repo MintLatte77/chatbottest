@@ -149,8 +149,12 @@ def school():
   "template": {
 	"outputs": [
 	  {
-		"textCard": {
-		  "title": "학년을 입력해 주세요"
+		"basicCard": {
+		  "title": "학년을 입력해 주세요",
+		  "thumbnail": {
+				"imageUrl": "https://cdn.discordapp.com/attachments/1021364751541997659/1219962349981798431/253206e9ece97e04.png?ex=660d357a&is=65fac07a&hm=7849e04bb18f371d63d376a6b1f64f434683fe9b433dd5cd770167a8d5a58716&"
+}
+
 		} 
 	  }
 	],
@@ -202,8 +206,11 @@ def grade():
   "template": {
 	"outputs": [
 	  {
-		"textCard": {
-		  "title": "반을 입력해 주세요"
+		"basicCard": {
+		  "title": "반을 입력해 주세요",
+"thumbnail": {
+				"imageUrl": "https://cdn.discordapp.com/attachments/1021364751541997659/1219962349981798431/253206e9ece97e04.png?ex=660d357a&is=65fac07a&hm=7849e04bb18f371d63d376a6b1f64f434683fe9b433dd5cd770167a8d5a58716&"
+		  }
 		} 
 	  }
 	],
@@ -212,64 +219,55 @@ def grade():
 		"messageText": "1반",
 		"action": "block",
 		"label": "1반",
-		"blockId": "65faa630d7cbb10c92facd52",
-		"extra" : usergrade + "1"
+		"blockId": "65faa630d7cbb10c92facd52"
 	  },
 	{
 		"messageText": "2반",
 		"action": "block",
 		"label": "2반",
-		"blockId": "65faa630d7cbb10c92facd52",
-		"extra" : usergrade + "2"
+		"blockId": "65faa630d7cbb10c92facd52"
 	  },
 	{
 		"messageText": "3반",
 		"action": "block",
 		"label": "3반",
-		"blockId": "65faa630d7cbb10c92facd52",
-		"extra" : usergrade + "3"
+		"blockId": "65faa630d7cbb10c92facd52"
 	  },
 	{
 		"messageText": "4반",
 		"action": "block",
 		"label": "4반",
-		"blockId": "65faa630d7cbb10c92facd52",
-		"extra" : usergrade + "4"
+		"blockId": "65faa630d7cbb10c92facd52"
 	  },
 	{
 		"messageText": "5반",
 		"action": "block",
 		"label": "5반",
-		"blockId": "65faa630d7cbb10c92facd52",
-		"extra" : usergrade + "5"
+		"blockId": "65faa630d7cbb10c92facd52"
 	  },
 	{
 		"messageText": "6반",
 		"action": "block",
 		"label": "6반",
-		"blockId": "65faa630d7cbb10c92facd52",
-		"extra" : usergrade + "6"
+		"blockId": "65faa630d7cbb10c92facd52"
 	  },
 	{
 		"messageText": "7반",
 		"action": "block",
 		"label": "7반",
-		"blockId": "65faa630d7cbb10c92facd52",
-		"extra" : usergrade + "7"
+		"blockId": "65faa630d7cbb10c92facd52"
 	  },
 	{
 		"messageText": "8반",
 		"action": "block",
 		"label": "8반",
-		"blockId": "65faa630d7cbb10c92facd52",
-		"extra" : usergrade + "8"
+		"blockId": "65faa630d7cbb10c92facd52"
 	  },
 	{
 		"messageText": "9반",
 		"action": "block",
 		"label": "9반",
-		"blockId": "65faa630d7cbb10c92facd52",
-		"extra" : usergrade + "9"
+		"blockId": "65faa630d7cbb10c92facd52"
 	  }
 	  
 	]
