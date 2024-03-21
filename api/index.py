@@ -131,17 +131,19 @@ def school():
 	body = request.get_json()
 	userschool = body['userRequest']['utterance']
 	userID = body['userRequest']['user']['id']
-	useridtable = userIdData.all(formula=match({"userID":userID}))
-	id1 = useridtable[0]['id']
-	for a in table.all():
-		if id1 == a['id']:
-			if userschool == "삼남중학교":
-				table.update(id1, {"schoolcode": "S"}, replace=True)
-			elif userschool == "언양고등학교":
-				table.update(id1, {"schoolcode": "E"}, replace=True)
-			else:
-				table.update(id1, {"schoolcode": "0"}, replace=True)
-	
+	try:
+		useridtable = userIdData.all(formula=match({"userID":userID}))
+		id1 = useridtable[0]['id']
+		for a in table.all():
+			if id1 == a['id']:
+				if userschool == "삼남중학교":
+					table.update(id1, {"schoolcode": "S"}, replace=True)
+				elif userschool == "언양고등학교":
+					table.update(id1, {"schoolcode": "E"}, replace=True)
+				else:
+					table.update(id1, {"schoolcode": "0"}, replace=True)
+	except:
+		print('error')
 	responesebody = {
   "version": "2.0",
   "template": {
