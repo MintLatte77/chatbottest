@@ -27,7 +27,6 @@ weeklist = {'0':'일','1':'월','2':'화','3':'수','4':'목','5':'금','6':'토
 timetabledict = {'월1사회2': '박경환 | 2301(1-5)', '월2체육': '강정현 | 6201(강당)', '월3미술': '이창열 | 3202(미술실)', '월4영어2': '이은정 | 2301(1-5)', '월5수학': '김효정 | 2301(1-5)', '월6한국사1': '윤선희 | 2301(1-5)', '월7정보': '이상옥 | 4201(SW융합실)', '화1한국사2': '김태경 | 2301(1-5)', '화2과학2': '이정미 | 2402(생물과학실)', '화3국어2': '남원정 | 2301(1-5)', '화4사회1': '권민호 | 2301(1-5)', '화5국어1': '김성은 | 2301(1-5)', '화6영어2': '이은정 | 2301(1-5)', '화7체육': '강정현 | 6201(강당)', '수1미술': '이창열 | 3202(미술실)', '수2수학': '김효정 | 2301(1-5)', '수3과학3': '이정미 | 2402(생물과학실)', '수4국어2': '남원정 | 2301(1-5)', '수5직업': '장지연 | 2404(진로실)', '수6진로': '남원정 | 2301(1-5)', '수7오늘은 7교시가 없어요':' - ','목1사회3': '박정호 | 2301(1-5)', '목2정보': '이상옥 | 4201(SW융합실)', '목3과학실험': '김명귀 | 2403(화학실험실)', '목4영어1': '신지현 | 2301(1-5)', '목5예술1': '이창열 | 3202(미술실)', '목6수학': '김효정 | 2301(1-5)', '목7국어1': '김성은 | 2301(1-5)', '금1수학': '김효정 | 2301(1-5)', '금2한국사2': '김태경 | 2301(1-5)', '금3영어1': '신지현 | 2301(1-5)', '금4과학1': '김명귀 | 2301(1-5)', '금5자율': '', '금6동아리': '', '금7여유': ''}
 timetablelist = []
 teacherlist = []
-description = ""
 
 
 airtable_token = os.environ.get('Airtable_Key')
@@ -139,11 +138,11 @@ def school():
 		for a in table.all():
 			if id1 == a['id']:
 				if userschool == "삼남중학교":
-					table.update(id1, {"schoolcode": "S"}, replace=True)
+					userIdData.update(id1, {"schoolcode": "S"}, replace=True)
 				elif userschool == "언양고등학교":
-					table.update(id1, {"schoolcode": "E"}, replace=True)
+					userIdData.update(id1, {"schoolcode": "E"}, replace=True)
 				else:
-					table.update(id1, {"schoolcode": "0"}, replace=True)
+					userIdData.update(id1, {"schoolcode": "0"}, replace=True)
 	except:
 		print('error')
 	responesebody = {
@@ -192,16 +191,16 @@ def grade():
 	try:
 		useridtable = userIdData.all(formula=match({"userID":userID}))
 		id1 = useridtable[0]['id']
-		for a in table.all():
+		for a in userIdData.all():
 			if id1 == a['id']:
 				if usergrade == "1학년":
-					table.update(id1, {"gradecode": 1}, replace=True)
+					userIdData.update(id1, {"gradecode": 1}, replace=True)
 				elif userschool == "2학년":
-					table.update(id1, {"gradecode": 2}, replace=True)
+					userIdData.update(id1, {"gradecode": 2}, replace=True)
 				elif userschool == "3학년":
-					table.update(id1, {"gradecode": 3}, replace=True)
+					userIdData.update(id1, {"gradecode": 3}, replace=True)
 				else:
-					table.update(id1, {"gradecode": 0}, replace=True)
+					userIdData.update(id1, {"gradecode": 0}, replace=True)
 	except:
 		print("error")
 	responesebody = {
@@ -280,37 +279,36 @@ def grade():
 
 @app.route('/class1', methods = ['POST'])
 def class1():
-	global userIdData
 	body = request.get_json()
 	userclass = body['userRequest']['utterance']
 	userID = body['userRequest']['user']['id']
 	try:
 		useridtable = userIdData.all(formula=match({"userID":userID}))
 		id1 = useridtable[0]['id']
-		for a in table.all():
+		for a in userIdData.all():
 			if id1 == a['id']:
 				data = a['fields']
-				userclass = class1
+				class1 = userclass
 				if userclass == "1반":
-					table.update(id1, {"classcode": 1}, replace=True)
+					userIdData.update(id1, {"classcode": 1}, replace=True)
 				elif userclass == "2반":
-					table.update(id1, {"classcode": 2}, replace=True)
+					userIdData.update(id1, {"classcode": 2}, replace=True)
 				elif userclass == "3반":
-					table.update(id1, {"classcode": 3}, replace=True)
+					userIdData.update(id1, {"classcode": 3}, replace=True)
 				elif userclass == "4반":
-					table.update(id1, {"classcode": 4}, replace=True)
+					userIdData.update(id1, {"classcode": 4}, replace=True)
 				elif userclass == "5반":
-					table.update(id1, {"classcode": 5}, replace=True)
+					userIdData.update(id1, {"classcode": 5}, replace=True)
 				elif userclass == "6반":
-					table.update(id1, {"classcode": 6}, replace=True)
+					userIdData.update(id1, {"classcode": 6}, replace=True)
 				elif userclass == "7반":
-					table.update(id1, {"classcode": 7}, replace=True)
+					userIdData.update(id1, {"classcode": 7}, replace=True)
 				elif userclass == "8반":
-					table.update(id1, {"classcode": 8}, replace=True)
+					userIdData.update(id1, {"classcode": 8}, replace=True)
 				elif userclass == "9반":
-					table.update(id1, {"classcode": 9}, replace=True)
+					userIdData.update(id1, {"classcode": 9}, replace=True)
 				else:
-					table.update(id1, {"classcode": 0}, replace=True)
+					userIdData.update(id1, {"classcode": 0}, replace=True)
 
 				if data['schoolcode'] == "S":
 					school = "삼남중학교 "
@@ -327,11 +325,12 @@ def class1():
 					grade = "3학년 "
 				else:
 					grade = "지원하지 않는 학년 "
-				description = str(school) + str(grade) + str(class1)
+	
 
 	except:
 		print("error")
 	
+	description = str(school) + str(grade) + str(class1)
 	
 	responesebody = {
   "version": "2.0",
