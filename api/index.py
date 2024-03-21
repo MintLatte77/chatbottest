@@ -90,7 +90,7 @@ def agree2():
 	useridtable = userIdData.all(formula=match({"userID":userID}))
 	if useridtable == []:
 		userIdstr = str(userID)
-		userIdData.create({'userIdcode':userIdstr})
+		userIdData.create({'userId':userIdstr})
 	
 	
 	responesebody = {
