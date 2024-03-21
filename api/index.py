@@ -195,13 +195,13 @@ def grade():
 		for a in userIdData.all():
 			if id1 == a['id']:
 				if usergrade == "1학년":
-					userIdData.update(id1, {"gradecode": 1}, replace=True)
+					userIdData.update(id1, {"gradecode": 1})
 				elif userschool == "2학년":
-					userIdData.update(id1, {"gradecode": 2}, replace=True)
+					userIdData.update(id1, {"gradecode": 2})
 				elif userschool == "3학년":
-					userIdData.update(id1, {"gradecode": 3}, replace=True)
+					userIdData.update(id1, {"gradecode": 3})
 				else:
-					userIdData.update(id1, {"gradecode": 0}, replace=True)
+					userIdData.update(id1, {"gradecode": 0})
 	responesebody = {
   "version": "2.0",
   "template": {
@@ -288,25 +288,25 @@ def class1():
 			data = a['fields']
 			uclass = userclass
 			if userclass == "1반":
-				userIdData.update(id1, {"classcode": 1}, replace=True)
+				userIdData.update(id1, {"classcode": 1})
 			elif userclass == "2반":
-				userIdData.update(id1, {"classcode": 2}, replace=True)
+				userIdData.update(id1, {"classcode": 2})
 			elif userclass == "3반":
-				userIdData.update(id1, {"classcode": 3}, replace=True)
+				userIdData.update(id1, {"classcode": 3})
 			elif userclass == "4반":
-				userIdData.update(id1, {"classcode": 4}, replace=True)
+				userIdData.update(id1, {"classcode": 4})
 			elif userclass == "5반":
-				userIdData.update(id1, {"classcode": 5}, replace=True)
+				userIdData.update(id1, {"classcode": 5})
 			elif userclass == "6반":
-				userIdData.update(id1, {"classcode": 6}, replace=True)
+				userIdData.update(id1, {"classcode": 6})
 			elif userclass == "7반":
-				userIdData.update(id1, {"classcode": 7}, replace=True)
+				userIdData.update(id1, {"classcode": 7})
 			elif userclass == "8반":
-				userIdData.update(id1, {"classcode": 8}, replace=True)
+				userIdData.update(id1, {"classcode": 8})
 			elif userclass == "9반":
-				userIdData.update(id1, {"classcode": 9}, replace=True)
+				userIdData.update(id1, {"classcode": 9})
 			else:
-				userIdData.update(id1, {"classcode": 0}, replace=True)
+				userIdData.update(id1, {"classcode": 0})
 
 			if data['schoolcode'] == "S":
 				uschool = "삼남중학교 "
