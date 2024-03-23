@@ -567,7 +567,7 @@ def timetable():
 	  {
 		"itemCard":{
 			  "head": {
-				"title": date + " 시간표" 
+				"title": "1학년 5반 " + date + " 시간표" 
 			  	},
 			  	"itemList": [
 				{
@@ -632,7 +632,7 @@ def timetable():
 	  {
 		"itemCard":{
 			  "head": {
-				"title": date + " 시간표" 
+				"title": user_grade_code + "학년 " + user_class_code + "반 " + date + " 시간표" 
 			  	},
 			  	"itemList": [
 				{
