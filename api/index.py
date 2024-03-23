@@ -603,9 +603,9 @@ def timetable():
 				else:
 					print("Not 1-5")
 					if NEIStime == "https://open.neis.go.kr/hub/hisTimetable":
-						numb = contents['hisTimetable'][1]['head'][0]['list_total_count']
+						numb = contents['hisTimetable'][0]['head'][0]['list_total_count']
 					else:
-						numb = contents['hisTimetable'][1]['head'][0]['list_total_count']
+						numb = contents['hisTimetable'][0]['head'][0]['list_total_count']
 					print(numb)
 					numb7 = 7 - int(numb)
 
