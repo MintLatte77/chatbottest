@@ -92,18 +92,19 @@ def agree2():
 		print(useridtable)
 		olderid = useridtable[0]['fields']['userID']
 		id1 = useridtable[0]['id']
+		if useridtable == 0 or useridtable == "false" or useridtable == "" or useridtable == "NaN" or useridtable == []:
+			Newdata = {'userID': userID, 'schoolcode': "N", 'gradecode': 0, 'classcode': 0}
+			userIdData.create(Newdata)
+			print(Newdata)
+		elif userID == olderid:
+			userIdData.update(id1, {'userID': userID, 'schoolcode': "N", 'gradecode': 0, 'classcode': 0}, replace=True)
+			print(olderid + " Updated!")
 	except:
 		Newdata = {'userID': userID, 'schoolcode': "N", 'gradecode': 0, 'classcode': 0}
 		userIdData.create(Newdata)
 		print(Newdata)
 
-	if useridtable == 0 or useridtable == "false" or useridtable == "" or useridtable == "NaN" or useridtable == []:
-		Newdata = {'userID': userID, 'schoolcode': "N", 'gradecode': 0, 'classcode': 0}
-		userIdData.create(Newdata)
-		print(Newdata)
-	elif userID == olderid:
-		userIdData.update(id1, {'userID': userID, 'schoolcode': "N", 'gradecode': 0, 'classcode': 0}, replace=True)
-		print(olderid + " Updated!")
+
 	
 	responesebody = {
   "version": "2.0",
