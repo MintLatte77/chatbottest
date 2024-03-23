@@ -519,26 +519,25 @@ def timetable():
 			
 			if find == -1:
 				if NEIStime == "https://open.neis.go.kr/hub/hisTimetable":
-					time = contents['hisTimetable'][1]['row']
+					if  week = 3:
+						timenumb = 6
+					else:
+						timenumb = 7
+
+					for n in range(0,timenumb):
+						try:
+							timecheck = int(a[n]['PERIO'])
+						except:
+							timecheck = 0
+	
+						if not(timecheck == n + 1):
+							timetablelist.append('선택')
+						else:
+							timetablelist.append(a['ITRT_CNTNT'])
+				
 				elif NEIStime == "https://open.neis.go.kr/hub/misTimetable":
 					time = contents['misTimetable'][1]['row']
-				
-				if NEIStime == "https://open.neis.go.kr/hub/hisTimetable" and week = 3:
-					timenumb = 6
-				elif NEIStime == "https://open.neis.go.kr/hub/hisTimetable" and not(week = 3):
-					timenumb = 7
-
-
-				
-				for n in range(0,timenumb):
-					try:
-						timecheck = int(a[n]['PERIO'])
-					except:
-						timecheck = 0
-
-					if not(timecheck == n + 1):
-						timetablelist.append('선택')
-					else:
+					for a in time:
 						timetablelist.append(a['ITRT_CNTNT'])
 			
 
