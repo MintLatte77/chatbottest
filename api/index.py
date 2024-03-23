@@ -466,6 +466,7 @@ def timetable():
 		}
 	}
 		else:
+			n = 1
 			print("Find Info")
 			print(useridtable)
 			for a in userIdData.all():
@@ -520,9 +521,17 @@ def timetable():
 					time = contents['hisTimetable'][1]['row']
 				elif NEIStime == "https://open.neis.go.kr/hub/misTimetable":
 					time = contents['misTimetable'][1]['row']
-
 				for a in time:
-					timetablelist.append(a['ITRT_CNTNT'])
+					try:
+						timecheck = int(a['PERIO'])
+					except:
+						timecheck = 0
+
+					if timecheck == n:
+						timetablelist.append(a['ITRT_CNTNT'])
+					else:
+						timetablelist.append('선택')
+					n += 1
 			
 			weekstr = str(week)
 			weekday = weeklist.get(weekstr, "월요")
