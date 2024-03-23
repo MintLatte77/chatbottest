@@ -618,8 +618,10 @@ def timetable():
 					
 					if not(numb7 == 0):
 						for a in numb7:
-							timecode = str(8 - a)
-							timetablelist.append("오늘은 " + timecode + "교시가 없어요")
+							timecode = str(numb + a)
+							app = "오늘은 " + timecode + "교시가 없어요"
+							print(app)
+							timetablelist.append(app)
 				
 					print(timetablelist)
 					responseBody = {
