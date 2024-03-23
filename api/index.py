@@ -507,7 +507,7 @@ def timetable():
 			contents = response.json()
 			print(contents)
 			findtext = response.text
-
+			timenum = 0
 			
 
 			#시간표 미제공 날짜 구별
@@ -516,9 +516,11 @@ def timetable():
 
 			weekstr = str(week)
 			weekday = weeklist.get(weekstr, "월요")
+
 			
 			if find == -1:
 				if NEIStime == "https://open.neis.go.kr/hub/hisTimetable":
+					time = contents['hisTimetable'][1]['row']
 					if  week == 3:
 						timenumb = 6
 					else:
@@ -526,14 +528,16 @@ def timetable():
 
 					for n in range(0,timenumb):
 						try:
-							timecheck = int(a[n]['PERIO'])
+							timecheck = int(time[timenum]['PERIO'])
 						except:
 							timecheck = 0
 	
 						if not(timecheck == n + 1):
 							timetablelist.append('선택')
 						else:
-							timetablelist.append(a['ITRT_CNTNT'])
+							timetablelist.append(time[timenum]['ITRT_CNTNT'])
+							timenum += 1
+							
 				
 				elif NEIStime == "https://open.neis.go.kr/hub/misTimetable":
 					time = contents['misTimetable'][1]['row']
@@ -629,7 +633,7 @@ def timetable():
 				else:
 					print("Not 1-5")
 					if NEIStime == "https://open.neis.go.kr/hub/hisTimetable":
-						numb = contents['hisTimetable'][0]['head'][0]['list_total_count']
+						numb = timenum + 1
 					else:
 						numb = contents['misTimetable'][0]['head'][0]['list_total_count']
 					print(numb)
