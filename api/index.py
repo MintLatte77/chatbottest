@@ -452,7 +452,12 @@ def timetable():
 			  					"action": "webLink",
 			  					"label": "온라인 건의함",
 			  					"webLinkUrl": "https://m.site.naver.com/1k4Sj"
-							}
+							},
+			{
+			  "action": "message",
+			  "label": "사용자 등록하기",
+			  "messageText": "사용자 등록하기"
+			}
 									]
 								}
 				}
@@ -678,7 +683,12 @@ def timetable():
 			  					"action": "webLink",
 			  					"label": "온라인 건의함",
 			  					"webLinkUrl": "https://m.site.naver.com/1k4Sj"
-							}
+							},
+			{
+			  "action": "message",
+			  "label": "사용자 등록하기",
+			  "messageText": "사용자 등록하기"
+			}
 									]
 								}
 				}
@@ -735,11 +745,8 @@ def service():
 				meal ="\n".join(content.split('<br/>'))
 			else:
 				meal = "오늘은 급식이 없어요!"
-					
-	except:
-		meal = "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요."
 
-	responseBody = {
+			responseBody = {
 		"version": "2.0",
 		"template": {
 			"outputs": [
@@ -753,6 +760,35 @@ def service():
 			  					"label": "온라인 건의함",
 			  					"webLinkUrl": "https://m.site.naver.com/1k4Sj"
 							}
+									]
+								}
+				}
+						]
+		}
+	}
+					
+	except:
+		meal = "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요."
+
+		responseBody = {
+		"version": "2.0",
+		"template": {
+			"outputs": [
+				{
+					"textCard": {
+		  				"title": date + " 오늘의 급식",
+		  				"description": meal ,
+		  				"buttons": [
+							{
+			  					"action": "webLink",
+			  					"label": "온라인 건의함",
+			  					"webLinkUrl": "https://m.site.naver.com/1k4Sj"
+							},
+			{
+			  "action": "message",
+			  "label": "사용자 등록하기",
+			  "messageText": "사용자 등록하기"
+			}
 									]
 								}
 				}
