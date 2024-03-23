@@ -162,7 +162,7 @@ def school():
 		"basicCard": {
 		  "title": "학년을 입력해 주세요",
 		  "thumbnail": {
-				"imageUrl": "https://cdn.discordapp.com/attachments/1021364751541997659/1219962349981798431/253206e9ece97e04.png?ex=660d357a&is=65fac07a&hm=7849e04bb18f371d63d376a6b1f64f434683fe9b433dd5cd770167a8d5a58716&"
+				"imageUrl": "https://cdn.discordapp.com/attachments/1021364751541997659/1221000642148040714/57fb83ef84578e09.png?ex=6610fc76&is=65fe8776&hm=bb260ef938a1bb6b49e575f2eb93cc6eed7e0c78710b93dd3ae44b15186b4fee&"
 }
 
 		} 
@@ -219,7 +219,7 @@ def grade():
 		"basicCard": {
 		  "title": "반을 입력해 주세요",
 "thumbnail": {
-				"imageUrl": "https://cdn.discordapp.com/attachments/1021364751541997659/1219962349981798431/253206e9ece97e04.png?ex=660d357a&is=65fac07a&hm=7849e04bb18f371d63d376a6b1f64f434683fe9b433dd5cd770167a8d5a58716&"
+				"imageUrl": "https://cdn.discordapp.com/attachments/1021364751541997659/1221000654944735323/26087c387327723a.png?ex=6610fc79&is=65fe8779&hm=7146b0b50cae00c853f129746ea8e27400348a76042c924b1bb82781d608e129&"
 		  }
 		} 
 	  }
