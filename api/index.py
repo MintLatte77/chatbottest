@@ -711,7 +711,6 @@ def service():
 	try:
 		useridtable = userIdData.all(formula=match({"userID":userID}))
 		print(useridtable)
-		olderid = useridtable[0]['fields']['userID']
 		id1 = useridtable[0]['id']
 		if useridtable == 0 or useridtable == "false" or useridtable == "" or useridtable == "NaN" or useridtable == []:
 			meal = "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요."
@@ -720,7 +719,7 @@ def service():
 				if id1 == a['id']:
 					data = a['fields']
 					if data['schoolcode'] == "S":
-						school_codeS = '7501030'
+						user_school_code = '7501030'
 					elif data['schoolcode'] == "E":
 						user_school_code = '7480188'
 					else:
