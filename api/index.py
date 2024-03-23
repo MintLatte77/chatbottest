@@ -192,6 +192,7 @@ def grade():
 	usergrade = body['userRequest']['utterance']
 	userID = body['userRequest']['user']['id']
 	useridtable = userIdData.all(formula=match({"userID":userID}))
+	print(useridtable)
 	id1 = useridtable[0]['id']
 	for a in userIdData.all():
 		if id1 == a['id']:
@@ -317,11 +318,11 @@ def class1():
 				else:
 					uschool = "지원하지 않는 학교 "
 
-				if data['gradecode'] == "1":
+				if data['gradecode'] == 1:
 					ugrade = "1학년 "
-				elif data['gradecode'] == "2":
+				elif data['gradecode'] == 2:
 					ugrade = "2학년 "
-				elif data['gradecode'] == "3":
+				elif data['gradecode'] == 3:
 					ugrade = "3학년 "
 				else:
 					ugrade = "지원하지 않는 학년 "
