@@ -459,6 +459,7 @@ def timetable():
 		}
 	}
 		else:
+			print("Find Info")
 			for a in userIdData.all():
 				if id1 == a['id']:
 					data = a['fields']
