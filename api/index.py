@@ -559,7 +559,7 @@ def timetable():
 					teacherlist = []
 					passing_timetable = {timetab: teacher for timetab, teacher in timetabledict.items() if not(timetab.find(weekday) == -1)}
 					for key in passing_timetable:
-						timetablelist.append(key[2:])
+						timetablelist.append(key[3:])
 	
 					for value in passing_timetable.values():
 						teacherlist.append(value)
