@@ -16,6 +16,7 @@ day = datetime_kst.strftime("%Y%m%d")
 date = str(int(datetime_kst.strftime("%m"))) + "월 "+ str(int(datetime_kst.strftime("%d"))) + "일"
 week = int(datetime_kst.strftime("%w"))
 
+
 # 환경변수/시간표 설정
 # table1 - 시간표
 NEISurl = "https://open.neis.go.kr/hub/mealServiceDietInfo"
@@ -429,6 +430,7 @@ def check():
 def timetable():
 	body = request.get_json()
 	userID = body['userRequest']['user']['id']
+	numb = 0
 	try:
 		useridtable = userIdData.all(formula=match({"userID":userID}))
 		print(useridtable)
