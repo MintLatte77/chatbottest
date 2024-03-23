@@ -459,10 +459,13 @@ def timetable():
 		}
 	}
 		else:
-			print("Find Info " + useridtable)
+			print("Find Info")
+			print(useridtable)
 			for a in userIdData.all():
+				print(a)
 				if id1 == a['id']:
 					data = a['fields']
+					print(data)
 					if data['schoolcode'] == "S":
 						user_school_code = '7501030'
 						NEIStime ="https://open.neis.go.kr/hub/misTimetable"
