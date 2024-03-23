@@ -525,14 +525,11 @@ def timetable():
 						numb += 1
 		
 				else: 
-					find = 0
+					find = 40
 					
 			
 			
 			if weekday == "일" or weekday == "토" or not(find == -1):
-				if descr == "":
-					descr = "오늘은 시간표가 없어요!"
-				
 				responseBody = {
 		"version": "2.0",
 		"template": {
@@ -540,7 +537,7 @@ def timetable():
 				{
 					"textCard": {
 		  				"title": date + " 시간표",
-		  				"description": descr ,
+		  				"description": "오늘은 시간표가 없어요!" ,
 		  				"buttons": [
 							{
 			  					"action": "webLink",
@@ -553,6 +550,7 @@ def timetable():
 						]
 		}
 	}
+				print(responseBody)
 			else:
 				print(timetablelist)
 				if user_school_code == "E" and str(user_grade_code) == '1' and str(user_class_code) == '5':
@@ -658,10 +656,7 @@ def timetable():
 	  }
 	]
 	}
-	}
-			
-		
-			
+	}			
 					
 	except:
 		print("Can't find info")
