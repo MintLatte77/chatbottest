@@ -431,7 +431,7 @@ def timetable():
 	body = request.get_json()
 	userID = body['userRequest']['user']['id']
 	numb = 0
-	try:
+	# try:
 		useridtable = userIdData.all(formula=match({"userID":userID}))
 		print(useridtable)
 		olderid = useridtable[0]['fields']['userID']
@@ -645,9 +645,9 @@ def timetable():
 		
 			
 					
-	except:
-		print("Can't find info")
-		responseBody = {
+	# except:
+		# print("Can't find info")
+		# responseBody = {
 		"version": "2.0",
 		"template": {
 			"outputs": [
