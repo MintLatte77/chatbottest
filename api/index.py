@@ -431,6 +431,7 @@ def timetable():
 	weekstr = str(week)
 	weekday = weeklist.get(weekstr, "월")
 	if weekday == "일" or weekday == "토":
+		descr = "오늘은 시간표가 없어요!"
 		responseBody = {
 		"version": "2.0",
 		"template": {
@@ -438,7 +439,7 @@ def timetable():
 				{
 					"textCard": {
 		  				"title": date + " 시간표"
-		  				"description": "오늘은 시간표가 없어요!" ,
+		  				"description": descr ,
 		  				"buttons": [
 							{
 			  					"action": "webLink",
