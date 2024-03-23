@@ -190,9 +190,9 @@ def grade():
 		if id1 == a['id']:
 			if usergrade == "1학년":
 				userIdData.update(id1, {"gradecode": 1})
-			elif userschool == "2학년":
+			elif usergrade == "2학년":
 				userIdData.update(id1, {"gradecode": 2})
-			elif userschool == "3학년":
+			elif usergrade == "3학년":
 				userIdData.update(id1, {"gradecode": 3})
 			else:
 				userIdData.update(id1, {"gradecode": 0})
