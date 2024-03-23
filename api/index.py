@@ -478,6 +478,7 @@ def timetable():
 					user_grade_code = data['gradecode']
 					user_class_code = data['classcode']
 					print(user_school_code + str(user_grade_code) + str(user_class_code))
+					break
 			
 			params = {
 			'KEY' : service_key,
@@ -496,6 +497,8 @@ def timetable():
 			response = requests.get(NEIStime, params=params)
 			contents = response.json()
 			findtext = response.text()
+
+			print(contents)
 
 			#시간표 미제공 날짜 구별
 			find = findtext.find('해당하는 데이터가 없습니다.')
