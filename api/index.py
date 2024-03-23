@@ -90,12 +90,12 @@ def agree2():
 	try:
 		useridtable = userIdData.all(formula=match({"userID":userID}))
 	except:
-		Newdata = {'userID': userID, 'schoolcode': "E", 'gradecode': 0, 'classcode': 0}
+		Newdata = {'userID': userID, 'schoolcode': "N", 'gradecode': 0, 'classcode': 0}
 		userIdData.create(Newdata)
 		print(Newdata)
 
 	if useridtable == 0 or useridtable == "false" or useridtable == "" or useridtable == "NaN" or useridtable == []:
-		Newdata = {'userID': userID, 'schoolcode': "E", 'gradecode': 0, 'classcode': 0}
+		Newdata = {'userID': userID, 'schoolcode': "N", 'gradecode': 0, 'classcode': 0}
 		userIdData.create(Newdata)
 		print(Newdata)
 	
@@ -138,6 +138,52 @@ def school():
 	userID = body['userRequest']['user']['id']
 	useridtable = userIdData.all(formula=match({"userID":userID}))
 	print(useridtable)
+	id1 = useridtable[0]['id']
+	for a in userIdData.all():
+		if id1 == a['id']:
+			if userschool == "삼남중학교":
+				userIdData.update(id1, {"schoolcode": "S"})
+			elif userschool == "언양고등학교":
+				userIdData.update(id1, {"schoolcode": "E"})
+			else:
+				userIdData.update(id1, {"schoolcode": "0"})
+	responesebody = {
+  "version": "2.0",
+  "template": {
+	"outputs": [
+	  {
+		"basicCard": {
+		  "title": "학년을 입력해 주세요",
+		  "thumbnail": {
+				"imageUrl": "https://cdn.discordapp.com/attachments/1021364751541997659/1219962349981798431/253206e9ece97e04.png?ex=660d357a&is=65fac07a&hm=7849e04bb18f371d63d376a6b1f64f434683fe9b433dd5cd770167a8d5a58716&"
+}
+
+		} 
+	  }
+	],
+	"quickReplies": [
+	  {
+		"messageText": "1학년",
+		"action": "block",
+		"label": "1학년",
+	"blockId": "65faa61da0a1dd2d9e02e80e"
+	  },
+	  {
+		"messageText": "2학년",
+		"action": "block",
+		"label": "2학년",
+		"blockId": "65faa61da0a1dd2d9e02e80e"
+	  },
+	{
+		"messageText": "3학년",
+		"action": "block",
+		"label": "3학년",
+		"blockId": "65faa61da0a1dd2d9e02e80e"
+	  }
+	]
+  }
+}
+	return responesebody
 	return useridtable
 
 @app.route('/grade', methods = ['POST'])
