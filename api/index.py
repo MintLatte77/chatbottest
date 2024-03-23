@@ -438,7 +438,7 @@ def timetable():
 			"outputs": [
 				{
 					"textCard": {
-		  				"title": date + " 시간표"
+		  				"title": date + " 시간표",
 		  				"description": descr ,
 		  				"buttons": [
 							{
