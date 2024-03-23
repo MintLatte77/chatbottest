@@ -476,10 +476,10 @@ def timetable():
 					else:
 						user_school_code = '7501030'
 						NEIStime ="https://open.neis.go.kr/hub/misTimetable"
-					user_grade_code = data['gradecode']
-					user_class_code = data['classcode']
+					user_grade_code = str(data['gradecode'])
+					user_class_code = str(data['classcode'])
 					break
-			print(user_school_code + str(user_grade_code) + str(user_class_code))
+			print(user_school_code + user_grade_code + user_class_cod))
 			
 			params = {
 			'KEY' : service_key,
@@ -491,8 +491,8 @@ def timetable():
 			'AY' : '2024',
 			'SEM' : '1',
 			'ALL_TI_YMD' : day,
-			'GRADE' : str(user_grade_code),
-			'CLASS_NM' : str(user_class_code)
+			'GRADE' : user_grade_code,
+			'CLASS_NM' : user_class_code
 			}
 
 			response = requests.get(NEIStime, params=params)
