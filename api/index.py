@@ -529,6 +529,7 @@ def timetable():
 					for n in range(0,timenumb):
 						try:
 							timecheck = int(time[timenum]['PERIO'])
+							print(timecheck)
 						except:
 							timecheck = 0
 	
@@ -537,6 +538,8 @@ def timetable():
 						else:
 							timetablelist.append(time[timenum]['ITRT_CNTNT'])
 							timenum += 1
+							print(timenum)
+						print(timatablelist)
 							
 				
 				elif NEIStime == "https://open.neis.go.kr/hub/misTimetable":
