@@ -519,7 +519,7 @@ def timetable():
 			
 			if find == -1:
 				if NEIStime == "https://open.neis.go.kr/hub/hisTimetable":
-					if  week = 3:
+					if  week == 3:
 						timenumb = 6
 					else:
 						timenumb = 7
