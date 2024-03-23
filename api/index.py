@@ -102,7 +102,7 @@ def agree2():
 		userIdData.create(Newdata)
 		print(Newdata)
 	elif userID == olderid:
-		userIdData.update(id1, {'schoolcode': "N", 'gradecode': 0, 'classcode': 0}, replace=True)
+		userIdData.update(id1, {'userID': userID, 'schoolcode': "N", 'gradecode': 0, 'classcode': 0}, replace=True)
 		print(olderid + " Updated!")
 	
 	responesebody = {
