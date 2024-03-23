@@ -562,6 +562,9 @@ def timetable():
 	
 					for value in passing_timetable.values():
 						teacherlist.append(value)
+
+					print(timetablelist)
+					print(teacherlist)
 					
 					responseBody = {
   "version": "2.0",
