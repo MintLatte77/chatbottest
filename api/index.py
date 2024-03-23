@@ -431,7 +431,7 @@ def timetable():
 	body = request.get_json()
 	userID = body['userRequest']['user']['id']
 	numb = 0
-	# try:
+	try:
 		useridtable = userIdData.all(formula=match({"userID":userID}))
 		print(useridtable)
 		olderid = useridtable[0]['fields']['userID']
@@ -473,6 +473,7 @@ def timetable():
 						NEIStime ="https://open.neis.go.kr/hub/misTimetable"
 					user_grade_code = data['gradecode']
 					user_class_code = data['classcode']
+					print(user_school_code + user_grade_code + user_class_code)
 			
 			params = {
 			'KEY' : service_key,
@@ -510,6 +511,7 @@ def timetable():
 		
 				else: 
 					find = 0
+			print(timetablelist)
 			weekstr = str(week)
 			weekday = weeklist.get(weekstr, "월")
 			if weekday == "일" or weekday == "토" or not(find == -1) or not(descr == ""):
@@ -595,7 +597,7 @@ def timetable():
 							numb += 1
 							timetablelist.append("오늘은 %d교시가 없어요!"%numb)
 				
-			
+						print(timetablelist)
 						responseBody = {
   "version": "2.0",
   "template": {
@@ -645,9 +647,9 @@ def timetable():
 		
 			
 					
-	# except:
-		# print("Can't find info")
-		# responseBody = {
+	except:
+		print("Can't find info")
+		responseBody = {
 		"version": "2.0",
 		"template": {
 			"outputs": [
