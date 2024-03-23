@@ -550,7 +550,7 @@ def timetable():
 				if user_school_code == "E" and user_grade_code == '1' and user_class_code == '5':
 					passing_timetable = {timetab: teacher for timetab, teacher in timetabledict.items() if not(timetab.find(weekday) == -1)}
 					for key in passing_timetable:
-							timetablelist.append(key[2:])
+						timetablelist.append(key[2:])
 	
 					for value in passing_timetable.values():
 						teacherlist.append(value)
@@ -601,6 +601,7 @@ def timetable():
 	}
 	}
 				else:
+					print("Not 1-5")
 					if NEIStime == "https://open.neis.go.kr/hub/hisTimetable":
 						numb = contents['hisTimetable'][1]['head'][0]['list_total_count']
 					else:
