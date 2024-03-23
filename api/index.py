@@ -434,8 +434,8 @@ def timetable():
 	try:
 		useridtable = userIdData.all(formula=match({"userID":userID}))
 		print(userIdData.all())
-		olderid = useridtable[0]['fields']['userID']
 		id1 = useridtable[0]['id']
+		print(id1)
 		if useridtable == 0 or useridtable == "false" or useridtable == "" or useridtable == "NaN" or useridtable == []:
 			print("Not Existed!")
 			responseBody = {
