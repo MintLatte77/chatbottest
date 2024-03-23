@@ -513,8 +513,9 @@ def timetable():
 			if find == -1:
 				if NEIStime == "https://open.neis.go.kr/hub/hisTimetable":
 					time = contents['hisTimetable'][1]['row']
-				else:
+				elif NEIStime == "https://open.neis.go.kr/hub/misTimetable":
 					time = contents['misTimetable'][1]['row']
+
 				for a in time:
 					timetablelist.append(a['ITRT_CNTNT'])
 		
@@ -603,7 +604,11 @@ def timetable():
 						numb = contents['hisTimetable'][1]['head'][0]['list_total_count']
 					else:
 						numb = contents['hisTimetable'][1]['head'][0]['list_total_count']
+					print(numb)
 					numb7 = 7 - int(numb)
+
+					print(numb7)
+					
 					if not(numb7 == 0):
 						for a in numb7:
 							timetablelist.append("오늘은 %d교시가 없어요"%a)
