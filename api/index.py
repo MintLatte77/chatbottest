@@ -19,10 +19,9 @@ week = int(datetime_kst.strftime("%w"))
 # 환경변수/시간표 설정
 # table1 - 시간표
 NEISurl = "https://open.neis.go.kr/hub/mealServiceDietInfo"
+
 service_key = os.environ.get('NEIS_Key')
 edu_code = 'H10'
-school_codeE = '7480188'
-school_codeS = '7501030'
 weeklist = {'0':'일','1':'월','2':'화','3':'수','4':'목','5':'금','6':'토'}
 timetabledict = {'월1사회2': '박경환 | 2301(1-5)', '월2체육': '강정현 | 6201(강당)', '월3미술': '이창열 | 3202(미술실)', '월4영어2': '이은정 | 2301(1-5)', '월5수학': '김효정 | 2301(1-5)', '월6한국사1': '윤선희 | 2301(1-5)', '월7정보': '이상옥 | 4201(SW융합실)', '화1한국사2': '김태경 | 2301(1-5)', '화2과학2': '이정미 | 2402(생물과학실)', '화3국어2': '남원정 | 2301(1-5)', '화4사회1': '권민호 | 2301(1-5)', '화5국어1': '김성은 | 2301(1-5)', '화6영어2': '이은정 | 2301(1-5)', '화7체육': '강정현 | 6201(강당)', '수1미술': '이창열 | 3202(미술실)', '수2수학': '김효정 | 2301(1-5)', '수3과학3': '이정미 | 2402(생물과학실)', '수4국어2': '남원정 | 2301(1-5)', '수5직업': '장지연 | 2404(진로실)', '수6진로': '남원정 | 2301(1-5)', '수7오늘은 7교시가 없어요':' - ','목1사회3': '박정호 | 2301(1-5)', '목2정보': '이상옥 | 4201(SW융합실)', '목3과학실험': '김명귀 | 2403(화학실험실)', '목4영어1': '신지현 | 2301(1-5)', '목5예술1': '이창열 | 3202(미술실)', '목6수학': '김효정 | 2301(1-5)', '목7국어1': '김성은 | 2301(1-5)', '금1수학': '김효정 | 2301(1-5)', '금2한국사2': '김태경 | 2301(1-5)', '금3영어1': '신지현 | 2301(1-5)', '금4과학1': '김명귀 | 2301(1-5)', '금5자율': '', '금6동아리': '', '금7여유': ''}
 timetablelist = []
@@ -66,7 +65,7 @@ def agree1():
 	  {
 		"textCard": {
 		  "title": "개인정보 수집 및 이용 동의서",
-		  "description": "\'오늘 급식 뭐임\'(이하 \'서비스\')은 급식, 시간표, 학사 일정 확인 등을 위해 「개인정보 보호법」 제 15조 1항에 따라 보유 기간(25년 2월 28일)까지 사용자의 개인정보(사용자 ID, 학교, 학년, 반)를 수집 및 이용합니다. 사용자는 서비스 이용에 필요한 최소한의 개인정보 수집 및 이용에 동의하지 않을 수 있으나, 동의를 거부 할 경우 서비스 이용이 불가합니다.\n아래 동의 버튼 클릭 시 해당 내용에 동의한 것으로 간주됩니다.",
+		  "description": "\'오늘 급식 뭐임\'(이하 \'서비스\')은 급식, 시간표, 학사 일정 확인 등을 위해 「개인정보 보호법」 제 15조 1항에 따라 보유 기간(25년 2월 28일)까지 사용자의 개인정보(암호화된 사용자 ID, 학교, 학년, 반)를 수집 및 이용합니다. 사용자는 서비스 이용에 필요한 최소한의 개인정보 수집 및 이용에 동의하지 않을 수 있으나, 동의를 거부 할 경우 서비스 이용이 불가합니다.\n아래 동의 버튼 클릭 시 해당 내용에 동의한 것으로 간주됩니다.",
 		"buttons": [
 			{
 			  "action": "block",
@@ -428,10 +427,78 @@ def check():
 
 @app.route('/timetable', methods = ["POST"])
 def timetable():
+	body = request.get_json()
+	userID = body['userRequest']['user']['id']
+	try:
+		useridtable = userIdData.all(formula=match({"userID":userID}))
+		print(useridtable)
+		olderid = useridtable[0]['fields']['userID']
+		id1 = useridtable[0]['id']
+		if useridtable == 0 or useridtable == "false" or useridtable == "" or useridtable == "NaN" or useridtable == []:
+			descr = "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요."
+		else:
+			for a in userIdData.all():
+				if id1 == a['id']:
+					data = a['fields']
+					if data['schoolcode'] == "S":
+						user_school_code = '7501030'
+						NEIStime ="https://open.neis.go.kr/hub/misTimetable"
+					elif data['schoolcode'] == "E":
+						user_school_code = '7480188'
+						NEIStime = "https://open.neis.go.kr/hub/hisTimetable"
+					else:
+						user_school_code = '7501030'
+						NEIStime ="https://open.neis.go.kr/hub/misTimetable"
+					user_grade_code = data['gradecode']
+					user_class_code = data['classcode']
+			
+			params = {
+			'KEY' : service_key,
+			'Type' : 'json',
+			'pIndex' : '1',
+			'pSize' : '100',
+			'ATPT_OFCDC_SC_CODE' : edu_code,
+			'SD_SCHUL_CODE' : user_school_code,
+			'AY' : '2024',
+			'SEM' : '1',
+			'ALL_TI_YMD' : day,
+			'GRADE' : user_grade_code,
+			'CLASS_NM' : user_class_code
+			}
+
+			response = requests.get(NEIStime, params=params)
+			contents = response.json()
+			findtext = response.text()
+
+			#시간표 미제공 날짜 구별
+			find = findtext.find('해당하는 데이터가 없습니다.')
+	
+			if find == -1:
+				if NEIStime == "https://open.neis.go.kr/hub/hisTimetable" :
+					time = contents['hisTimetable'][1]['row']
+					for a in time:
+   					 	timetablelist.append(a['ITRT_CNTNT'])
+						numb = numb + 1
+					
+				elif NEIStime == "https://open.neis.go.kr/hub/misTimetable":
+					time = contents['misTimetable'][1]['row']
+					for a in time:
+   					 	timetablelist.append(a['ITRT_CNTNT'])
+						numb = numb + 1
+		
+				else: 
+					find = 0
+			
+					
+	except:
+		 descr = "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요."
+	
 	weekstr = str(week)
 	weekday = weeklist.get(weekstr, "월")
-	if weekday == "일" or weekday == "토":
-		descr = "오늘은 시간표가 없어요!"
+	if weekday == "일" or weekday == "토" or not(find == -1) or not(descr == ""):
+		if descr == "":
+			descr = "오늘은 시간표가 없어요!"
+		
 		responseBody = {
 		"version": "2.0",
 		"template": {
@@ -453,13 +520,14 @@ def timetable():
 		}
 	}
 	else:
-		passing_timetable = {timetab: teacher for timetab, teacher in timetabledict.items() if not(timetab.find(weekday) == -1)}
-		for key in passing_timetable:
-			timetablelist.append(key[2:])
+		if user_school_code == "E" and str(user_grade_code) == '1' and str(user_class_code) == '5':
+			passing_timetable = {timetab: teacher for timetab, teacher in timetabledict.items() if not(timetab.find(weekday) == -1)}
+			for key in passing_timetable:
+				timetablelist.append(key[2:])
 	
-		for value in passing_timetable.values():
-			teacherlist.append(value)
-		responseBody = {
+			for value in passing_timetable.values():
+				teacherlist.append(value)
+			responseBody = {
   "version": "2.0",
   "template": {
 	"outputs": [
@@ -504,34 +572,113 @@ def timetable():
 	]
 	}
 	}
+		else:
+			numb7 = 7 - numb
+			for a in num7:
+				numb = numb + 1
+				timetablelist.append("오늘은 %d교시가 없어요!"%numb)
+				
+			
+			responseBody = {
+  "version": "2.0",
+  "template": {
+	"outputs": [
+	  {
+		"itemCard":{
+			  "head": {
+				"title": date + " 시간표" 
+			  	},
+			  	"itemList": [
+				{
+				"title": '1교시',
+				"description": timetablelist[0]
+				},
+				{
+				"title": '2교시',
+				"description": timetablelist[1]
+				},
+				{
+				"title": '3교시',
+				"description": timetablelist[2]
+				},
+				{
+				"title": '4교시',
+				"description": timetablelist[3]
+				},
+				{
+				"title": '5교시',
+				"description": timetablelist[4]
+				},
+				{
+				"title": '6교시',
+				"description": timetablelist[5]
+				},
+				{
+				"title": '7교시',
+				"description": timetablelist[6]
+				}
+			  ],
+			  "itemListAlignment": "left"
+		}
+	  }
+	]
+	}
+	}
+			
+		
 	return responseBody
 	   
 
 @app.route('/service', methods = ["POST"])
 def service():
-	params = {
-		'KEY' : service_key,
-		'Type' : 'json',
-		'pIndex' : '1',
-		'pSize' : '100',
-		'ATPT_OFCDC_SC_CODE' : edu_code,
-		'SD_SCHUL_CODE' : school_codeE,
-		'MLSV_YMD' : day
-		}
-
-	response = requests.get(NEISurl, params=params)
-	contents = response.text
-
-	#급식 미제공 날짜 구별
-	find = contents.find('해당하는 데이터가 없습니다.')
+	body = request.get_json()
+	userID = body['userRequest']['user']['id']
 	
-	if find == -1:
-		findstart = contents.find('DDISH_NM') + 11
-		findend = contents.find('ORPLC_INFO') - 3
-		content = contents[findstart:findend]
-		meal ="\n".join(content.split('<br/>'))
-	else:
-		meal = "오늘은 급식이 없어요!"
+	
+	try:
+		useridtable = userIdData.all(formula=match({"userID":userID}))
+		print(useridtable)
+		olderid = useridtable[0]['fields']['userID']
+		id1 = useridtable[0]['id']
+		if useridtable == 0 or useridtable == "false" or useridtable == "" or useridtable == "NaN" or useridtable == []:
+			meal = "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요."
+		else:
+			for a in userIdData.all():
+				if id1 == a['id']:
+					data = a['fields']
+					if data['schoolcode'] == "S":
+						school_codeS = '7501030'
+					elif data['schoolcode'] == "E":
+						user_school_code = '7480188'
+					else:
+						user_school_code = '7501030'
+			
+			params = {
+			'KEY' : service_key,
+			'Type' : 'json',
+			'pIndex' : '1',
+			'pSize' : '100',
+			'ATPT_OFCDC_SC_CODE' : edu_code,
+			'SD_SCHUL_CODE' : user_school_code,
+			'MLSV_YMD' : day
+			}
+
+			response = requests.get(NEISurl, params=params)
+			contents = response.text
+
+			#급식 미제공 날짜 구별
+			find = contents.find('해당하는 데이터가 없습니다.')
+	
+			if find == -1:
+				findstart = contents.find('DDISH_NM') + 11
+				findend = contents.find('ORPLC_INFO') - 3
+				content = contents[findstart:findend]
+				meal ="\n".join(content.split('<br/>'))
+			else:
+				meal = "오늘은 급식이 없어요!"
+					
+	except:
+		meal = "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요."
 
 	responseBody = {
 		"version": "2.0",
