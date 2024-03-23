@@ -138,7 +138,7 @@ def school():
 	userID = body['userRequest']['user']['id']
 	useridtable = userIdData.all(formula=match({"userID":userID}))
 	print(useridtable)
-	return
+	return usertable
 
 @app.route('/grade', methods = ['POST'])
 def grade():
