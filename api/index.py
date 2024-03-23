@@ -495,11 +495,14 @@ def timetable():
 			'CLASS_NM' : user_class_code
 			}
 
+			print(NEIStime)
 			response = requests.get(NEIStime, params=params)
+			print(response)
 			contents = response.json()
+			print(contents)
 			findtext = response.text()
 
-			print(contents)
+			
 
 			#시간표 미제공 날짜 구별
 			find = findtext.find('해당하는 데이터가 없습니다.')
