@@ -612,7 +612,7 @@ def timetable():
 					else:
 						numb = contents['misTimetable'][0]['head'][0]['list_total_count']
 					print(numb)
-					numb7 = 7 - int(numb)
+					numb7 = 8 - int(numb)
 
 					print(numb7)
 					
