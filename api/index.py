@@ -526,9 +526,10 @@ def timetable():
 		
 				else: 
 					find = 40
-					
-			
-			
+
+			print(weekday == "일")
+			print(weekday == "토")
+			print(not(find == -1))
 			if weekday == "일" or weekday == "토" or not(find == -1):
 				responseBody = {
 		"version": "2.0",
@@ -680,7 +681,6 @@ def timetable():
 						]
 		}
 	}
-	
 	
 	return responseBody
 
