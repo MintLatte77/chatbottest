@@ -433,7 +433,7 @@ def timetable():
 	numb = 0
 	try:
 		useridtable = userIdData.all(formula=match({"userID":userID}))
-		print(useridtable)
+		print(userIdData.all())
 		olderid = useridtable[0]['fields']['userID']
 		id1 = useridtable[0]['id']
 		if useridtable == 0 or useridtable == "false" or useridtable == "" or useridtable == "NaN" or useridtable == []:
@@ -459,7 +459,7 @@ def timetable():
 		}
 	}
 		else:
-			print("Find Info")
+			print("Find Info " + useridtable)
 			for a in userIdData.all():
 				if id1 == a['id']:
 					data = a['fields']
@@ -474,7 +474,7 @@ def timetable():
 						NEIStime ="https://open.neis.go.kr/hub/misTimetable"
 					user_grade_code = data['gradecode']
 					user_class_code = data['classcode']
-					print(user_school_code + user_grade_code + user_class_code)
+					print(user_school_code + str(user_grade_code) + str(user_class_code))
 			
 			params = {
 			'KEY' : service_key,
@@ -486,8 +486,8 @@ def timetable():
 			'AY' : '2024',
 			'SEM' : '1',
 			'ALL_TI_YMD' : day,
-			'GRADE' : user_grade_code,
-			'CLASS_NM' : user_class_code
+			'GRADE' : str(user_grade_code),
+			'CLASS_NM' : str(user_class_code)
 			}
 
 			response = requests.get(NEIStime, params=params)
