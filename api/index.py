@@ -521,7 +521,8 @@ def timetable():
 		
 				else: 
 					find = 0
-			print(timetablelist)
+					
+			
 			weekstr = str(week)
 			weekday = weeklist.get(weekstr, "월")
 			if weekday == "일" or weekday == "토" or not(find == -1) or not(descr == ""):
@@ -549,6 +550,7 @@ def timetable():
 		}
 	}
 				else:
+					print(timetablelist)
 					if user_school_code == "E" and str(user_grade_code) == '1' and str(user_class_code) == '5':
 						passing_timetable = {timetab: teacher for timetab, teacher in timetabledict.items() if not(timetab.find(weekday) == -1)}
 						for key in passing_timetable:
