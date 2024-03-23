@@ -437,7 +437,26 @@ def timetable():
 		olderid = useridtable[0]['fields']['userID']
 		id1 = useridtable[0]['id']
 		if useridtable == 0 or useridtable == "false" or useridtable == "" or useridtable == "NaN" or useridtable == []:
-			descr = "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요."
+			responseBody = {
+		"version": "2.0",
+		"template": {
+			"outputs": [
+				{
+					"textCard": {
+		  				"title": date + " 시간표",
+		  				"description": "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요." ,
+		  				"buttons": [
+							{
+			  					"action": "webLink",
+			  					"label": "온라인 건의함",
+			  					"webLinkUrl": "https://m.site.naver.com/1k4Sj"
+							}
+									]
+								}
+				}
+						]
+		}
+	}
 		else:
 			for a in userIdData.all():
 				if id1 == a['id']:
@@ -490,18 +509,13 @@ def timetable():
 		
 				else: 
 					find = 0
-			
-					
-	except:
-		descr = "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요."
-	
-	weekstr = str(week)
-	weekday = weeklist.get(weekstr, "월")
-	if weekday == "일" or weekday == "토" or not(find == -1) or not(descr == ""):
-		if descr == "":
-			descr = "오늘은 시간표가 없어요!"
-		
-		responseBody = {
+			weekstr = str(week)
+			weekday = weeklist.get(weekstr, "월")
+			if weekday == "일" or weekday == "토" or not(find == -1) or not(descr == ""):
+				if descr == "":
+					descr = "오늘은 시간표가 없어요!"
+				
+			responseBody = {
 		"version": "2.0",
 		"template": {
 			"outputs": [
@@ -521,15 +535,15 @@ def timetable():
 						]
 		}
 	}
-	else:
-		if user_school_code == "E" and str(user_grade_code) == '1' and str(user_class_code) == '5':
-			passing_timetable = {timetab: teacher for timetab, teacher in timetabledict.items() if not(timetab.find(weekday) == -1)}
-			for key in passing_timetable:
-				timetablelist.append(key[2:])
+			else:
+				if user_school_code == "E" and str(user_grade_code) == '1' and str(user_class_code) == '5':
+					passing_timetable = {timetab: teacher for timetab, teacher in timetabledict.items() if not(timetab.find(weekday) == -1)}
+					for key in passing_timetable:
+						timetablelist.append(key[2:])
 	
-			for value in passing_timetable.values():
-				teacherlist.append(value)
-			responseBody = {
+					for value in passing_timetable.values():
+						teacherlist.append(value)
+					responseBody = {
   "version": "2.0",
   "template": {
 	"outputs": [
@@ -574,14 +588,14 @@ def timetable():
 	]
 	}
 	}
-		else:
-			numb7 = 7 - numb
-			for a in num7:
-				numb += 1
-				timetablelist.append("오늘은 %d교시가 없어요!"%numb)
+				else:
+					numb7 = 7 - numb
+					for a in num7:
+						numb += 1
+						timetablelist.append("오늘은 %d교시가 없어요!"%numb)
 				
 			
-			responseBody = {
+					responseBody = {
   "version": "2.0",
   "template": {
 	"outputs": [
@@ -628,6 +642,31 @@ def timetable():
 	}
 			
 		
+			
+					
+	except:
+		responseBody = {
+		"version": "2.0",
+		"template": {
+			"outputs": [
+				{
+					"textCard": {
+		  				"title": date + " 시간표",
+		  				"description": "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요." ,
+		  				"buttons": [
+							{
+			  					"action": "webLink",
+			  					"label": "온라인 건의함",
+			  					"webLinkUrl": "https://m.site.naver.com/1k4Sj"
+							}
+									]
+								}
+				}
+						]
+		}
+	}
+	
+	
 	return responseBody
 
 @app.route('/service', methods = ["POST"])
