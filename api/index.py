@@ -552,15 +552,15 @@ def timetable():
 						]
 		}
 	}
-				else:
-					print(timetablelist)
-					if user_school_code == "E" and str(user_grade_code) == '1' and str(user_class_code) == '5':
-						passing_timetable = {timetab: teacher for timetab, teacher in timetabledict.items() if not(timetab.find(weekday) == -1)}
-						for key in passing_timetable:
+			else:
+				print(timetablelist)
+				if user_school_code == "E" and str(user_grade_code) == '1' and str(user_class_code) == '5':
+					passing_timetable = {timetab: teacher for timetab, teacher in timetabledict.items() if not(timetab.find(weekday) == -1)}
+					for key in passing_timetable:
 							timetablelist.append(key[2:])
-		
-						for value in passing_timetable.values():
-							teacherlist.append(value)
+	
+					for value in passing_timetable.values():
+						teacherlist.append(value)
 						responseBody = {
   "version": "2.0",
   "template": {
@@ -606,14 +606,14 @@ def timetable():
 	]
 	}
 	}
-					else:
-						numb7 = 7 - numb
-						for a in num7:
-							numb += 1
-							timetablelist.append("오늘은 %d교시가 없어요!"%numb)
+				else:
+					numb7 = 7 - numb
+					for a in num7:
+						numb += 1
+						timetablelist.append("오늘은 %d교시가 없어요!"%numb)
 				
-						print(timetablelist)
-						responseBody = {
+					print(timetablelist)
+					responseBody = {
   "version": "2.0",
   "template": {
 	"outputs": [
