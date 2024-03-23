@@ -505,6 +505,7 @@ def timetable():
 
 			#시간표 미제공 날짜 구별
 			find = findtext.find('해당하는 데이터가 없습니다.')
+			print(find)
 	
 			if find == -1:
 				if NEIStime == "https://open.neis.go.kr/hub/hisTimetable" :
@@ -528,7 +529,7 @@ def timetable():
 					
 			
 			
-			if weekday == "일" or weekday == "토" or not(find == -1) or not(descr == ""):
+			if weekday == "일" or weekday == "토" or not(find == -1):
 				if descr == "":
 					descr = "오늘은 시간표가 없어요!"
 				
