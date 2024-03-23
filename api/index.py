@@ -499,7 +499,7 @@ def timetable():
 			response = requests.get(NEIStime, params=params)
 			contents = response.json()
 			print(contents)
-			findtext = response.text()
+			findtext = response.text
 
 			
 
