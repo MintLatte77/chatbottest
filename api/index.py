@@ -506,26 +506,18 @@ def timetable():
 			#시간표 미제공 날짜 구별
 			find = findtext.find('해당하는 데이터가 없습니다.')
 			print(find)
-	
+
+			weekstr = str(week)
+			weekday = weeklist.get(weekstr, "월")
+			
 			if find == -1:
-				if NEIStime == "https://open.neis.go.kr/hub/hisTimetable" :
+				if NEIStime == "https://open.neis.go.kr/hub/hisTimetable":
 					time = contents['hisTimetable'][1]['row']
-					weekstr = str(week)
-					weekday = weeklist.get(weekstr, "월")
-					for a in time:
-						timetablelist.append(a['ITRT_CNTNT'])
-						numb += 1
-					
-				elif NEIStime == "https://open.neis.go.kr/hub/misTimetable":
+				else:
 					time = contents['misTimetable'][1]['row']
-					weekstr = str(week)
-					weekday = weeklist.get(weekstr, "월")
-					for a in time:
-						timetablelist.append(a['ITRT_CNTNT'])
-						numb += 1
+				for a in time:
+					timetablelist.append(a['ITRT_CNTNT'])
 		
-				else: 
-					find = 40
 
 			print(weekday == "일")
 			print(weekday == "토")
@@ -607,10 +599,11 @@ def timetable():
 	}
 	}
 				else:
-					numb7 = 7 - numb
-					for a in num7:
-						numb += 1
-						timetablelist.append("오늘은 %d교시가 없어요!"%numb)
+					if NEIStime == "https://open.neis.go.kr/hub/hisTimetable":
+						numb = contents['hisTimetable'][1]['head'][0]['list_total_count']
+					else:
+						numb = contents['hisTimetable'][1]['head'][0]['list_total_count']
+					numb7 = 7 - int(numb)
 				
 					print(timetablelist)
 					responseBody = {
