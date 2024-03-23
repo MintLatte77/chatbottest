@@ -466,7 +466,7 @@ def timetable():
 		}
 	}
 		else:
-			n = 1
+			
 			print("Find Info")
 			print(useridtable)
 			for a in userIdData.all():
@@ -514,27 +514,33 @@ def timetable():
 			find = findtext.find('해당하는 데이터가 없습니다.')
 			print(find)
 
-
+			weekstr = str(week)
+			weekday = weeklist.get(weekstr, "월요")
 			
 			if find == -1:
 				if NEIStime == "https://open.neis.go.kr/hub/hisTimetable":
 					time = contents['hisTimetable'][1]['row']
 				elif NEIStime == "https://open.neis.go.kr/hub/misTimetable":
 					time = contents['misTimetable'][1]['row']
-				for a in time:
+				
+				if NEIStime == "https://open.neis.go.kr/hub/hisTimetable" and week = 3:
+					timenumb = 6
+				elif NEIStime == "https://open.neis.go.kr/hub/hisTimetable" and not(week = 3):
+					timenumb = 7
+
+
+				
+				for n in range(0,timenumb):
 					try:
-						timecheck = int(a['PERIO'])
+						timecheck = int(a[n]['PERIO'])
 					except:
 						timecheck = 0
 
-					if timecheck == n:
-						timetablelist.append(a['ITRT_CNTNT'])
-					else:
+					if not(timecheck == n + 1):
 						timetablelist.append('선택')
-					n += 1
+					else:
+						timetablelist.append(a['ITRT_CNTNT'])
 			
-			weekstr = str(week)
-			weekday = weeklist.get(weekstr, "월요")
 
 			print(weekday == "일")
 			print(weekday == "토")
