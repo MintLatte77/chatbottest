@@ -429,6 +429,7 @@ def check():
 @app.route('/timetable', methods = ["POST"])
 def timetable():
 	descr = ""
+	timetablelist = []
 	body = request.get_json()
 	userID = body['userRequest']['user']['id']
 	numb = 0
@@ -704,6 +705,7 @@ def timetable():
 
 @app.route('/service', methods = ["POST"])
 def service():
+	meal = ""
 	body = request.get_json()
 	userID = body['userRequest']['user']['id']
 	
