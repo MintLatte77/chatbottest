@@ -553,10 +553,7 @@ def timetable():
 				print(responseBody)
 			else:
 				print(timetablelist)
-				print(user_school_code == "E")
-				print(user_grade_code == '1')
-				print(user_class_code == '5')
-				if user_school_code == "E" and user_grade_code == '1' and user_class_code == '5':
+				if user_school_code == "7480188" and user_grade_code == '1' and user_class_code == '5':
 					passing_timetable = {timetab: teacher for timetab, teacher in timetabledict.items() if not(timetab.find(weekday) == -1)}
 					for key in passing_timetable:
 						timetablelist.append(key[2:])
