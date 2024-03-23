@@ -408,11 +408,13 @@ def check():
 		"buttons": [
 			{
 			  "action": "message",
-			  "label": "오늘 급식 뭐임?"
+			  "label": "오늘 급식 뭐임?",
+			  "messageText": "오늘 급식 뭐임?"
 			},
 			{
 			  "action": "message",
-			  "label": "오늘 시간표 뭐임?"
+			  "label": "오늘 시간표 뭐임?",
+			  "messageText": "오늘 시간표 뭐임?"
 			}
 		]
 		}
