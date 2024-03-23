@@ -479,13 +479,13 @@ def timetable():
 				if NEIStime == "https://open.neis.go.kr/hub/hisTimetable" :
 					time = contents['hisTimetable'][1]['row']
 					for a in time:
-   					 	timetablelist.append(a['ITRT_CNTNT'])
+					 	timetablelist.append(a['ITRT_CNTNT'])
 						numb += 1
 					
 				elif NEIStime == "https://open.neis.go.kr/hub/misTimetable":
 					time = contents['misTimetable'][1]['row']
 					for a in time:
-   					 	timetablelist.append(a['ITRT_CNTNT'])
+					 	timetablelist.append(a['ITRT_CNTNT'])
 						numb += 1
 		
 				else: 
@@ -629,7 +629,6 @@ def timetable():
 			
 		
 	return responseBody
-	   
 
 @app.route('/service', methods = ["POST"])
 def service():
