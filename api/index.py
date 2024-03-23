@@ -430,13 +430,35 @@ def check():
 def timetable():
 	weekstr = str(week)
 	weekday = weeklist.get(weekstr, "월")
-	passing_timetable = {timetab: teacher for timetab, teacher in timetabledict.items() if not(timetab.find(weekday) == -1)}
-	for key in passing_timetable:
-		timetablelist.append(key[2:])
-
-	for value in passing_timetable.values():
-		teacherlist.append(value)
-	responseBody = {
+	if weekday == "일" or weekday == "토":
+		responseBody = {
+		"version": "2.0",
+		"template": {
+			"outputs": [
+				{
+					"textCard": {
+		  				"title": date + " 시간표"
+		  				"description": "오늘은 시간표가 없어요!" ,
+		  				"buttons": [
+							{
+			  					"action": "webLink",
+			  					"label": "온라인 건의함",
+			  					"webLinkUrl": "https://m.site.naver.com/1k4Sj"
+							}
+									]
+								}
+				}
+						]
+		}
+	}
+	else:
+		passing_timetable = {timetab: teacher for timetab, teacher in timetabledict.items() if not(timetab.find(weekday) == -1)}
+		for key in passing_timetable:
+			timetablelist.append(key[2:])
+	
+		for value in passing_timetable.values():
+			teacherlist.append(value)
+		responseBody = {
   "version": "2.0",
   "template": {
 	"outputs": [
@@ -508,7 +530,7 @@ def service():
 		content = contents[findstart:findend]
 		meal ="\n".join(content.split('<br/>'))
 	else:
-		meal = "오늘은 급식이 없습니다!"
+		meal = "오늘은 급식이 없어요!"
 
 	responseBody = {
 		"version": "2.0",
