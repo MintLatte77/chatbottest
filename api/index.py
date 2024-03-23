@@ -493,7 +493,7 @@ def timetable():
 			
 					
 	except:
-		 descr = "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요."
+		descr = "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요."
 	
 	weekstr = str(week)
 	weekday = weeklist.get(weekstr, "월")
