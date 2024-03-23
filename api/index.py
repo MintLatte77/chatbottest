@@ -428,6 +428,7 @@ def check():
 
 @app.route('/timetable', methods = ["POST"])
 def timetable():
+	descr = ""
 	body = request.get_json()
 	userID = body['userRequest']['user']['id']
 	numb = 0
@@ -477,8 +478,8 @@ def timetable():
 						NEIStime ="https://open.neis.go.kr/hub/misTimetable"
 					user_grade_code = data['gradecode']
 					user_class_code = data['classcode']
-					print(user_school_code + str(user_grade_code) + str(user_class_code))
 					break
+			print(user_school_code + str(user_grade_code) + str(user_class_code))
 			
 			params = {
 			'KEY' : service_key,
