@@ -87,17 +87,9 @@ def agree2():
 	body = request.get_json()
 	userID = body['userRequest']['user']['id']
 	
-	try:
-		useridtable = userIdData.all(formula=match({"userID":userID}))
-	except:
-		Newdata = {'userID': userID, 'schoolcode': "N", 'gradecode': 0, 'classcode': 0}
-		userIdData.create(Newdata)
-		print(Newdata)
-
-	if useridtable == 0 or useridtable == "false" or useridtable == "" or useridtable == "NaN" or useridtable == []:
-		Newdata = {'userID': userID, 'schoolcode': "N", 'gradecode': 0, 'classcode': 0}
-		userIdData.create(Newdata)
-		print(Newdata)
+	Newdata = {'userID': userID, 'schoolcode': "N", 'gradecode': 0, 'classcode': 0}
+	userIdData.create(Newdata)
+	print(Newdata)
 	
 	responesebody = {
   "version": "2.0",
