@@ -480,13 +480,13 @@ def timetable():
 					time = contents['hisTimetable'][1]['row']
 					for a in time:
    					 	timetablelist.append(a['ITRT_CNTNT'])
-						numb = numb + 1
+						numb += 1
 					
 				elif NEIStime == "https://open.neis.go.kr/hub/misTimetable":
 					time = contents['misTimetable'][1]['row']
 					for a in time:
    					 	timetablelist.append(a['ITRT_CNTNT'])
-						numb = numb + 1
+						numb += 1
 		
 				else: 
 					find = 0
@@ -577,7 +577,7 @@ def timetable():
 		else:
 			numb7 = 7 - numb
 			for a in num7:
-				numb = numb + 1
+				numb += 1
 				timetablelist.append("오늘은 %d교시가 없어요!"%numb)
 				
 			
