@@ -509,12 +509,16 @@ def timetable():
 			if find == -1:
 				if NEIStime == "https://open.neis.go.kr/hub/hisTimetable" :
 					time = contents['hisTimetable'][1]['row']
+					weekstr = str(week)
+					weekday = weeklist.get(weekstr, "월")
 					for a in time:
 						timetablelist.append(a['ITRT_CNTNT'])
 						numb += 1
 					
 				elif NEIStime == "https://open.neis.go.kr/hub/misTimetable":
 					time = contents['misTimetable'][1]['row']
+					weekstr = str(week)
+					weekday = weeklist.get(weekstr, "월")
 					for a in time:
 						timetablelist.append(a['ITRT_CNTNT'])
 						numb += 1
@@ -523,13 +527,12 @@ def timetable():
 					find = 0
 					
 			
-			weekstr = str(week)
-			weekday = weeklist.get(weekstr, "월")
+			
 			if weekday == "일" or weekday == "토" or not(find == -1) or not(descr == ""):
 				if descr == "":
 					descr = "오늘은 시간표가 없어요!"
 				
-					responseBody = {
+				responseBody = {
 		"version": "2.0",
 		"template": {
 			"outputs": [
