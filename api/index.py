@@ -437,6 +437,7 @@ def timetable():
 		olderid = useridtable[0]['fields']['userID']
 		id1 = useridtable[0]['id']
 		if useridtable == 0 or useridtable == "false" or useridtable == "" or useridtable == "NaN" or useridtable == []:
+			print("Not Existed!")
 			responseBody = {
 		"version": "2.0",
 		"template": {
@@ -645,6 +646,7 @@ def timetable():
 			
 					
 	except:
+		print("Can't find info")
 		responseBody = {
 		"version": "2.0",
 		"template": {
