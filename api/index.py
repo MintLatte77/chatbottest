@@ -12,9 +12,9 @@ from pyairtable.formulas import match
 datetime_utc = datetime.utcnow()
 timezone_kst = timezone(timedelta(hours=9))
 datetime_kst = datetime_utc.astimezone(timezone_kst)
-day = '20240325' # datetime_kst.strftime("%Y%m%d")
+day = '20240326' # datetime_kst.strftime("%Y%m%d")
 date = str(int(datetime_kst.strftime("%m"))) + "월 "+ str(int(datetime_kst.strftime("%d"))) + "일"
-week = 1 # int(datetime_kst.strftime("%w"))
+week = 2 # int(datetime_kst.strftime("%w"))
 
 
 # 환경변수/시간표 설정
@@ -604,6 +604,9 @@ def timetable():
 					else:
 						numb = contents['hisTimetable'][1]['head'][0]['list_total_count']
 					numb7 = 7 - int(numb)
+					if not(numb7 == 0):
+						for a in numb7:
+							timetablelist.append("오늘은 %d교시가 없어요"%a)
 				
 					print(timetablelist)
 					responseBody = {
@@ -651,6 +654,7 @@ def timetable():
 	]
 	}
 	}			
+					print(responseBody)
 					
 	except:
 		print("Can't find info")
