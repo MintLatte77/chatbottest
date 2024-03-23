@@ -479,7 +479,7 @@ def timetable():
 					user_grade_code = str(data['gradecode'])
 					user_class_code = str(data['classcode'])
 					break
-			print(user_school_code + user_grade_code + user_class_cod))
+			print(user_school_code + user_grade_code + user_class_code)
 			
 			params = {
 			'KEY' : service_key,
@@ -497,7 +497,6 @@ def timetable():
 
 			print(NEIStime)
 			response = requests.get(NEIStime, params=params)
-			print(response)
 			contents = response.json()
 			print(contents)
 			findtext = response.text()
