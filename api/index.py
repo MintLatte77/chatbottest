@@ -60,7 +60,7 @@ def test():
 	
 	return userIdData.all()
 
-@app.route('/sche') #, methods = ['POST']
+@app.route('/sche', methods = ['POST'])
 def sche():
 	userID = body['userRequest']['user']['id']
 	scheN = 0
@@ -81,10 +81,13 @@ def sche():
 					data = a['fields']
 					if data['schoolcode'] == "S":
 						Loading = Sschedule.all(sort=['datestart'])
+						schooln = "삼남중학교"
 					elif data['schoolcode'] == "E":
 						Loading = Eschedule.all(sort=['datestart'])
+						schooln = "언양고등학교"
 					else:
 						Loading = Sschedule.all(sort=['datestart'])
+						schooln = "언양고등학교"
 			for a in Loading:
 				schedatastart = a['fields']['datestart']
 				schedataend = a['fields']['dateend']
@@ -125,6 +128,42 @@ def sche():
 				schedescr4 = scheduledatestart[4]
 			else:
 				schedescr4 = scheduledatestart[4] + " ~ " + scheduledateend[4]
+			{
+  "version": "2.0",
+  "template": {
+    "outputs": [
+      {
+        "listCard": {
+          "header": {
+            "title": schooln + " 학사일정"
+          },
+          "items": [
+            {
+              "title": schedulename[0],
+              "description": schedescr0
+            },
+            {
+              "title": schedulename[1],
+              "description": schedescr1
+            },
+            {
+              "title": schedulename[2],
+              "description": schedescr2
+            },
+            {
+              "title": schedulename[3],
+              "description": schedescr3
+            },
+            {
+              "title": schedulename[4],
+              "description": schedescr4
+            }
+	  ]
+        }
+      }
+    ]
+  }
+}
 
 	except:
 		schedulename = ["오류"]
@@ -134,7 +173,7 @@ def sche():
 		schedescr3 = ""
 		schedescr4 = ""
 
-	return schedulename
+	return 
 				
 			
 
