@@ -74,6 +74,8 @@ def sche():
 		schedulename = []
 		scheduledatestart = []
 		scheduledateend = []
+		schedatastart = ""
+		schedataend = ""
 		print("Setting")
 		if useridtable == 0 or useridtable == "false" or useridtable == "" or useridtable == "NaN" or useridtable == []:
 			responseBody = {
@@ -122,8 +124,10 @@ def sche():
 			for a in Loading:
 				schedatastart = a['fields']['datestart']
 				schedataend = a['fields']['dateend']
-				if int(day) > schedatastart:
-					if int(day) > schedataend:
+				startday = "".join(schedatastart.split("-"))
+				endday = "".join(schedataend.split("-"))
+				if int(day) > int(startday):
+					if int(day) > int(endday):
 						scheN += 1
 					else:
 						break
