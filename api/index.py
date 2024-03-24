@@ -62,6 +62,7 @@ def test():
 
 @app.route('/sche', methods = ['POST'])
 def sche():
+	body = request.get_json()
 	userID = body['userRequest']['user']['id']
 	scheN = 0
 	
