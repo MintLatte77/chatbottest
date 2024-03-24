@@ -528,17 +528,20 @@ def timetable():
 
 					for n in range(0,timenumb):
 						try:
+							print(timenum)
 							timecheck = int(time[timenum]['PERIO'])
+							print("Now")
 							print(timecheck)
 						except:
 							timecheck = 0
 	
 						if not(timecheck == n + 1):
 							timetablelist.append('선택')
+							print("선택과목")
 						else:
 							timetablelist.append(time[timenum]['ITRT_CNTNT'])
+							print(time[timenum]['ITRT_CNTNT'])
 							timenum += 1
-							print(timenum)
 						print(timatablelist)
 							
 				
