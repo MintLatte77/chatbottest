@@ -11,7 +11,7 @@ from pyairtable.formulas import match
 
 datetime_utc = datetime.utcnow()
 timezone_kst = timezone(timedelta(hours=9))
-timezone_kst_n = timezone(timedelta(hours=33))
+timezone_kst_n = timezone(timedelta(days=1, hours=9))
 datetime_kst = datetime_utc.astimezone(timezone_kst)
 datetime_kst_n = datetime_utc.astimezone(timezone_kst_n)
 day = datetime_kst.strftime("%Y%m%d")
