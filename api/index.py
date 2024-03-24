@@ -74,6 +74,7 @@ def sche():
 		schedulename = []
 		scheduledatestart = []
 		scheduledateend = []
+		print("Setting")
 		if useridtable == 0 or useridtable == "false" or useridtable == "" or useridtable == "NaN" or useridtable == []:
 			responseBody = {
 		"version": "2.0",
@@ -101,18 +102,22 @@ def sche():
 		}
 	}
 		else:
+			print("school")
 			for a in userIdData.all():
 				if id1 == a['id']:
 					data = a['fields']
 					if data['schoolcode'] == "S":
 						Loading = Sschedule.all(sort=['datestart'])
 						schooln = "삼남중학교"
+						break
 					elif data['schoolcode'] == "E":
 						Loading = Eschedule.all(sort=['datestart'])
 						schooln = "언양고등학교"
+						break
 					else:
 						Loading = Sschedule.all(sort=['datestart'])
 						schooln = "언양고등학교"
+						break
 			print(schooln)
 			for a in Loading:
 				schedatastart = a['fields']['datestart']
