@@ -937,6 +937,9 @@ def service():
 					else:
 						user_school_code = '7501030'
 			
+			day1 = str(day)
+			day2 = str(day_n)
+
 			params = {
 			'KEY' : service_key,
 			'Type' : 'json',
@@ -944,7 +947,7 @@ def service():
 			'pSize' : '100',
 			'ATPT_OFCDC_SC_CODE' : edu_code,
 			'SD_SCHUL_CODE' : user_school_code,
-			'MLSV_YMD' : day
+			'MLSV_YMD' : day1
 			}
 
 			response = requests.get(NEISurl, params=params)
@@ -968,10 +971,10 @@ def service():
 			'pSize' : '100',
 			'ATPT_OFCDC_SC_CODE' : edu_code,
 			'SD_SCHUL_CODE' : user_school_code,
-			'MLSV_YMD' : day_n
+			'MLSV_YMD' : day2
 			}
 
-			response_n = requests.get(NEISurl, params=params)
+			response_n = requests.get(NEISurl, params=params_n)
 			contents_n = response_n.text
 
 			#급식 미제공 날짜 구별
