@@ -174,6 +174,7 @@ def all():
 				schedulename.append(Loading[b]['fields']['schedule'])
 				scheduledatestart.append(Loading[b]['fields']['datestart'])
 				scheduledateend.append(Loading[b]['fields']['dateend'])
+				print(b)
 			
 			print(schedulename)
 
