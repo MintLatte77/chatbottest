@@ -923,14 +923,14 @@ def service():
 						user_school_code = '7480188'
 						print(user_school_code)
 						for b in mealdata:
-							mealdatastart = b['fields']['Date']
-							startday = "".join(mealdatastart.split("-"))
-							print(today)
-							if int(day) == int(today):
+							mealdataday = b['fields']['Date']
+							mealday = "".join(mealdataday.split("-"))
+							print(mealday)
+							if int(day) == int(mealday):
 								breakfast1 = b['fields']['breakfast1']
 								breakfast2 = b['fields']['breakfast2']
 								dinner = b['fields']['dinner']
-							elif int(day_n) == int(today):
+							elif int(day_n) == int(mealday):
 								breakfast1_n = b['fields']['breakfast1']
 								breakfast2_n = b['fields']['breakfast2']
 								dinner_n = b['fields']['dinner']
