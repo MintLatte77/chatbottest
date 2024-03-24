@@ -922,7 +922,7 @@ def service():
 					elif data['schoolcode'] == "E":
 						user_school_code = '7480188'
 						print(user_school_code)
-						for b in mealdata:
+						for b in mealdata.all():
 							mealdataday = b['fields']['Date']
 							mealday = "".join(mealdataday.split("-"))
 							print(mealday)
