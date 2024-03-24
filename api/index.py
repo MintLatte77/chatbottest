@@ -33,6 +33,11 @@ airtable_token = os.environ.get('Airtable_Key')
 BASE_ID = 'appehbq0HhoF3Rk62'
 TABLE_NAME = 'tblnxuLnQ0t4qPlox'
 userIdData = Table(airtable_token, BASE_ID, TABLE_NAME)
+scheduleID = 'app4Shep99fg80KYb'
+Eonyang = 'tbluLhtM3VcwQdo8u'
+Samnam = 'tblg8eounZNf1xCAs'
+Eschedule = Table(airtable_token, scheduleID, Eonyang)
+Sschedule = Table(airtable_token, scheduleID, Samnam)
 
 #
 
@@ -54,6 +59,84 @@ def time():
 def test():
 	
 	return userIdData.all()
+
+@app.route('/sche') #, methods = ['POST']
+def sche():
+	userID = body['userRequest']['user']['id']
+	scheN = 0
+	
+	
+	try:
+		useridtable = userIdData.all(formula=match({"userID":userID}))
+		print(useridtable)
+		id1 = useridtable[0]['id']
+		schedulename = []
+		scheduledatestart = []
+		scheduledateend = []
+		if useridtable == 0 or useridtable == "false" or useridtable == "" or useridtable == "NaN" or useridtable == []:
+			result = "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요."
+		else:
+			for a in userIdData.all():
+				if id1 == a['id']:
+					data = a['fields']
+					if data['schoolcode'] == "S":
+						Loading = Sschedule.all(sort=['datestart'])
+					elif data['schoolcode'] == "E":
+						Loading = Eschedule.all(sort=['datestart'])
+					else:
+						Loading = Sschedule.all(sort=['datestart'])
+			for a in Loading:
+				schedatastart = a['fields']['datestart']
+				schedataend = a['fields']['dateend']
+				if int(day) > schedatastart:
+					if int(day) > schedataend:
+						scheN += 1
+					else:
+						break
+				else:
+					break
+			
+			for b in range(scheN, scheN + 5):
+				schedulename.append(Loading[b]['fields']['schedule'])
+				scheduledatestart.append(Loading[b]['fields']['datestart'])
+				scheduledateend.append(Loading[b]['fields']['dateend'])
+
+			if scheduledatestart[0] == scheduledateend[0]:
+				schedescr0 = scheduledatestart[0]
+			else:
+				schedescr0 = scheduledatestart[0] + " ~ " + scheduledateend[0]
+
+			if scheduledatestart[1] == scheduledateend[1]:
+				schedescr1 = scheduledatestart[1]
+			else:
+				schedescr1 = scheduledatestart[1] + " ~ " + scheduledateend[1]
+			
+			if scheduledatestart[2] == scheduledateend[2]:
+				schedescr2 = scheduledatestart[2]
+			else:
+				schedescr2 = scheduledatestart[2] + " ~ " + scheduledateend[2]
+
+			if scheduledatestart[3] == scheduledateend[3]:
+				schedescr3 = scheduledatestart[3]
+			else:
+				schedescr3 = scheduledatestart[3] + " ~ " + scheduledateend[3]
+
+			if scheduledatestart[4] == scheduledateend[4]:
+				schedescr4 = scheduledatestart[4]
+			else:
+				schedescr4 = scheduledatestart[4] + " ~ " + scheduledateend[4]
+
+	except:
+		schedulename = ["오류"]
+		schedescr0 = ""
+		schedescr1 = ""
+		schedescr2 = ""
+		schedescr3 = ""
+		schedescr4 = ""
+
+	return schedulename
+				
+			
 
 # 동의서 작성
 
