@@ -81,7 +81,7 @@ def sche():
 			"outputs": [
 				{
 					"textCard": {
-		  				"title": date + " 시간표",
+		  				"title": date + " 학사일정",
 		  				"description": "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요." ,
 		  				"buttons": [
 							{
@@ -113,6 +113,7 @@ def sche():
 					else:
 						Loading = Sschedule.all(sort=['datestart'])
 						schooln = "언양고등학교"
+			print(schooln)
 			for a in Loading:
 				schedatastart = a['fields']['datestart']
 				schedataend = a['fields']['dateend']
@@ -123,11 +124,14 @@ def sche():
 						break
 				else:
 					break
+			print(scheN)
 			
 			for b in range(scheN, scheN + 5):
 				schedulename.append(Loading[b]['fields']['schedule'])
 				scheduledatestart.append(Loading[b]['fields']['datestart'])
 				scheduledateend.append(Loading[b]['fields']['dateend'])
+			
+			print(schedulename)
 
 			if scheduledatestart[0] == scheduledateend[0]:
 				schedescr0 = scheduledatestart[0]
@@ -197,7 +201,7 @@ def sche():
 			"outputs": [
 				{
 					"textCard": {
-		  				"title": date + " 시간표",
+		  				"title": date + " 학사일정",
 		  				"description": "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요." ,
 		  				"buttons": [
 							{
