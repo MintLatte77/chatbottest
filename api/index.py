@@ -639,7 +639,7 @@ def timetable():
 				else:
 					print("Not 1-5")
 					if NEIStime == "https://open.neis.go.kr/hub/hisTimetable":
-						numb = timenum + 1
+						numb = timenum
 					else:
 						numb = contents['misTimetable'][0]['head'][0]['list_total_count']
 					print(numb)
@@ -649,7 +649,7 @@ def timetable():
 					
 					if not(numb7 == 0):
 						print("numb is not 7")
-						for a in range(1, numb7):
+						for a in range(0, numb7):
 							timecode = str(numb + a)
 							app = "오늘은 " + timecode + "교시가 없어요"
 							print(app)
