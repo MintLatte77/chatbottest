@@ -542,7 +542,7 @@ def timetable():
 							timetablelist.append(time[timenum]['ITRT_CNTNT'])
 							print(time[timenum]['ITRT_CNTNT'])
 							timenum += 1
-						print(timatablelist)
+						print(timetablelist)
 							
 				
 				elif NEIStime == "https://open.neis.go.kr/hub/misTimetable":
