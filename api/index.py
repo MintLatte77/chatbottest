@@ -125,7 +125,9 @@ def sche():
 				schedatastart = a['fields']['datestart']
 				schedataend = a['fields']['dateend']
 				startday = "".join(schedatastart.split("-"))
+				print(startday)
 				endday = "".join(schedataend.split("-"))
+				print(endday)
 				if int(day) > int(startday):
 					if int(day) > int(endday):
 						scheN += 1
