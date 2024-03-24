@@ -76,6 +76,27 @@ def all():
 		id1 = useridtable[0]['id']
 		if useridtable == 0 or useridtable == "false" or useridtable == "" or useridtable == "NaN" or useridtable == []:
 			meal = "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요."
+
+			responseBody = {
+		"version": "2.0",
+		"template": {
+			"outputs": [
+				{
+					"textCard": {
+		  				"title": date,
+		  				"description": meal ,
+		  				"buttons": [
+			{
+			  "action": "message",
+			  "label": "사용자 등록하기",
+			  "messageText": "사용자 등록하기"
+			}
+									]
+								}
+				}
+						]
+		}
+	}
 		else:
 			
 			# 급식
@@ -746,7 +767,7 @@ def all():
 			"outputs": [
 				{
 					"textCard": {
-		  				"title": date + " 오늘의 급식",
+		  				"title": date,
 		  				"description": meal ,
 		  				"buttons": [
 			{
