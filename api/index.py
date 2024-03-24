@@ -11,9 +11,8 @@ from pyairtable.formulas import match
 
 datetime_utc = datetime.utcnow()
 timezone_kst = timezone(timedelta(hours=9))
-timezone_kst_n = timezone(timedelta(days=1, hours=9))
 datetime_kst = datetime_utc.astimezone(timezone_kst)
-datetime_kst_n = datetime_utc.astimezone(timezone_kst_n)
+datetime_kst_n = datetime_kst + timedelta(days=1)
 day = datetime_kst.strftime("%Y%m%d")
 day_n = datetime_kst_n.strftime("%Y%m%d")
 date = str(int(datetime_kst.strftime("%m"))) + "월 "+ str(int(datetime_kst.strftime("%d"))) + "일"
