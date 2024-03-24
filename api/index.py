@@ -11,8 +11,11 @@ from pyairtable.formulas import match
 
 datetime_utc = datetime.utcnow()
 timezone_kst = timezone(timedelta(hours=9))
+timezone_kst_n = timezone(timedelta(hours=33))
 datetime_kst = datetime_utc.astimezone(timezone_kst)
+datetime_kst_n = datetime_utc.astimezone(timezone_kst_n)
 day = datetime_kst.strftime("%Y%m%d")
+day_n = datetime_kst_n.strftime("%Y%m%d")
 date = str(int(datetime_kst.strftime("%m"))) + "월 "+ str(int(datetime_kst.strftime("%d"))) + "일"
 week = int(datetime_kst.strftime("%w"))
 time = int(datetime_kst.strftime("%H"))
@@ -39,6 +42,9 @@ Eonyang = 'tbluLhtM3VcwQdo8u'
 Samnam = 'tblg8eounZNf1xCAs'
 Eschedule = Table(airtable_token, scheduleID, Eonyang)
 Sschedule = Table(airtable_token, scheduleID, Samnam)
+mealbase = 'app9eLibHZzVA39uJ'
+mealtable = 'tblvip1ulmxdKMeX4'
+mealdata = Table(airtable_token, mealbase, mealtable)
 
 #
 
@@ -902,15 +908,47 @@ def service():
 		if useridtable == 0 or useridtable == "false" or useridtable == "" or useridtable == "NaN" or useridtable == []:
 			meal = "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요."
 		else:
+			breakfast1 = " - "
+			breakfast2 = " - "
+			dinner = " - "
+			breakfast1_n = " - "
+			breakfast2_n = " - "
+			dinner_n = " - "
 			for a in userIdData.all():
 				if id1 == a['id']:
 					data = a['fields']
 					if data['schoolcode'] == "S":
 						user_school_code = '7501030'
+						breakfast1 = " - "
+						breakfast2 = " - "
+						dinner = " - "
+						breakfast1_n = " - "
+						breakfast2_n = " - "
+						dinner_n = " - "
 					elif data['schoolcode'] == "E":
 						user_school_code = '7480188'
+						print(schooln)
+						for a in mealdata:
+							mealdatastart = a['fields']['Date']
+							startday = "".join(mealdatastart.split("-"))
+							print(today)
+							if int(day) == int(today):
+								breakfast1 = a['fields']['breakfast1']
+								breakfast2 = a['fields']['breakfast2']
+								dinner = a['fields']['dinner']
+							elif int(day_n) == int(today):
+								breakfast1_n = a['fields']['breakfast1']
+								breakfast2_n = a['fields']['breakfast2']
+								dinner_n = a['fields']['dinner']
 					else:
 						user_school_code = '7501030'
+						user_school_code = '7501030'
+						breakfast1 = " - "
+						breakfast2 = " - "
+						dinner = " - "
+						breakfast1_n = " - "
+						breakfast2_n = " - "
+						dinner_n = " - "
 			
 			params = {
 			'KEY' : service_key,
@@ -935,20 +973,96 @@ def service():
 				meal ="\n".join(content.split('<br/>'))
 			else:
 				meal = "오늘은 급식이 없어요!"
+			
+			params_n = {
+			'KEY' : service_key,
+			'Type' : 'json',
+			'pIndex' : '1',
+			'pSize' : '100',
+			'ATPT_OFCDC_SC_CODE' : edu_code,
+			'SD_SCHUL_CODE' : user_school_code,
+			'MLSV_YMD' : day_n
+			}
+
+			response_n = requests.get(NEISurl, params=params)
+			contents_n = response_n.text
+
+			#급식 미제공 날짜 구별
+			find_n = contents_n.find('해당하는 데이터가 없습니다.')
+			
+			if find_n == -1:
+				findstart_n = contents_n.find('DDISH_NM') + 11
+				findend_n = contents_n.find('ORPLC_INFO') - 3
+				content_n = contents_n[findstart_n:findend_n]
+				meal_n ="\n".join(content_n.split('<br/>'))
+			else:
+				meal_n = "내일은 급식이 없어요!"
+
+			
 
 			responseBody = {
-		"version": "2.0",
-		"template": {
-			"outputs": [
-				{
-					"textCard": {
-		  				"title": date + " 오늘의 급식",
-		  				"description": meal
-								}
-				}
-						]
-		}
-	}					
+  "version": "2.0",
+  "template": {
+    "outputs": [
+      {
+        "carousel": {
+          "type": "itemCard",
+          "items": [
+            {
+              "thumbnail": {
+                "imageUrl" : "https://cdn.discordapp.com/attachments/1021364751541997659/1221373992645038100/7f0eaa8db4618a16.png?ex=6612582b&is=65ffe32b&hm=3bd8828a5bd814e7c3150b119706f54bfc58702171eb18485386c5a3ac53f686&"
+              },
+              "itemList": [
+                {
+                  "title": "아침",
+                  "description": breakfast1
+                },
+		{
+                  "title": "아침(간편)",
+                  "description": breakfast2
+                },
+                {
+                  "title": "점심",
+                  "description": meal
+                },
+                {
+                  "title" : "저녁",
+                  "description" : dinner
+                }
+              ],
+              "itemListAlignment": "left"
+            },
+	{
+              "thumbnail": {
+                "imageUrl" : "https://cdn.discordapp.com/attachments/1021364751541997659/1221434345550512198/1.png?ex=66129061&is=66001b61&hm=51982aaece47769c5254fe9fb69f61a61243456eb1d984d76a58861eaff6233c&"
+              },
+              "itemList": [
+                {
+                  "title": "아침",
+                  "description": breakfast1_n
+                },
+		{
+                  "title": "아침(간편)",
+                  "description": breakfast2_n
+                },
+                {
+                  "title": "점심",
+                  "description": meal_n
+                },
+                {
+                  "title" : "저녁",
+                  "description" : dinner_n
+                }
+              ],
+              "itemListAlignment": "left"
+            },
+           
+          ]
+        }
+      }
+    ]
+  }
+}					
 					
 	except:
 		meal = "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요."
