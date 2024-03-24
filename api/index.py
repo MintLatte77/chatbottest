@@ -15,6 +15,7 @@ datetime_kst = datetime_utc.astimezone(timezone_kst)
 day = '20240327' # datetime_kst.strftime("%Y%m%d")
 date = str(int(datetime_kst.strftime("%m"))) + "월 "+ str(int(datetime_kst.strftime("%d"))) + "일"
 week = 3 # int(datetime_kst.strftime("%w"))
+time = int(datetime_kst.strftime("%H"))
 
 
 # 환경변수/시간표 설정
@@ -60,6 +61,709 @@ def test():
 	
 	return userIdData.all()
 
+@app.route('/all', methods = ['POST'])
+def all():
+	meal = ""
+	body = request.get_json()
+	userID = body['userRequest']['user']['id']
+	descr = ""
+	timetablelist = []
+	numb = 0
+	scheN = 0
+	try:
+		useridtable = userIdData.all(formula=match({"userID":userID}))
+		print(useridtable)
+		id1 = useridtable[0]['id']
+		if useridtable == 0 or useridtable == "false" or useridtable == "" or useridtable == "NaN" or useridtable == []:
+			meal = "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요."
+		else:
+			
+			# 급식
+			
+			for a in userIdData.all():
+				if id1 == a['id']:
+					data = a['fields']
+					if data['schoolcode'] == "S":
+						user_school_code = '7501030'
+					elif data['schoolcode'] == "E":
+						user_school_code = '7480188'
+					else:
+						user_school_code = '7501030'
+			
+			params = {
+			'KEY' : service_key,
+			'Type' : 'json',
+			'pIndex' : '1',
+			'pSize' : '100',
+			'ATPT_OFCDC_SC_CODE' : edu_code,
+			'SD_SCHUL_CODE' : user_school_code,
+			'MLSV_YMD' : day
+			}
+
+			response = requests.get(NEISurl, params=params)
+			contents = response.text
+
+			#급식 미제공 날짜 구별
+			find = contents.find('해당하는 데이터가 없습니다.')
+	
+			if find == -1:
+				findstart = contents.find('DDISH_NM') + 11
+				findend = contents.find('ORPLC_INFO') - 3
+				content = contents[findstart:findend]
+				meal ="\n".join(content.split('<br/>'))
+			else:
+				meal = "오늘은 급식이 없어요!"
+			
+			# 학사일정
+			
+			print("school")
+			for a in userIdData.all():
+				if id1 == a['id']:
+					data = a['fields']
+					if data['schoolcode'] == "S":
+						Loading = Sschedule.all(sort=['datestart'])
+						schooln = "삼남중학교"
+						break
+					elif data['schoolcode'] == "E":
+						Loading = Eschedule.all(sort=['datestart'])
+						schooln = "언양고등학교"
+						break
+					else:
+						Loading = Sschedule.all(sort=['datestart'])
+						schooln = "언양고등학교"
+						break
+			print(schooln)
+			for a in Loading:
+				schedatastart = a['fields']['datestart']
+				schedataend = a['fields']['dateend']
+				startday = "".join(schedatastart.split("-"))
+				print(startday)
+				endday = "".join(schedataend.split("-"))
+				print(endday)
+				if int(day) > int(startday):
+					if int(day) > int(endday):
+						scheN += 1
+					else:
+						break
+				else:
+					break
+			print(scheN)
+			
+			for b in range(scheN, scheN + 5):
+				schedulename.append(Loading[b]['fields']['schedule'])
+				scheduledatestart.append(Loading[b]['fields']['datestart'])
+				scheduledateend.append(Loading[b]['fields']['dateend'])
+			
+			print(schedulename)
+
+			if scheduledatestart[0] == scheduledateend[0]:
+				schedescr0 = scheduledatestart[0]
+			else:
+				schedescr0 = scheduledatestart[0] + " ~ " + scheduledateend[0]
+
+			if scheduledatestart[1] == scheduledateend[1]:
+				schedescr1 = scheduledatestart[1]
+			else:
+				schedescr1 = scheduledatestart[1] + " ~ " + scheduledateend[1]
+			
+			if scheduledatestart[2] == scheduledateend[2]:
+				schedescr2 = scheduledatestart[2]
+			else:
+				schedescr2 = scheduledatestart[2] + " ~ " + scheduledateend[2]
+
+			if scheduledatestart[3] == scheduledateend[3]:
+				schedescr3 = scheduledatestart[3]
+			else:
+				schedescr3 = scheduledatestart[3] + " ~ " + scheduledateend[3]
+
+			if scheduledatestart[4] == scheduledateend[4]:
+				schedescr4 = scheduledatestart[4]
+			else:
+				schedescr4 = scheduledatestart[4] + " ~ " + scheduledateend[4]
+			
+			print("Find Info")
+			print(useridtable)
+			for a in userIdData.all():
+				print(a)
+				if id1 == a['id']:
+					data = a['fields']
+					print(data)
+					if data['schoolcode'] == "S":
+						user_school_code = '7501030'
+						NEIStime ="https://open.neis.go.kr/hub/misTimetable"
+					elif data['schoolcode'] == "E":
+						user_school_code = '7480188'
+						NEIStime = "https://open.neis.go.kr/hub/hisTimetable"
+					else:
+						user_school_code = '7501030'
+						NEIStime ="https://open.neis.go.kr/hub/misTimetable"
+					user_grade_code = str(data['gradecode'])
+					user_class_code = str(data['classcode'])
+					break
+			print(user_school_code + user_grade_code + user_class_code)
+			
+			params = {
+			'KEY' : service_key,
+			'Type' : 'json',
+			'pIndex' : '1',
+			'pSize' : '100',
+			'ATPT_OFCDC_SC_CODE' : edu_code,
+			'SD_SCHUL_CODE' : user_school_code,
+			'AY' : '2024',
+			'SEM' : '1',
+			'ALL_TI_YMD' : day,
+			'GRADE' : user_grade_code,
+			'CLASS_NM' : user_class_code
+			}
+
+			print(NEIStime)
+			response = requests.get(NEIStime, params=params)
+			contents = response.json()
+			print(contents)
+			findtext = response.text
+			timenum = 0
+			
+
+			#시간표 미제공 날짜 구별
+			find = findtext.find('해당하는 데이터가 없습니다.')
+			print(find)
+
+			weekstr = str(week)
+			weekday = weeklist.get(weekstr, "월요")
+
+			
+			if find == -1:
+				if NEIStime == "https://open.neis.go.kr/hub/hisTimetable":
+					time = contents['hisTimetable'][1]['row']
+					if  week == 3:
+						timenumb = 6
+					else:
+						timenumb = 7
+
+					for n in range(0,timenumb):
+						try:
+							print(timenum)
+							timecheck = int(time[timenum]['PERIO'])
+							print("Now")
+							print(timecheck)
+						except:
+							timecheck = 0
+	
+						if not(timecheck == n + 1):
+							timetablelist.append('선택')
+							print("선택과목")
+						else:
+							timetablelist.append(time[timenum]['ITRT_CNTNT'])
+							print(time[timenum]['ITRT_CNTNT'])
+							timenum += 1
+						print(timetablelist)
+							
+				
+				elif NEIStime == "https://open.neis.go.kr/hub/misTimetable":
+					time = contents['misTimetable'][1]['row']
+					for a in time:
+						timetablelist.append(a['ITRT_CNTNT'])
+			
+
+			print(weekday == "일")
+			print(weekday == "토")
+			print(not(find == -1))
+			if weekday == "일" or weekday == "토" or not(find == -1):
+				responseBody = {
+		"version": "2.0",
+		"template": {
+			"outputs": [
+				{
+					"textCard": {
+		  				"title": date,
+		  				"description": "정보를 불러오지 못했어요. " 
+								}
+				}
+						]
+		}
+	}
+				print(responseBody)
+			else:
+				print(timetablelist)
+				if user_school_code == "7480188" and user_grade_code == '1' and user_class_code == '5':
+					timetablelist = []
+					teacherlist = []
+					passing_timetable = {timetab: teacher for timetab, teacher in timetabledict.items() if not(timetab.find(weekday) == -1)}
+					for key in passing_timetable:
+						timetablelist.append(key[3:])
+	
+					for value in passing_timetable.values():
+						teacherlist.append(value)
+
+					print(timetablelist)
+					print(teacherlist)
+					if time < 13:
+						responseBody = {
+  "version": "2.0",
+  "template": {
+    "outputs": [
+      {
+        "carousel": {
+          "type": "itemCard",
+          "items": [
+            {
+              "imageTitle": {
+                "title": date + " 오늘의 급식"
+              },
+              "itemList": [
+                {
+                  "title": "아침",
+                  "description": "추후 제공 예정"
+                },
+                {
+                  "title": "점심",
+                  "description": meal
+                },
+                {
+                  "title" : "저녁",
+                  "description" : "추후 제공 예정"
+                }
+              ],
+              "itemListAlignment": "left"
+            },
+            {
+              "imageTitle": {
+                "title": user_grade_code + "학년 " + user_class_code + "반 " + date + " 시간표" ,
+              },
+              "itemList": [
+                {
+                  "title": "1교시",
+                  "description": timetablelist[0] + ' | ' + teacherlist[0]
+                },
+                {
+                  "title": "2교시",
+                  "description": timetablelist[1] + ' | ' + teacherlist[1]
+                },
+				{
+                  "title": "3교시",
+                  "description": timetablelist[2] + ' | ' + teacherlist[2]
+                },
+				{
+                  "title": "4교시",
+                  "description": timetablelist[3] + ' | ' + teacherlist[3]
+                }
+              ],
+              "itemListAlignment": "left",
+              "buttons": [
+                {
+                  "label": "오후 시간표 보기",
+                  "action": "block",
+                  "blockId": "65ffef4a023977068dd9cf3f"
+                }
+              ]
+            },
+            {
+              "imageTitle": {
+                "title": date + " 학사일정",
+              },
+              "itemList": [
+                {
+                  "title": "-",
+                  "description": schedulename[0] + '\n' + schedescr0
+                },
+                {
+                  "title": "-",
+                  "description": schedulename[1] + '\n' + schedescr1
+                },
+				{
+                  "title": "-",
+                  "description": schedulename[2] + '\n' + schedescr2
+                },
+				{
+                  "title": "-",
+                  "description": schedulename[3] + '\n' + schedescr3
+                },
+				{
+                  "title": "-",
+                  "description": schedulename[4] + '\n' + schedescr4
+                }
+              ],
+              "itemListAlignment": "left",
+              "buttons": [
+                {
+                  "label": "학사일정 보기 (언양고)",
+                  "action": "webLink",
+                  "webLinkUrl": "https://school.use.go.kr/eonyang-h/M01030301/"
+                },
+				{
+                  "label": "학사일정 보기 (삼남중)",
+                  "action": "webLink",
+                  "webLinkUrl": "https://school.use.go.kr/isamnam-m/M01030201/"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
+						
+					else:
+						responseBody = {
+  "version": "2.0",
+  "template": {
+    "outputs": [
+      {
+        "carousel": {
+          "type": "itemCard",
+          "items": [
+            {
+              "imageTitle": {
+                "title": date + " 오늘의 급식"
+              },
+              "itemList": [
+                {
+                  "title": "아침",
+                  "description": "추후 제공 예정"
+                },
+                {
+                  "title": "점심",
+                  "description": meal
+                },
+                {
+                  "title" : "저녁",
+                  "description" : "추후 제공 예정"
+                }
+              ],
+              "itemListAlignment": "left"
+            },
+            {
+              "imageTitle": {
+                "title": user_grade_code + "학년 " + user_class_code + "반 " + date + " 시간표" ,
+              },
+              "itemList": [
+                {
+                  "title": "5교시",
+                  "description": timetablelist[4] + ' | ' + teacherlist[4]
+                },
+                {
+                  "title": "6교시",
+                  "description": timetablelist[5] + ' | ' + teacherlist[5]
+                },
+				{
+                  "title": "7교시",
+                  "description": timetablelist[6] + ' | ' + teacherlist[6]
+                }
+              ],
+              "itemListAlignment": "left",
+              "buttons": [
+                {
+                  "label": "오전 시간표 보기",
+                  "action": "block",
+                  "blockId": "65ffef3ce44fec2154b21fe8"
+                }
+              ]
+            },
+            {
+              "imageTitle": {
+                "title": date + " 학사일정",
+              },
+              "itemList": [
+                {
+                  "title": "-",
+                  "description": schedulename[0] + '\n' + schedescr0
+                },
+                {
+                  "title": "-",
+                  "description": schedulename[1] + '\n' + schedescr1
+                },
+				{
+                  "title": "-",
+                  "description": schedulename[2] + '\n' + schedescr2
+                },
+				{
+                  "title": "-",
+                  "description": schedulename[3] + '\n' + schedescr3
+                },
+				{
+                  "title": "-",
+                  "description": schedulename[4] + '\n' + schedescr4
+                }
+              ],
+              "itemListAlignment": "left",
+              "buttons": [
+                {
+                  "label": "학사일정 보기 (언양고)",
+                  "action": "webLink",
+                  "webLinkUrl": "https://school.use.go.kr/eonyang-h/M01030301/"
+                },
+				{
+                  "label": "학사일정 보기 (삼남중)",
+                  "action": "webLink",
+                  "webLinkUrl": "https://school.use.go.kr/isamnam-m/M01030201/"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
+				
+				else:
+					print("Not 1-5")
+					if NEIStime == "https://open.neis.go.kr/hub/hisTimetable":
+						numb = timenum
+					else:
+						numb = contents['misTimetable'][0]['head'][0]['list_total_count']
+					print(numb)
+					numb7 = 8 - int(numb)
+
+					print(numb7)
+					
+					if not(numb7 == 0):
+						print("numb is not 7")
+						for a in range(0, numb7):
+							timecode = str(numb + a + 1)
+							app = "오늘은 " + timecode + "교시가 없어요"
+							print(app)
+							timetablelist.append(app)
+				
+					print(timetablelist)
+					if time < 13:
+						responseBody = {
+  "version": "2.0",
+  "template": {
+    "outputs": [
+      {
+        "carousel": {
+          "type": "itemCard",
+          "items": [
+            {
+              "imageTitle": {
+                "title": date + " 오늘의 급식"
+              },
+              "itemList": [
+                {
+                  "title": "아침",
+                  "description": "추후 제공 예정"
+                },
+                {
+                  "title": "점심",
+                  "description": meal
+                },
+                {
+                  "title" : "저녁",
+                  "description" : "추후 제공 예정"
+                }
+              ],
+              "itemListAlignment": "left"
+            },
+            {
+              "imageTitle": {
+                "title": user_grade_code + "학년 " + user_class_code + "반 " + date + " 시간표" ,
+              },
+              "itemList": [
+                {
+                  "title": "1교시",
+                  "description": timetablelist[0] + ' | ' + teacherlist[0]
+                },
+                {
+                  "title": "2교시",
+                  "description": timetablelist[1] + ' | ' + teacherlist[1]
+                },
+				{
+                  "title": "3교시",
+                  "description": timetablelist[2] + ' | ' + teacherlist[2]
+                },
+				{
+                  "title": "4교시",
+                  "description": timetablelist[3] + ' | ' + teacherlist[3]
+                }
+              ],
+              "itemListAlignment": "left",
+              "buttons": [
+                {
+                  "label": "오후 시간표 보기",
+                  "action": "block",
+                  "blockId": "65ffef4a023977068dd9cf3f"
+                }
+              ]
+            },
+            {
+              "imageTitle": {
+                "title": date + " 학사일정",
+              },
+              "itemList": [
+                {
+                  "title": "-",
+                  "description": schedulename[0]
+                },
+                {
+                  "title": "-",
+                  "description": schedulename[1]
+                },
+				{
+                  "title": "-",
+                  "description": schedulename[2]
+                },
+				{
+                  "title": "-",
+                  "description": schedulename[3]
+                },
+				{
+                  "title": "-",
+                  "description": schedulename[4]
+                }
+              ],
+              "itemListAlignment": "left",
+              "buttons": [
+                {
+                  "label": "학사일정 보기 (언양고)",
+                  "action": "webLink",
+                  "webLinkUrl": "https://school.use.go.kr/eonyang-h/M01030301/"
+                },
+				{
+                  "label": "학사일정 보기 (삼남중)",
+                  "action": "webLink",
+                  "webLinkUrl": "https://school.use.go.kr/isamnam-m/M01030201/"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
+						
+					else:
+						responseBody = {
+  "version": "2.0",
+  "template": {
+    "outputs": [
+      {
+        "carousel": {
+          "type": "itemCard",
+          "items": [
+            {
+              "imageTitle": {
+                "title": date + " 오늘의 급식"
+              },
+              "itemList": [
+                {
+                  "title": "아침",
+                  "description": "추후 제공 예정"
+                },
+                {
+                  "title": "점심",
+                  "description": meal
+                },
+                {
+                  "title" : "저녁",
+                  "description" : "추후 제공 예정"
+                }
+              ],
+              "itemListAlignment": "left"
+            },
+            {
+              "imageTitle": {
+                "title": user_grade_code + "학년 " + user_class_code + "반 " + date + " 시간표" ,
+              },
+              "itemList": [
+                {
+                  "title": "5교시",
+                  "description": timetablelist[4]
+                },
+                {
+                  "title": "6교시",
+                  "description": timetablelist[5]
+                },
+				{
+                  "title": "7교시",
+                  "description": timetablelist[6]
+                }
+              ],
+              "itemListAlignment": "left",
+              "buttons": [
+                {
+                  "label": "오전 시간표 보기",
+                  "action": "block",
+                  "blockId": "65ffef3ce44fec2154b21fe8"
+                }
+              ]
+            },
+            {
+              "imageTitle": {
+                "title": date + " 학사일정",
+              },
+              "itemList": [
+                {
+                  "title": "-",
+                  "description": schedulename[0] + '\n' + schedescr0
+                },
+                {
+                  "title": "-",
+                  "description": schedulename[1] + '\n' + schedescr1
+                },
+				{
+                  "title": "-",
+                  "description": schedulename[2] + '\n' + schedescr2
+                },
+				{
+                  "title": "-",
+                  "description": schedulename[3] + '\n' + schedescr3
+                },
+				{
+                  "title": "-",
+                  "description": schedulename[4] + '\n' + schedescr4
+                }
+              ],
+              "itemListAlignment": "left",
+              "buttons": [
+                {
+                  "label": "학사일정 보기 (언양고)",
+                  "action": "webLink",
+                  "webLinkUrl": "https://school.use.go.kr/eonyang-h/M01030301/"
+                },
+				{
+                  "label": "학사일정 보기 (삼남중)",
+                  "action": "webLink",
+                  "webLinkUrl": "https://school.use.go.kr/isamnam-m/M01030201/"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
+					
+	except:
+		meal = "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요."
+
+		responseBody = {
+		"version": "2.0",
+		"template": {
+			"outputs": [
+				{
+					"textCard": {
+		  				"title": date + " 오늘의 급식",
+		  				"description": meal ,
+		  				"buttons": [
+			{
+			  "action": "message",
+			  "label": "사용자 등록하기",
+			  "messageText": "사용자 등록하기"
+			}
+									]
+								}
+				}
+						]
+		}
+	}
+	return responseBody
+
+	
+
 @app.route('/sche', methods = ['POST'])
 def sche():
 	body = request.get_json()
@@ -87,11 +791,6 @@ def sche():
 		  				"title": date + " 학사일정",
 		  				"description": "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요." ,
 		  				"buttons": [
-							{
-			  					"action": "webLink",
-			  					"label": "온라인 건의함",
-			  					"webLinkUrl": "https://m.site.naver.com/1k4Sj"
-							},
 			{
 			  "action": "message",
 			  "label": "사용자 등록하기",
@@ -215,11 +914,6 @@ def sche():
 		  				"title": date + " 학사일정",
 		  				"description": "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요." ,
 		  				"buttons": [
-							{
-			  					"action": "webLink",
-			  					"label": "온라인 건의함",
-			  					"webLinkUrl": "https://m.site.naver.com/1k4Sj"
-							},
 			{
 			  "action": "message",
 			  "label": "사용자 등록하기",
@@ -630,11 +1324,6 @@ def timetable():
 		  				"title": date + " 시간표",
 		  				"description": "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요." ,
 		  				"buttons": [
-							{
-			  					"action": "webLink",
-			  					"label": "온라인 건의함",
-			  					"webLinkUrl": "https://m.site.naver.com/1k4Sj"
-							},
 			{
 			  "action": "message",
 			  "label": "사용자 등록하기",
@@ -743,14 +1432,7 @@ def timetable():
 				{
 					"textCard": {
 		  				"title": date + " 시간표",
-		  				"description": "오늘은 시간표가 없어요!" ,
-		  				"buttons": [
-							{
-			  					"action": "webLink",
-			  					"label": "온라인 건의함",
-			  					"webLinkUrl": "https://m.site.naver.com/1k4Sj"
-							}
-									]
+		  				"description": "오늘은 시간표가 없어요!"
 								}
 				}
 						]
@@ -895,11 +1577,6 @@ def timetable():
 		  				"title": date + " 시간표",
 		  				"description": "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요." ,
 		  				"buttons": [
-							{
-			  					"action": "webLink",
-			  					"label": "온라인 건의함",
-			  					"webLinkUrl": "https://m.site.naver.com/1k4Sj"
-							},
 			{
 			  "action": "message",
 			  "label": "사용자 등록하기",
@@ -969,19 +1646,12 @@ def service():
 				{
 					"textCard": {
 		  				"title": date + " 오늘의 급식",
-		  				"description": meal ,
-		  				"buttons": [
-							{
-			  					"action": "webLink",
-			  					"label": "온라인 건의함",
-			  					"webLinkUrl": "https://m.site.naver.com/1k4Sj"
-							}
-									]
+		  				"description": meal
 								}
 				}
 						]
 		}
-	}
+	}					
 					
 	except:
 		meal = "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요."
@@ -995,11 +1665,6 @@ def service():
 		  				"title": date + " 오늘의 급식",
 		  				"description": meal ,
 		  				"buttons": [
-							{
-			  					"action": "webLink",
-			  					"label": "온라인 건의함",
-			  					"webLinkUrl": "https://m.site.naver.com/1k4Sj"
-							},
 			{
 			  "action": "message",
 			  "label": "사용자 등록하기",
@@ -1011,4 +1676,528 @@ def service():
 						]
 		}
 	}
+	return responseBody
+
+@app.route('/am', methods = ["POST"])
+def am():
+	descr = ""
+	timetablelist = []
+	body = request.get_json()
+	userID = body['userRequest']['user']['id']
+	numb = 0
+	try:
+		useridtable = userIdData.all(formula=match({"userID":userID}))
+		print(userIdData.all())
+		id1 = useridtable[0]['id']
+		print(id1)
+		if useridtable == 0 or useridtable == "false" or useridtable == "" or useridtable == "NaN" or useridtable == []:
+			print("Not Existed!")
+			responseBody = {
+		"version": "2.0",
+		"template": {
+			"outputs": [
+				{
+					"textCard": {
+		  				"title": date + " 시간표",
+		  				"description": "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요." ,
+		  				"buttons": [
+			{
+			  "action": "message",
+			  "label": "사용자 등록하기",
+			  "messageText": "사용자 등록하기"
+			}
+									]
+								}
+				}
+						]
+		}
+	}
+		else:
+			
+			print("Find Info")
+			print(useridtable)
+			for a in userIdData.all():
+				print(a)
+				if id1 == a['id']:
+					data = a['fields']
+					print(data)
+					if data['schoolcode'] == "S":
+						user_school_code = '7501030'
+						NEIStime ="https://open.neis.go.kr/hub/misTimetable"
+					elif data['schoolcode'] == "E":
+						user_school_code = '7480188'
+						NEIStime = "https://open.neis.go.kr/hub/hisTimetable"
+					else:
+						user_school_code = '7501030'
+						NEIStime ="https://open.neis.go.kr/hub/misTimetable"
+					user_grade_code = str(data['gradecode'])
+					user_class_code = str(data['classcode'])
+					break
+			print(user_school_code + user_grade_code + user_class_code)
+			
+			params = {
+			'KEY' : service_key,
+			'Type' : 'json',
+			'pIndex' : '1',
+			'pSize' : '100',
+			'ATPT_OFCDC_SC_CODE' : edu_code,
+			'SD_SCHUL_CODE' : user_school_code,
+			'AY' : '2024',
+			'SEM' : '1',
+			'ALL_TI_YMD' : day,
+			'GRADE' : user_grade_code,
+			'CLASS_NM' : user_class_code
+			}
+
+			print(NEIStime)
+			response = requests.get(NEIStime, params=params)
+			contents = response.json()
+			print(contents)
+			findtext = response.text
+			timenum = 0
+			
+
+			#시간표 미제공 날짜 구별
+			find = findtext.find('해당하는 데이터가 없습니다.')
+			print(find)
+
+			weekstr = str(week)
+			weekday = weeklist.get(weekstr, "월요")
+
+			
+			if find == -1:
+				if NEIStime == "https://open.neis.go.kr/hub/hisTimetable":
+					time = contents['hisTimetable'][1]['row']
+					if  week == 3:
+						timenumb = 6
+					else:
+						timenumb = 7
+
+					for n in range(0,timenumb):
+						try:
+							print(timenum)
+							timecheck = int(time[timenum]['PERIO'])
+							print("Now")
+							print(timecheck)
+						except:
+							timecheck = 0
+	
+						if not(timecheck == n + 1):
+							timetablelist.append('선택')
+							print("선택과목")
+						else:
+							timetablelist.append(time[timenum]['ITRT_CNTNT'])
+							print(time[timenum]['ITRT_CNTNT'])
+							timenum += 1
+						print(timetablelist)
+							
+				
+				elif NEIStime == "https://open.neis.go.kr/hub/misTimetable":
+					time = contents['misTimetable'][1]['row']
+					for a in time:
+						timetablelist.append(a['ITRT_CNTNT'])
+			
+
+			print(weekday == "일")
+			print(weekday == "토")
+			print(not(find == -1))
+			if weekday == "일" or weekday == "토" or not(find == -1):
+				responseBody = {
+		"version": "2.0",
+		"template": {
+			"outputs": [
+				{
+					"textCard": {
+		  				"title": date + " 시간표",
+		  				"description": "오늘은 시간표가 없어요!" 
+								}
+				}
+						]
+		}
+	}
+				print(responseBody)
+			else:
+				print(timetablelist)
+				if user_school_code == "7480188" and user_grade_code == '1' and user_class_code == '5':
+					timetablelist = []
+					teacherlist = []
+					passing_timetable = {timetab: teacher for timetab, teacher in timetabledict.items() if not(timetab.find(weekday) == -1)}
+					for key in passing_timetable:
+						timetablelist.append(key[3:])
+	
+					for value in passing_timetable.values():
+						teacherlist.append(value)
+
+					print(timetablelist)
+					print(teacherlist)
+					
+					responseBody = {
+  "version": "2.0",
+  "template": {
+	"outputs": [
+	  {
+		"itemCard":{
+			  "head": {
+				"title": "1학년 5반 " + date + " 시간표" 
+			  	},
+			  	"itemList": [
+				{
+				"title": '1교시',
+				"description": timetablelist[0] + ' | ' + teacherlist[0]
+				},
+				{
+				"title": '2교시',
+				"description": timetablelist[1] + ' | ' + teacherlist[1]
+				},
+				{
+				"title": '3교시',
+				"description": timetablelist[2] + ' | ' + teacherlist[2]
+				},
+				{
+				"title": '4교시',
+				"description": timetablelist[3] + ' | ' + teacherlist[3]
+				}
+			  ],
+			  "itemListAlignment": "left"
+		}
+	  }
+	]
+	}
+	}
+				else:
+					print("Not 1-5")
+					if NEIStime == "https://open.neis.go.kr/hub/hisTimetable":
+						numb = timenum
+					else:
+						numb = contents['misTimetable'][0]['head'][0]['list_total_count']
+					print(numb)
+					numb7 = 8 - int(numb)
+
+					print(numb7)
+					
+					if not(numb7 == 0):
+						print("numb is not 7")
+						for a in range(0, numb7):
+							timecode = str(numb + a + 1)
+							app = "오늘은 " + timecode + "교시가 없어요"
+							print(app)
+							timetablelist.append(app)
+				
+					print(timetablelist)
+					responseBody = {
+  "version": "2.0",
+  "template": {
+	"outputs": [
+	  {
+		"itemCard":{
+			  "head": {
+				"title": user_grade_code + "학년 " + user_class_code + "반 " + date + " 시간표" 
+			  	},
+			  	"itemList": [
+				{
+				"title": '1교시',
+				"description": timetablelist[0]
+				},
+				{
+				"title": '2교시',
+				"description": timetablelist[1]
+				},
+				{
+				"title": '3교시',
+				"description": timetablelist[2]
+				},
+				{
+				"title": '4교시',
+				"description": timetablelist[3]
+				}
+			  ],
+			  "itemListAlignment": "left"
+		}
+	  }
+	]
+	}
+	}			
+					print(responseBody)
+					
+	except:
+		print("Can't find info")
+		responseBody = {
+		"version": "2.0",
+		"template": {
+			"outputs": [
+				{
+					"textCard": {
+		  				"title": date + " 시간표",
+		  				"description": "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요." ,
+		  				"buttons": [
+			{
+			  "action": "message",
+			  "label": "사용자 등록하기",
+			  "messageText": "사용자 등록하기"
+			}
+									]
+								}
+				}
+						]
+		}
+	}
+	
+	return responseBody
+
+@app.route('/pm', methods = ["POST"])
+def pm():
+	descr = ""
+	timetablelist = []
+	body = request.get_json()
+	userID = body['userRequest']['user']['id']
+	numb = 0
+	try:
+		useridtable = userIdData.all(formula=match({"userID":userID}))
+		print(userIdData.all())
+		id1 = useridtable[0]['id']
+		print(id1)
+		if useridtable == 0 or useridtable == "false" or useridtable == "" or useridtable == "NaN" or useridtable == []:
+			print("Not Existed!")
+			responseBody = {
+		"version": "2.0",
+		"template": {
+			"outputs": [
+				{
+					"textCard": {
+		  				"title": date + " 시간표",
+		  				"description": "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요." ,
+		  				"buttons": [
+			{
+			  "action": "message",
+			  "label": "사용자 등록하기",
+			  "messageText": "사용자 등록하기"
+			}
+									]
+								}
+				}
+						]
+		}
+	}
+		else:
+			
+			print("Find Info")
+			print(useridtable)
+			for a in userIdData.all():
+				print(a)
+				if id1 == a['id']:
+					data = a['fields']
+					print(data)
+					if data['schoolcode'] == "S":
+						user_school_code = '7501030'
+						NEIStime ="https://open.neis.go.kr/hub/misTimetable"
+					elif data['schoolcode'] == "E":
+						user_school_code = '7480188'
+						NEIStime = "https://open.neis.go.kr/hub/hisTimetable"
+					else:
+						user_school_code = '7501030'
+						NEIStime ="https://open.neis.go.kr/hub/misTimetable"
+					user_grade_code = str(data['gradecode'])
+					user_class_code = str(data['classcode'])
+					break
+			print(user_school_code + user_grade_code + user_class_code)
+			
+			params = {
+			'KEY' : service_key,
+			'Type' : 'json',
+			'pIndex' : '1',
+			'pSize' : '100',
+			'ATPT_OFCDC_SC_CODE' : edu_code,
+			'SD_SCHUL_CODE' : user_school_code,
+			'AY' : '2024',
+			'SEM' : '1',
+			'ALL_TI_YMD' : day,
+			'GRADE' : user_grade_code,
+			'CLASS_NM' : user_class_code
+			}
+
+			print(NEIStime)
+			response = requests.get(NEIStime, params=params)
+			contents = response.json()
+			print(contents)
+			findtext = response.text
+			timenum = 0
+			
+
+			#시간표 미제공 날짜 구별
+			find = findtext.find('해당하는 데이터가 없습니다.')
+			print(find)
+
+			weekstr = str(week)
+			weekday = weeklist.get(weekstr, "월요")
+
+			
+			if find == -1:
+				if NEIStime == "https://open.neis.go.kr/hub/hisTimetable":
+					time = contents['hisTimetable'][1]['row']
+					if  week == 3:
+						timenumb = 6
+					else:
+						timenumb = 7
+
+					for n in range(0,timenumb):
+						try:
+							print(timenum)
+							timecheck = int(time[timenum]['PERIO'])
+							print("Now")
+							print(timecheck)
+						except:
+							timecheck = 0
+	
+						if not(timecheck == n + 1):
+							timetablelist.append('선택')
+							print("선택과목")
+						else:
+							timetablelist.append(time[timenum]['ITRT_CNTNT'])
+							print(time[timenum]['ITRT_CNTNT'])
+							timenum += 1
+						print(timetablelist)
+							
+				
+				elif NEIStime == "https://open.neis.go.kr/hub/misTimetable":
+					time = contents['misTimetable'][1]['row']
+					for a in time:
+						timetablelist.append(a['ITRT_CNTNT'])
+			
+
+			print(weekday == "일")
+			print(weekday == "토")
+			print(not(find == -1))
+			if weekday == "일" or weekday == "토" or not(find == -1):
+				responseBody = {
+		"version": "2.0",
+		"template": {
+			"outputs": [
+				{
+					"textCard": {
+		  				"title": date + " 시간표",
+		  				"description": "오늘은 시간표가 없어요!" 
+								}
+				}
+						]
+		}
+	}
+				print(responseBody)
+			else:
+				print(timetablelist)
+				if user_school_code == "7480188" and user_grade_code == '1' and user_class_code == '5':
+					timetablelist = []
+					teacherlist = []
+					passing_timetable = {timetab: teacher for timetab, teacher in timetabledict.items() if not(timetab.find(weekday) == -1)}
+					for key in passing_timetable:
+						timetablelist.append(key[3:])
+	
+					for value in passing_timetable.values():
+						teacherlist.append(value)
+
+					print(timetablelist)
+					print(teacherlist)
+					
+					responseBody = {
+  "version": "2.0",
+  "template": {
+	"outputs": [
+	  {
+		"itemCard":{
+			  "head": {
+				"title": "1학년 5반 " + date + " 시간표" 
+			  	},
+			  	"itemList": [
+				{
+				"title": '5교시',
+				"description": timetablelist[4] + ' | ' + teacherlist[4]
+				},
+				{
+				"title": '6교시',
+				"description": timetablelist[5] + ' | ' + teacherlist[5]
+				},
+				{
+				"title": '7교시',
+				"description": timetablelist[6] + ' | ' + teacherlist[6]
+				}
+			  ],
+			  "itemListAlignment": "left"
+		}
+	  }
+	]
+	}
+	}
+				else:
+					print("Not 1-5")
+					if NEIStime == "https://open.neis.go.kr/hub/hisTimetable":
+						numb = timenum
+					else:
+						numb = contents['misTimetable'][0]['head'][0]['list_total_count']
+					print(numb)
+					numb7 = 8 - int(numb)
+
+					print(numb7)
+					
+					if not(numb7 == 0):
+						print("numb is not 7")
+						for a in range(0, numb7):
+							timecode = str(numb + a + 1)
+							app = "오늘은 " + timecode + "교시가 없어요"
+							print(app)
+							timetablelist.append(app)
+				
+					print(timetablelist)
+					responseBody = {
+  "version": "2.0",
+  "template": {
+	"outputs": [
+	  {
+		"itemCard":{
+			  "head": {
+				"title": user_grade_code + "학년 " + user_class_code + "반 " + date + " 시간표" 
+			  	},
+			  	"itemList": [
+				{
+				"title": '5교시',
+				"description": timetablelist[4]
+				},
+				{
+				"title": '6교시',
+				"description": timetablelist[5]
+				},
+				{
+				"title": '7교시',
+				"description": timetablelist[6]
+				}
+			  ],
+			  "itemListAlignment": "left"
+		}
+	  }
+	]
+	}
+	}			
+					print(responseBody)
+					
+	except:
+		print("Can't find info")
+		responseBody = {
+		"version": "2.0",
+		"template": {
+			"outputs": [
+				{
+					"textCard": {
+		  				"title": date + " 시간표",
+		  				"description": "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요." ,
+		  				"buttons": [
+			{
+			  "action": "message",
+			  "label": "사용자 등록하기",
+			  "messageText": "사용자 등록하기"
+			}
+									]
+								}
+				}
+						]
+		}
+	}
+	
 	return responseBody
