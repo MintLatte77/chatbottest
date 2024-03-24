@@ -12,9 +12,9 @@ from pyairtable.formulas import match
 datetime_utc = datetime.utcnow()
 timezone_kst = timezone(timedelta(hours=9))
 datetime_kst = datetime_utc.astimezone(timezone_kst)
-day = '20240327' # datetime_kst.strftime("%Y%m%d")
+day = datetime_kst.strftime("%Y%m%d")
 date = str(int(datetime_kst.strftime("%m"))) + "월 "+ str(int(datetime_kst.strftime("%d"))) + "일"
-week = 3 # int(datetime_kst.strftime("%w"))
+week = int(datetime_kst.strftime("%w"))
 time = int(datetime_kst.strftime("%H"))
 
 
