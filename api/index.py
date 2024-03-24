@@ -650,7 +650,7 @@ def timetable():
 					if not(numb7 == 0):
 						print("numb is not 7")
 						for a in range(0, numb7):
-							timecode = str(numb + a)
+							timecode = str(numb + a + 1)
 							app = "오늘은 " + timecode + "교시가 없어요"
 							print(app)
 							timetablelist.append(app)
