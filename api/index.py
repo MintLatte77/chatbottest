@@ -1,3 +1,4 @@
+
 from flask import Flask, request
 import sys
 from datetime import datetime, timedelta, timezone
@@ -12,11 +13,8 @@ from pyairtable.formulas import match
 datetime_utc = datetime.utcnow()
 timezone_kst = timezone(timedelta(hours=9))
 datetime_kst = datetime_utc.astimezone(timezone_kst)
-datetime_kst_n = datetime_kst + timedelta(days=1)
 day = datetime_kst.strftime("%Y%m%d")
-day_n = datetime_kst_n.strftime("%Y%m%d")
 date = str(int(datetime_kst.strftime("%m"))) + "월 "+ str(int(datetime_kst.strftime("%d"))) + "일"
-date_n = str(int(datetime_kst_n.strftime("%m"))) + "월 "+ str(int(datetime_kst_n.strftime("%d"))) + "일"
 week = int(datetime_kst.strftime("%w"))
 time = int(datetime_kst.strftime("%H"))
 
@@ -42,9 +40,6 @@ Eonyang = 'tbluLhtM3VcwQdo8u'
 Samnam = 'tblg8eounZNf1xCAs'
 Eschedule = Table(airtable_token, scheduleID, Eonyang)
 Sschedule = Table(airtable_token, scheduleID, Samnam)
-mealbase = 'app9eLibHZzVA39uJ'
-mealtable = 'tblvip1ulmxdKMeX4'
-mealdata = Table(airtable_token, mealbase, mealtable)
 
 #
 
@@ -907,35 +902,7 @@ def service():
 		id1 = useridtable[0]['id']
 		if useridtable == 0 or useridtable == "false" or useridtable == "" or useridtable == "NaN" or useridtable == []:
 			meal = "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요."
-
-			responseBody = {
-		"version": "2.0",
-		"template": {
-			"outputs": [
-				{
-					"textCard": {
-		  				"title": date + " 급식",
-		  				"description": meal ,
-		  				"buttons": [
-			{
-			  "action": "message",
-			  "label": "사용자 등록하기",
-			  "messageText": "사용자 등록하기"
-			}
-									]
-								}
-				}
-						]
-		}
-	}
 		else:
-			breakfast1 = " - "
-			breakfast2 = " - "
-			dinner = " - "
-			breakfast1_n = " - "
-			breakfast2_n = " - "
-			dinner_n = " - "
-			print("Setting")
 			for a in userIdData.all():
 				if id1 == a['id']:
 					data = a['fields']
@@ -943,25 +910,9 @@ def service():
 						user_school_code = '7501030'
 					elif data['schoolcode'] == "E":
 						user_school_code = '7480188'
-						print(user_school_code)
-						for b in mealdata.all():
-							mealdataday = b['fields']['Date']
-							mealday = "".join(mealdataday.split("-"))
-							print(mealday)
-							if int(day) == int(mealday):
-								breakfast1 = b['fields']['breakfast1']
-								breakfast2 = b['fields']['breakfast2']
-								dinner = b['fields']['dinner']
-							elif int(day_n) == int(mealday):
-								breakfast1_n = b['fields']['breakfast1']
-								breakfast2_n = b['fields']['breakfast2']
-								dinner_n = b['fields']['dinner']
 					else:
 						user_school_code = '7501030'
 			
-			day1 = str(day)
-			day2 = str(day_n)
-
 			params = {
 			'KEY' : service_key,
 			'Type' : 'json',
@@ -969,7 +920,7 @@ def service():
 			'pSize' : '100',
 			'ATPT_OFCDC_SC_CODE' : edu_code,
 			'SD_SCHUL_CODE' : user_school_code,
-			'MLSV_YMD' : day1
+			'MLSV_YMD' : day
 			}
 
 			response = requests.get(NEISurl, params=params)
@@ -985,94 +936,20 @@ def service():
 				meal ="\n".join(content.split('<br/>'))
 			else:
 				meal = "오늘은 급식이 없어요!"
-			
-			params_n = {
-			'KEY' : service_key,
-			'Type' : 'json',
-			'pIndex' : '1',
-			'pSize' : '100',
-			'ATPT_OFCDC_SC_CODE' : edu_code,
-			'SD_SCHUL_CODE' : user_school_code,
-			'MLSV_YMD' : day2
-			}
-
-			response_n = requests.get(NEISurl, params=params_n)
-			contents_n = response_n.text
-
-			#급식 미제공 날짜 구별
-			find_n = contents_n.find('해당하는 데이터가 없습니다.')
-			
-			if find_n == -1:
-				findstart_n = contents_n.find('DDISH_NM') + 11
-				findend_n = contents_n.find('ORPLC_INFO') - 3
-				content_n = contents_n[findstart_n:findend_n]
-				meal_n ="\n".join(content_n.split('<br/>'))
-			else:
-				meal_n = "내일은 급식이 없어요!"
-
-			
 
 			responseBody = {
-  "version": "2.0",
-  "template": {
-    "outputs": [
-      {
-        "carousel": {
-          "type": "listCard",
-          "items": [
-			  {
-			  "header": {
-				"title" : date + " 급식"
-			  },
-              "items": [
-                {
-                  "title": "아침",
-                  "description": breakfast1
-                },
+		"version": "2.0",
+		"template": {
+			"outputs": [
 				{
-                  "title": "아침(간편)",
-                  "description": breakfast2
-                },
-                {
-                  "title": "점심",
-                  "description": meal
-                },
-                {
-                  "title" : "저녁",
-                  "description" : dinner
-                }
-              ]
-            },
-			{
-              "header": {
-				"title" : date_n + " 급식"
-			  },
-              "items": [
-                {
-                  "title": "아침",
-                  "description": breakfast1_n
-                },
-				{
-                  "title": "아침(간편)",
-                  "description": breakfast2_n
-                },
-                {
-                  "title": "점심",
-                  "description": meal_n
-                },
-                {
-                  "title" : "저녁",
-                  "description" : dinner_n
-                }
-              ]
-            },
-           
-          ]
-        }
-      }
-    ]
-  }
-}					
+					"textCard": {
+		  				"title": date + " 오늘의 급식",
+		  				"description": meal
+								}
+				}
+						]
+		}
+	}					
 					
 	except:
 		meal = "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요."
@@ -1083,7 +960,7 @@ def service():
 			"outputs": [
 				{
 					"textCard": {
-		  				"title": date + " 급식",
+		  				"title": date + " 오늘의 급식",
 		  				"description": meal ,
 		  				"buttons": [
 			{
