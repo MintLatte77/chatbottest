@@ -70,6 +70,11 @@ def all():
 	timetablelist = []
 	numb = 0
 	scheN = 0
+	schedulename = []
+	scheduledatestart = []
+	scheduledateend = []
+	schedatastart = ""
+	schedataend = ""
 	try:
 		useridtable = userIdData.all(formula=match({"userID":userID}))
 		print(useridtable)
