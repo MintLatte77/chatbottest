@@ -16,6 +16,7 @@ datetime_kst_n = datetime_kst + timedelta(days=1)
 day = datetime_kst.strftime("%Y%m%d")
 day_n = datetime_kst_n.strftime("%Y%m%d")
 date = str(int(datetime_kst.strftime("%m"))) + "월 "+ str(int(datetime_kst.strftime("%d"))) + "일"
+date_n = str(int(datetime_kst_n.strftime("%m"))) + "월 "+ str(int(datetime_kst_n.strftime("%d"))) + "일"
 week = int(datetime_kst.strftime("%w"))
 time = int(datetime_kst.strftime("%H"))
 
@@ -906,6 +907,27 @@ def service():
 		id1 = useridtable[0]['id']
 		if useridtable == 0 or useridtable == "false" or useridtable == "" or useridtable == "NaN" or useridtable == []:
 			meal = "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요."
+
+			responseBody = {
+		"version": "2.0",
+		"template": {
+			"outputs": [
+				{
+					"textCard": {
+		  				"title": date + " 급식",
+		  				"description": meal ,
+		  				"buttons": [
+			{
+			  "action": "message",
+			  "label": "사용자 등록하기",
+			  "messageText": "사용자 등록하기"
+			}
+									]
+								}
+				}
+						]
+		}
+	}
 		else:
 			breakfast1 = " - "
 			breakfast2 = " - "
@@ -996,18 +1018,18 @@ def service():
     "outputs": [
       {
         "carousel": {
-          "type": "itemCard",
+          "type": "listCard",
           "items": [
-            {
-              "thumbnail": {
-                "imageUrl" : "https://cdn.discordapp.com/attachments/1021364751541997659/1221373992645038100/7f0eaa8db4618a16.png?ex=6612582b&is=65ffe32b&hm=3bd8828a5bd814e7c3150b119706f54bfc58702171eb18485386c5a3ac53f686&"
-              },
-              "itemList": [
+			  {
+			  "header": {
+				"title" : date + " 급식"
+			  },
+              "items": [
                 {
                   "title": "아침",
                   "description": breakfast1
                 },
-		{
+				{
                   "title": "아침(간편)",
                   "description": breakfast2
                 },
@@ -1019,19 +1041,18 @@ def service():
                   "title" : "저녁",
                   "description" : dinner
                 }
-              ],
-              "itemListAlignment": "left"
+              ]
             },
-	{
-              "thumbnail": {
-                "imageUrl" : "https://cdn.discordapp.com/attachments/1021364751541997659/1221434345550512198/1.png?ex=66129061&is=66001b61&hm=51982aaece47769c5254fe9fb69f61a61243456eb1d984d76a58861eaff6233c&"
-              },
-              "itemList": [
+			{
+              "header": {
+				"title" : date_n + " 급식"
+			  },
+              "items": [
                 {
                   "title": "아침",
                   "description": breakfast1_n
                 },
-		{
+				{
                   "title": "아침(간편)",
                   "description": breakfast2_n
                 },
@@ -1043,8 +1064,7 @@ def service():
                   "title" : "저녁",
                   "description" : dinner_n
                 }
-              ],
-              "itemListAlignment": "left"
+              ]
             },
            
           ]
@@ -1063,7 +1083,7 @@ def service():
 			"outputs": [
 				{
 					"textCard": {
-		  				"title": date + " 오늘의 급식",
+		  				"title": date + " 급식",
 		  				"description": meal ,
 		  				"buttons": [
 			{
