@@ -14,7 +14,10 @@ import time
 datetime_utc = datetime.utcnow()
 timezone_kst = timezone(timedelta(hours=9))
 datetime_kst = datetime_utc.astimezone(timezone_kst)
+twodayslater = timedelta(days=2)
+datetime_kst_2 = datetime_kst + twodayslater
 day = datetime_kst.strftime("%Y%m%d")
+day_2 = datetime_kst_2.strftime("%Y%m%d")
 date = str(int(datetime_kst.strftime("%m"))) + "월 "+ str(int(datetime_kst.strftime("%d"))) + "일"
 week = int(datetime_kst.strftime("%w"))
 time = int(datetime_kst.strftime("%H"))
@@ -102,7 +105,6 @@ def testmeal():
 @app.route('/test', methods = ['POST']) # 급식 테스트!!
 def test():
 	starttime = datetime.utcnow().timestamp()
-	meal = "" # 급식 내용
 	body = request.get_json()
 	userID = body['userRequest']['user']['id'] # ID 조회
 	print(userID)
@@ -120,6 +122,8 @@ def test():
 		schoolname = UserData[0]['fields']['schoolname']
 		print(schoolname)
 		
+		mealdict = {}
+		output = []
 		params = {
 		'KEY' : NEIS_Key,
 		'Type' : 'json',
@@ -127,48 +131,47 @@ def test():
 		'pSize' : '100',
 		'ATPT_OFCDC_SC_CODE' : Educode,
 		'SD_SCHUL_CODE' : schoolcode,
-		'MLSV_YMD' : day
+		'MLSV_FROM_YMD' : day,
+		'MLSV_TO_YMD' : day_2
 		}
 		
 		response = requests.get(NEISmealurl, params=params)
-		contents = response.text
-		#급식 미제공 날짜 구별
-		find = contents.find('해당하는 데이터가 없습니다.')
-
+		contentstext = response.text
+		contents = response.json()
+		
+		
+		find = contentstext.find('해당하는 데이터가 없습니다.')
+		
 		if find == -1:
-			findstart = contents.find('DDISH_NM') + 11
-			findend = contents.find('ORPLC_INFO') - 3
-			content = contents[findstart:findend]
-			meal ="\n".join(content.split('<br/>'))
+			count = int(contents['mealServiceDietInfo'][0]['head'][0]['list_total_count'])
+			for a in range(0, count):
+				mealday = str(contents['mealServiceDietInfo'][1]['row'][a]['MLSV_YMD'])
+				mealcontents = contents['mealServiceDietInfo'][1]['row'][a]['DDISH_NM']
+				mealcontent = "\n".join(mealcontents.split('<br/>'))
+				mealdict[mealday] = mealcontent
+			mealdata = dict(sorted(mealdict.items()))
+			for key, value in mealdata.items():
+				output.append({"title":key[4:5] + "월 " + key[6:7] + "일" + " " + schoolname + " 급식", "description" : value})
+					
 		else:
-			meal = "오늘은 급식이 없어요!"
-			responseBody = {
-  "version": "2.0",
-  "template": {
-    "outputs": [
-      {
-        "carousel": {
-          "type": "textCard",
-          "items": [
-            {
-              "title": date + " " + schoolname + " 급식",
-              "description": meal
-            },
-            {
-              "title": date + " " + schoolname + " 급식",
-              "description": "보물상자2 안에는 뭐가 있을까"
-            },
-            {
-              "title": date + " " + schoolname + " 급식",
-              "description": "보물상자3 안에는 뭐가 있을까"
-            }
-          ]
-        }
-      }
-    ]
-  }
-}
-			
+			output = [{
+	              "title": date + " " + schoolname + " 급식",
+	              "description": "급식이 없어요!"
+	            }]
+	responseBody = {
+	  "version": "2.0",
+	  "template": {
+	    "outputs": [
+	      {
+	        "carousel": {
+	          "type": "textCard",
+	          "items": [output]
+	        }
+	      }
+	    ]
+	  }
+	}
+				
 	endtime = datetime.utcnow().timestamp()
 	loadingtime = endtime - starttime
 	print(str(loadingtime) + "s 소요")
