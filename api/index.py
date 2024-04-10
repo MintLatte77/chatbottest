@@ -61,7 +61,7 @@ def time():
 
 @app.route('/test', methods = ['POST']) # 급식 테스트!!
 def test():
-	starttime = time.time()
+	starttime = datetime.utcnow().timestamp()
 	meal = "" # 급식 내용
 	body = request.get_json()
 	userID = body['userRequest']['user']['id'] # ID 조회
@@ -130,7 +130,7 @@ def test():
 						]
 		}
 	}
-	endtime = time.time()
+	endtime = datetime.utcnow().timestamp()
 	loadingtime = endtime - starttime
 	print(loadingtime + "s 소요")
 	return responseBody
