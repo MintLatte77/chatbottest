@@ -73,8 +73,9 @@ def testmeal():
 		}
 		
 	response = requests.get(NEISmealurl, params=params)
-	contents = response.text
-	return contents
+	contents = response.json()
+	responsecode = contents['mealServiceDietInfo'][0]['head'][1]['RESULT']['CODE']
+	return responsecode
 
 @app.route('/test', methods = ['POST']) # 급식 테스트!!
 def test():
