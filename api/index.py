@@ -175,6 +175,7 @@ def test():
 	endtime = datetime.utcnow().timestamp()
 	loadingtime = endtime - starttime
 	print(str(loadingtime) + "s 소요")
+	print(responseBody)
 	return responseBody
 
 
