@@ -132,7 +132,7 @@ def test():
 	}
 	endtime = datetime.utcnow().timestamp()
 	loadingtime = endtime - starttime
-	print(loadingtime + "s 소요")
+	print(str(loadingtime) + "s 소요")
 	return responseBody
 
 
