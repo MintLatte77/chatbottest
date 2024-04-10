@@ -66,80 +66,55 @@ def test():
 	body = request.get_json()
 	userID = body['userRequest']['user']['id'] # ID 조회
 	print(userID)
-	try:
-		UserData = UserIdData.all(formula=match({"userID": userID, "Educode": '-', "schoolcode": '-', "schoolname": '-'}, match_any=True))
+	UserData = UserIdData.all(formula=match({"userID": userID, "Educode": '-', "schoolcode": '-', "schoolname": '-'}, match_any=True))
+	print(UserData)
+	if useridtable == 0 or useridtable == "false" or useridtable == "" or useridtable == "NaN" or useridtable == []:
+		print("Can't Search Data")
+		raise Exception("Can't Search Data")
+	else:
 		print(UserData)
-		if useridtable == 0 or useridtable == "false" or useridtable == "" or useridtable == "NaN" or useridtable == []:
-			print("Can't Search Data")
-			raise Exception("Can't Search Data")
+		Educode = UserData[0]['fields']['Educode']
+		print(Educode)
+		schoolcode = UserData[0]['fields']['schoolcode']
+		print(schoolcode)
+		schoolname = UserData[0]['fields']['schoolname']
+		print(schoolname)
+		
+		params = {
+		'KEY' : NEIS_Key,
+		'Type' : 'json',
+		'pIndex' : '1',
+		'pSize' : '100',
+		'ATPT_OFCDC_SC_CODE' : Educode,
+		'SD_SCHUL_CODE' : schoolcode,
+		'MLSV_YMD' : day
+		}
+		
+		response = requests.get(NEISmealurl, params=params)
+		contents = response.text
+		#급식 미제공 날짜 구별
+		find = contents.find('해당하는 데이터가 없습니다.')
+
+		if find == -1:
+			findstart = contents.find('DDISH_NM') + 11
+			findend = contents.find('ORPLC_INFO') - 3
+			content = contents[findstart:findend]
+			meal ="\n".join(content.split('<br/>'))
 		else:
-			print(UserData)
-			Educode = UserData[0]['fields']['Educode']
-			print(Educode)
-			schoolcode = UserData[0]['fields']['schoolcode']
-			print(schoolcode)
-			schoolname = UserData[0]['fields']['schoolname']
-			print(schoolname)
-			
-			params = {
-			'KEY' : NEIS_Key,
-			'Type' : 'json',
-			'pIndex' : '1',
-			'pSize' : '100',
-			'ATPT_OFCDC_SC_CODE' : Educode,
-			'SD_SCHUL_CODE' : schoolcode,
-			'MLSV_YMD' : day
-			}
-
-			response = requests.get(NEISmealurl, params=params)
-			contents = response.text
-
-			#급식 미제공 날짜 구별
-			find = contents.find('해당하는 데이터가 없습니다.')
-	
-			if find == -1:
-				findstart = contents.find('DDISH_NM') + 11
-				findend = contents.find('ORPLC_INFO') - 3
-				content = contents[findstart:findend]
-				meal ="\n".join(content.split('<br/>'))
-			else:
-				meal = "오늘은 급식이 없어요!"
-
+			meal = "오늘은 급식이 없어요!"
 			responseBody = {
-		"version": "2.0",
-		"template": {
-			"outputs": [
-				{
-					"textCard": {
-		  				"title": date + schoolname + " 오늘의 급식",
-		  				"description": meal
-								}
-				}
-						]
-		}
-	}					
-					
-	except:
-		responseBody = {
-		"version": "2.0",
-		"template": {
-			"outputs": [
-				{
-					"textCard": {
-		  				"title": date + " 오늘의 급식",
-		  				"description": "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요." ,
-		  				"buttons": [
+	"version": "2.0",
+	"template": {
+	"outputs": [
 			{
-			  "action": "message",
-			  "label": "사용자 등록하기",
-			  "messageText": "사용자 등록하기"
+				"textCard": {
+	  				"title": date + schoolname + " 오늘의 급식",
+	  				"description": meal
+							}
 			}
-									]
-								}
-				}
-						]
-		}
+					]
 	}
+}
 	endtime = datetime.utcnow().timestamp()
 	loadingtime = endtime - starttime
 	print(str(loadingtime) + "s 소요")
