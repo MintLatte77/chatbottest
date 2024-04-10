@@ -151,6 +151,7 @@ def test():
 				mealdict[mealday] = mealcontent
 			mealdata = dict(sorted(mealdict.items()))
 			for key, value in mealdata.items():
+				print(key)
 				output.append({"title":key[4:5] + "월 " + key[6:7] + "일" + " " + schoolname + " 급식", "description" : value})
 					
 		else:
@@ -165,7 +166,7 @@ def test():
 	      {
 	        "carousel": {
 	          "type": "textCard",
-	          "items": [output]
+	          "items": output
 	        }
 	      }
 	    ]
