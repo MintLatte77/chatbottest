@@ -61,7 +61,7 @@ def time():
 @app.route('/test')
 def test():
 	
-	return UserIdData.all(formula="userID")	
+	return UserIdData.all(formula=match({"userID": "test", "schoolcode": '-', "schooltype": '-', "schoolname": '-', "gradecode": '-', "classcode": '-'}, match_any=True))	
 
 @app.route('/sche', methods = ['POST'])
 def sche():
