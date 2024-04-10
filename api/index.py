@@ -21,9 +21,9 @@ time = int(datetime_kst.strftime("%H"))
 
 # 환경변수/시간표 설정
 # table1 - 시간표
-NEISurl = "https://open.neis.go.kr/hub/mealServiceDietInfo"
+NEISmealurl = "https://open.neis.go.kr/hub/mealServiceDietInfo"
 
-service_key = os.environ.get('NEIS_Key')
+NEIS_Key = os.environ.get('NEIS_Key')
 edu_code = 'H10'
 weeklist = {'0':'일','1':'월요','2':'화요','3':'수요','4':'목요','5':'금요','6':'토'}
 timetabledict = {'월요1사회2': '박경환 | 2301(1-5)', '월요2체육': '강정현 | 6201(강당)', '월요3미술': '이창열 | 3202(미술실)', '월요4영어2': '이은정 | 2301(1-5)', '월요5수학': '김효정 | 2301(1-5)', '월요6한국사1': '윤선희 | 2301(1-5)', '월요7정보': '이상옥 | 4201(SW융합실)', '화요1한국사2': '김태경 | 2301(1-5)', '화요2과학2': '이정미 | 2402(생물과학실)', '화요3국어2': '남원정 | 2301(1-5)', '화요4사회1': '권민호 | 2301(1-5)', '화요5국어1': '김성은 | 2301(1-5)', '화요6영어2': '이은정 | 2301(1-5)', '화요7체육': '강정현 | 6201(강당)', '수요1미술': '이창열 | 3202(미술실)', '수요2수학': '김효정 | 2301(1-5)', '수요3과학3': '이정미 | 2402(생물과학실)', '수요4국어2': '남원정 | 2301(1-5)', '수요5직업': '장지연 | 2404(진로실)', '수요6진로': '남원정 | 2301(1-5)', '수요7오늘은 7교시가 없어요':' - ','목요1사회3': '박정호 | 2301(1-5)', '목요2정보': '이상옥 | 4201(SW융합실)', '목요3과학실험': '김명귀 | 2403(화학실험실)', '목요4영어1': '신지현 | 2301(1-5)', '목요5예술1': '이창열 | 3202(미술실)', '목요6수학': '김효정 | 2301(1-5)', '목요7국어1': '김성은 | 2301(1-5)', '금요1수학': '김효정 | 2301(1-5)', '금요2한국사2': '김태경 | 2301(1-5)', '금요3영어1': '신지현 | 2301(1-5)', '금요4과학1': '김명귀 | 2301(1-5)', '금요5자율': '', '금요6동아리': '', '금요7여유': ''}
@@ -58,10 +58,78 @@ def home():
 def time():
 	return str(datetime_kst) + "  " + str(day)
 
-@app.route('/test')
+@app.route('/test') # 급식 테스트!!
 def test():
+	meal = "" # 급식 내용
+	# body = request.get_json()
+	# userID = body['userRequest']['user']['id'] # ID 조회
+	try:
+		UserData = UserIdData.all(formula=match({"userID": "test", "Educode": '-', "schoolcode": '-', "schoolname": '-'}, match_any=True))
+		if useridtable == 0 or useridtable == "false" or useridtable == "" or useridtable == "NaN" or useridtable == []:
+			print("Can't Search Data")
+			raise Exception("Can't Search Data")
+		else:
+			params = {
+			'KEY' : NEIS_Key,
+			'Type' : 'json',
+			'pIndex' : '1',
+			'pSize' : '100',
+			'ATPT_OFCDC_SC_CODE' : UserData[0]['fields']['Educode'],
+			'SD_SCHUL_CODE' : UserData[0]['fields']['schoolcode'],
+			'MLSV_YMD' : day
+			}
+
+			response = requests.get(NEISmealurl, params=params)
+			contents = response.text
+
+			#급식 미제공 날짜 구별
+			find = contents.find('해당하는 데이터가 없습니다.')
 	
-	return UserIdData.all(formula=match({"userID": "test", "schoolcode": '-', "schooltype": '-', "schoolname": '-', "gradecode": '-', "classcode": '-'}, match_any=True))	
+			if find == -1:
+				findstart = contents.find('DDISH_NM') + 11
+				findend = contents.find('ORPLC_INFO') - 3
+				content = contents[findstart:findend]
+				meal ="\n".join(content.split('<br/>'))
+			else:
+				meal = "오늘은 급식이 없어요!"
+
+			responseBody = {
+		"version": "2.0",
+		"template": {
+			"outputs": [
+				{
+					"textCard": {
+		  				"title": date + UserData[0]['fields']['schoolname'] + " 오늘의 급식",
+		  				"description": meal
+								}
+				}
+						]
+		}
+	}					
+					
+	except:
+		responseBody = {
+		"version": "2.0",
+		"template": {
+			"outputs": [
+				{
+					"textCard": {
+		  				"title": date + " 오늘의 급식",
+		  				"description": "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요." ,
+		  				"buttons": [
+			{
+			  "action": "message",
+			  "label": "사용자 등록하기",
+			  "messageText": "사용자 등록하기"
+			}
+									]
+								}
+				}
+						]
+		}
+	}
+	return responseBody
+
 
 @app.route('/sche', methods = ['POST'])
 def sche():
