@@ -71,6 +71,7 @@ def test():
 			print("Can't Search Data")
 			raise Exception("Can't Search Data")
 		else:
+			print(UserData)
 			Educode = UserData[0]['fields']['Educode']
 			schoolcode = UserData[0]['fields']['schoolcode']
 			schoolname = UserData[0]['fields']['schoolname']
