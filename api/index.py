@@ -130,7 +130,6 @@ def test():
             {
               "title": date + " " + schoolname + " 급식",
               "description": meal
-              }
             },
             {
               "title": date + " " + schoolname + " 급식",
