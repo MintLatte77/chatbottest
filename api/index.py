@@ -43,7 +43,7 @@ Sschedule = Table(airtable_token, scheduleID, Samnam)
 # airtable_token = os.environ.get('Airtable_Key')
 UserIdBase = 'appehbq0HhoF3Rk62'
 UserIdTable = 'tblm8yAPlQ3wzjAKp'
-UserIdData = Table(airtable_token,'appehbq0HhoF3Rk62','tblm8yAPlQ3wzjAKp')
+UserIdData = Table(airtable_token, UserIdBase, UserIdTable)
 
 # @app.route('/service', methods = ["POST"])
 # 	body = request.get_json()
