@@ -61,6 +61,8 @@ def time():
 
 @app.route('/testmeal')
 def testmeal():
+	mealdict = {}
+	output = []
 	params = {
 		'KEY' : NEIS_Key,
 		'Type' : 'json',
@@ -68,14 +70,34 @@ def testmeal():
 		'pSize' : '100',
 		'ATPT_OFCDC_SC_CODE' : 'H10',
 		'SD_SCHUL_CODE' : '7480188',
-		'MLSV_FROM_YMD' : '20240410',
+		'MLSV_FROM_YMD' : '20240408',
 		'MLSV_TO_YMD' : '20240410'
 		}
 		
 	response = requests.get(NEISmealurl, params=params)
+	contentstext = response.text
 	contents = response.json()
-
-	return contents
+	
+	
+	find = contentstext.find('해당하는 데이터가 없습니다.')
+	
+	if find == -1:
+		count = int(contents['mealServiceDietInfo'][0]['head'][0]['list_total_count'])
+		for a in range(0, count):
+			mealday = str(contents['mealServiceDietInfo'][1]['row'][a]['MLSV_YMD'])
+			mealcontents = contents['mealServiceDietInfo'][1]['row'][a]['DDISH_NM']
+			mealcontent = "\n".join(mealcontents.split('<br/>'))
+			mealdict[mealday] = mealcontent
+		mealdata = sorted(mealdict.items())
+		for key, value in mealdata.items():
+			output.append({"title":key[4:5] + "월 " + key[6:7] + "일", "description" : value}})
+				
+	else:
+		output = [{
+              "title": date + " " + "언양고등학교" + " 급식",
+              "description": "급식이 없어요!"
+            }]
+	return output
 
 @app.route('/test', methods = ['POST']) # 급식 테스트!!
 def test():
