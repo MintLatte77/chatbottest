@@ -59,6 +59,23 @@ def home():
 def time():
 	return str(datetime_kst) + "  " + str(day)
 
+@app.route('/testmeal')
+def testmeal():
+	params = {
+		'KEY' : NEIS_Key,
+		'Type' : 'json',
+		'pIndex' : '1',
+		'pSize' : '100',
+		'ATPT_OFCDC_SC_CODE' : 'H10',
+		'SD_SCHUL_CODE' : '7480188',
+		'MLSV_FROM_YMD' : '20240408',
+		'MLSV_TO_YMD' : '20240410'
+		}
+		
+	response = requests.get(NEISmealurl, params=params)
+	contents = response.text
+	return contents
+
 @app.route('/test', methods = ['POST']) # 급식 테스트!!
 def test():
 	starttime = datetime.utcnow().timestamp()
@@ -103,18 +120,33 @@ def test():
 		else:
 			meal = "오늘은 급식이 없어요!"
 			responseBody = {
-	"version": "2.0",
-	"template": {
-	"outputs": [
-			{
-				"textCard": {
-	  				"title": date + " " + schoolname + " 오늘의 급식",
-	  				"description": meal
-							}
-			}
-					]
-	}
+  "version": "2.0",
+  "template": {
+    "outputs": [
+      {
+        "carousel": {
+          "type": "textCard",
+          "items": [
+            {
+              "title": date + " " + schoolname + " 급식",
+              "description": meal
+              }
+            },
+            {
+              "title": date + " " + schoolname + " 급식",
+              "description": "보물상자2 안에는 뭐가 있을까"
+            },
+            {
+              "title": date + " " + schoolname + " 급식",
+              "description": "보물상자3 안에는 뭐가 있을까"
+            }
+          ]
+        }
+      }
+    ]
+  }
 }
+			
 	endtime = datetime.utcnow().timestamp()
 	loadingtime = endtime - starttime
 	print(str(loadingtime) + "s 소요")
