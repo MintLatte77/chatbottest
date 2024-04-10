@@ -68,7 +68,7 @@ def test():
 	print(userID)
 	UserData = UserIdData.all(formula=match({"userID": userID, "Educode": '-', "schoolcode": '-', "schoolname": '-'}, match_any=True))
 	print(UserData)
-	if useridtable == 0 or useridtable == "false" or useridtable == "" or useridtable == "NaN" or useridtable == []:
+	if UserData == 0 or UserData == "false" or UserData == "" or UserData == "NaN" or UserData == []:
 		print("Can't Search Data")
 		raise Exception("Can't Search Data")
 	else:
