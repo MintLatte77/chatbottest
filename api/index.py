@@ -75,8 +75,11 @@ def test():
 		else:
 			print(UserData)
 			Educode = UserData[0]['fields']['Educode']
+			print(Educode)
 			schoolcode = UserData[0]['fields']['schoolcode']
+			print(schoolcode)
 			schoolname = UserData[0]['fields']['schoolname']
+			print(schoolname)
 			
 			params = {
 			'KEY' : NEIS_Key,
