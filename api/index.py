@@ -108,7 +108,7 @@ def test():
 	"outputs": [
 			{
 				"textCard": {
-	  				"title": date + schoolname + " 오늘의 급식",
+	  				"title": date + " " + schoolname + " 오늘의 급식",
 	  				"description": meal
 							}
 			}
