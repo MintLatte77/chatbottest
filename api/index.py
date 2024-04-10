@@ -93,9 +93,10 @@ def testmeal():
 			mealdict[mealday] = mealcontent
 		mealdata = dict(sorted(mealdict.items()))
 		for key, value in mealdata.items():
-			startday = key[4:6]
-			endday = key[6:8]
-			output.append({"title":startday + "월 " + endday + "일", "description" : value})
+			month = key[4:6]
+			day1 = key[6:8]
+			print(key + month + day1)
+			output.append({"title":month + "월 " + day1 + "일", "description" : value})
 				
 	else:
 		output = [{
