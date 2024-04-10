@@ -66,18 +66,22 @@ def test():
 	body = request.get_json()
 	userID = body['userRequest']['user']['id'] # ID 조회
 	try:
-		UserData = UserIdData.all(formula=match({"userID": "test", "Educode": '-', "schoolcode": '-', "schoolname": '-'}, match_any=True))
+		UserData = UserIdData.all(formula=match({"userID": userID, "Educode": '-', "schoolcode": '-', "schoolname": '-'}, match_any=True))
 		if useridtable == 0 or useridtable == "false" or useridtable == "" or useridtable == "NaN" or useridtable == []:
 			print("Can't Search Data")
 			raise Exception("Can't Search Data")
 		else:
+			Educode = UserData[0]['fields']['Educode']
+			schoolcode = UserData[0]['fields']['schoolcode']
+			schoolname = UserData[0]['fields']['schoolname']
+			
 			params = {
 			'KEY' : NEIS_Key,
 			'Type' : 'json',
 			'pIndex' : '1',
 			'pSize' : '100',
-			'ATPT_OFCDC_SC_CODE' : UserData[0]['fields']['Educode'],
-			'SD_SCHUL_CODE' : UserData[0]['fields']['schoolcode'],
+			'ATPT_OFCDC_SC_CODE' : Educode,
+			'SD_SCHUL_CODE' : schoolcode,
 			'MLSV_YMD' : day
 			}
 
@@ -101,7 +105,7 @@ def test():
 			"outputs": [
 				{
 					"textCard": {
-		  				"title": date + UserData[0]['fields']['schoolname'] + " 오늘의 급식",
+		  				"title": date + schoolname + " 오늘의 급식",
 		  				"description": meal
 								}
 				}
