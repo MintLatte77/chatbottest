@@ -61,8 +61,8 @@ def time():
 @app.route('/test') # 급식 테스트!!
 def test():
 	meal = "" # 급식 내용
-	# body = request.get_json()
-	# userID = body['userRequest']['user']['id'] # ID 조회
+	body = request.get_json()
+	userID = body['userRequest']['user']['id'] # ID 조회
 	try:
 		UserData = UserIdData.all(formula=match({"userID": "test", "Educode": '-', "schoolcode": '-', "schoolname": '-'}, match_any=True))
 		if useridtable == 0 or useridtable == "false" or useridtable == "" or useridtable == "NaN" or useridtable == []:
