@@ -68,14 +68,14 @@ def testmeal():
 		'pSize' : '100',
 		'ATPT_OFCDC_SC_CODE' : 'H10',
 		'SD_SCHUL_CODE' : '7480188',
-		'MLSV_FROM_YMD' : '20240408',
+		'MLSV_FROM_YMD' : '20240410',
 		'MLSV_TO_YMD' : '20240410'
 		}
 		
 	response = requests.get(NEISmealurl, params=params)
 	contents = response.json()
-	responsecode = contents['mealServiceDietInfo'][0]['head'][1]['RESULT']['CODE']
-	return responsecode
+
+	return contents
 
 @app.route('/test', methods = ['POST']) # 급식 테스트!!
 def test():
