@@ -32,16 +32,17 @@ teacherlist = []
 
 
 airtable_token = os.environ.get('Airtable_Key')
-BASE_ID = 'appehbq0HhoF3Rk62'
-TABLE_NAME = 'tblnxuLnQ0t4qPlox'
-userIdData = Table(airtable_token, BASE_ID, TABLE_NAME)
 scheduleID = 'app4Shep99fg80KYb'
 Eonyang = 'tbluLhtM3VcwQdo8u'
 Samnam = 'tblg8eounZNf1xCAs'
 Eschedule = Table(airtable_token, scheduleID, Eonyang)
 Sschedule = Table(airtable_token, scheduleID, Samnam)
 
-#
+# New code
+# airtable_token = os.environ.get('Airtable_Key')
+UserIdBase = 'appehbq0HhoF3Rk62'
+UserIdTable = 'tblm8yAPlQ3wzjAKp'
+UserIdData = Table(airtable_token,'appehbq0HhoF3Rk62','tblm8yAPlQ3wzjAKp')
 
 # @app.route('/service', methods = ["POST"])
 # 	body = request.get_json()
@@ -60,7 +61,7 @@ def time():
 @app.route('/test')
 def test():
 	
-	return userIdData.all()	
+	return UserIdData.all(formula="userID")	
 
 @app.route('/sche', methods = ['POST'])
 def sche():
