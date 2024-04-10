@@ -65,8 +65,10 @@ def test():
 	meal = "" # 급식 내용
 	body = request.get_json()
 	userID = body['userRequest']['user']['id'] # ID 조회
+	print(userID)
 	try:
 		UserData = UserIdData.all(formula=match({"userID": userID, "Educode": '-', "schoolcode": '-', "schoolname": '-'}, match_any=True))
+		print(UserData)
 		if useridtable == 0 or useridtable == "false" or useridtable == "" or useridtable == "NaN" or useridtable == []:
 			print("Can't Search Data")
 			raise Exception("Can't Search Data")
