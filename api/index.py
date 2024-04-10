@@ -88,7 +88,7 @@ def testmeal():
 			mealcontents = contents['mealServiceDietInfo'][1]['row'][a]['DDISH_NM']
 			mealcontent = "\n".join(mealcontents.split('<br/>'))
 			mealdict[mealday] = mealcontent
-		mealdata = sorted(mealdict.items())
+		mealdata = dict(sorted(mealdict.items()))
 		for key, value in mealdata.items():
 			output.append({"title":key[4:5] + "월 " + key[6:7] + "일", "description" : value})
 				
