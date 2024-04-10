@@ -90,7 +90,7 @@ def testmeal():
 			mealdict[mealday] = mealcontent
 		mealdata = sorted(mealdict.items())
 		for key, value in mealdata.items():
-			output.append({"title":key[4:5] + "월 " + key[6:7] + "일", "description" : value}})
+			output.append({"title":key[4:5] + "월 " + key[6:7] + "일", "description" : value})
 				
 	else:
 		output = [{
