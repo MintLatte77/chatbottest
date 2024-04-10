@@ -58,7 +58,7 @@ def home():
 def time():
 	return str(datetime_kst) + "  " + str(day)
 
-@app.route('/test') # 급식 테스트!!
+@app.route('/test', methods = ['POST']) # 급식 테스트!!
 def test():
 	meal = "" # 급식 내용
 	body = request.get_json()
