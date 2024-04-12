@@ -155,7 +155,9 @@ def test():
 			mealdata = dict(sorted(mealdict.items()))
 			for key, value in mealdata.items():
 				print(key)
-				output.append({"title":key[4:5] + "월 " + key[6:7] + "일" + " " + schoolname + " 급식", "description" : value})
+				keymonth = key[4:5]
+				keyday = key[6:7]
+				output.append({"title":keymonth + "월 " + keyday + "일" + " " + schoolname + " 급식", "description" : value})
 					
 		else:
 			output = [{
