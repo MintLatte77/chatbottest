@@ -157,6 +157,7 @@ def test():
 				print(key)
 				keymonth = key[4:5]
 				keyday = key[6:7]
+				print(keymonth + keyday)
 				output.append({"title":keymonth + "월 " + keyday + "일" + " " + schoolname + " 급식", "description" : value})
 					
 		else:
