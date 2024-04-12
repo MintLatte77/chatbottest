@@ -16,8 +16,8 @@ timezone_kst = timezone(timedelta(hours=9))
 datetime_kst = datetime_utc.astimezone(timezone_kst)
 twodayslater = timedelta(days=2)
 datetime_kst_2 = datetime_kst + twodayslater
-day = datetime_kst.strftime("%Y%m%d")
-day_2 = datetime_kst_2.strftime("%Y%m%d")
+day = '20240415' # datetime_kst.strftime("%Y%m%d")
+day_2 = '20240417' # datetime_kst_2.strftime("%Y%m%d")
 date = str(int(datetime_kst.strftime("%m"))) + "월 "+ str(int(datetime_kst.strftime("%d"))) + "일"
 week = int(datetime_kst.strftime("%w"))
 time = int(datetime_kst.strftime("%H"))
