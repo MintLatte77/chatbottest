@@ -1,4 +1,3 @@
-
 from flask import Flask, request
 import sys
 from datetime import datetime, timedelta, timezone
@@ -1004,8 +1003,8 @@ def timetable():
 	
 	return responseBody
 
-@app.route('/service', methods = ["POST"])
-def service():
+@app.route('/meal', methods = ["POST"])
+def meal():
 	starttime = datetime.utcnow().timestamp()
 	body = request.get_json()
 	userID = body['userRequest']['user']['id'] # ID 조회
