@@ -1055,7 +1055,7 @@ def meal():
 	              "title": date + " " + schoolname + " 급식",
 	              "description": "급식이 없어요!"
 	            }]
-	responseBody = {
+		responseBody = {
 	  "version": "2.0",
 	  "template": {
 	    "outputs": [
