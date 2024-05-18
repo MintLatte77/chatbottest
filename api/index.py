@@ -407,7 +407,6 @@ def infocheck():
 			}
 			response = requests.get('https://open.neis.go.kr/hub/classInfo', params=params)
 			contents = response.json()
-			print(contents)
 			contentstext = response.text
 			find = contentstext.find('해당하는 데이터가 없습니다.')
 			if find == -1:
