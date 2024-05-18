@@ -367,7 +367,7 @@ def infocheck():
 		usergrade = userinfo[gradefind-1:gradefind]
 		userclass = userinfo[classfind-1:classfind]
 		userareacode = areacode[userarea]
-		print(userarea + userschool + usergrade + userclass)
+		print(userareacode + userarea + userschool + usergrade + userclass)
 
 		userareacode = areacode[userarea]
 		params = {
