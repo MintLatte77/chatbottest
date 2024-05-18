@@ -361,7 +361,7 @@ def infocheck():
 		print(contents)
 		
 	
-	responesebody = {
+		responesebody = {
   "version": "2.0",
   "template": {
 	"outputs": [
@@ -387,7 +387,6 @@ def infocheck():
 	]
   }
 }
-				break
 
 	except:
 		responesebody = {
