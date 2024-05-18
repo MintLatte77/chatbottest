@@ -108,7 +108,7 @@ def testmeal():
 @app.route('/test')
 def test():
 	params = {
-			'KEY' : service_key,
+			'KEY' : NEIS_Key,
 			'Type' : 'json',
 			'pIndex' : '1',
 			'pSize' : '100',
@@ -349,7 +349,7 @@ def infocheck():
 
 		userareacode = areacode[userarea]
 		params = {
-			'KEY' : service_key,
+			'KEY' : NEIS_Key,
 			'Type' : 'json',
 			'pIndex' : '1',
 			'pSize' : '100',
