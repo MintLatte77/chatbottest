@@ -383,6 +383,7 @@ def infocheck():
 		print(contents)
 		contentstext = response.text
 		find = contentstext.find('해당하는 데이터가 없습니다.')
+		print(contents['schoolInfo'][0]['row'][0])
 		if find == -1:
 			area = contents['schoolInfo'][0]['row'][0]['LCTN_SC_NM']
 			print(area)
