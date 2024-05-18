@@ -385,15 +385,15 @@ def infocheck():
 		print(contentstext)
 		find = contentstext.find('해당하는 데이터가 없습니다.')
 		print(find)
-		print(contents['schoolInfo'][0]['row'][0])
+		print(contents['schoolInfo'][1]['row'][0])
 		if find == -1:
-			area = contents['schoolInfo'][0]['row'][0]['LCTN_SC_NM']
+			area = contents['schoolInfo'][1]['row'][0]['LCTN_SC_NM']
 			print(area)
-			school = contents['schoolInfo'][0]['row'][0]['SCHUL_NM']
+			school = contents['schoolInfo'][1]['row'][0]['SCHUL_NM']
 			print(school)
-			schoolcode = contents['schoolInfo'][0]['row'][0]['SD_SCHUL_CODE']
+			schoolcode = contents['schoolInfo'][1]['row'][0]['SD_SCHUL_CODE']
 			print(schoolcode)
-			schooltype = contents['schoolInfo'][0]['row'][0]['SCHUL_KND_SC_NM']
+			schooltype = contents['schoolInfo'][1]['row'][0]['SCHUL_KND_SC_NM']
 			print(schooltype)
 			
 			params = {
@@ -412,7 +412,7 @@ def infocheck():
 			find = contentstext.find('해당하는 데이터가 없습니다.')
 			if find == -1:
 				state = 0
-				for a in contents['classInfo'][0]['row']:
+				for a in contents['classInfo'][1]['row']:
 					agrade = a['GRADE']
 					aclass = a['CLASS_NM']
 					if agrade == usergrade[0] and aclass == userclass[0]:
