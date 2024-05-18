@@ -428,7 +428,7 @@ def infocheck():
 						elif schooltype == "고등학교":
 							type = "his"
 						
-						UserIdData.update(id1, {'Educode': area, 'schoolcode': schoolcode, 'schooltype': type, 'schoolname':school, 'gradecode': grade, 'classcode': class1}, replace=True)
+						UserIdData.update(id1, {'userID':userID, 'Educode': area, 'schoolcode': schoolcode, 'schooltype': type, 'schoolname':school, 'gradecode': grade, 'classcode': class1}, replace=True)
 						break
 				if state == 0:
 					print("No Grade or Class")
