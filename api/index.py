@@ -333,6 +333,7 @@ def info():
 
 @app.route('/infocheck', methods = ['POST'])
 def infocheck():
+	starttime = datetime.utcnow().timestamp()
 	body = request.get_json()
 	userinfo = body['userRequest']['utterance']
 	userID = body['userRequest']['user']['id']
@@ -361,8 +362,8 @@ def infocheck():
 		if schoolfind == -1 or gradefind == -1 or classfind == -1:
 			print("wrong format")
 			raise Exception("wrong format")
-		userarea = userinfo[0:1]
-		userschool = userinfo[3:schoolfind]
+		userarea = userinfo[0:2]
+		userschool = userinfo[3:schoolfind+2]
 		usergrade = userinfo[gradefind-1:gradefind]
 		userclass = userinfo[classfind-1:classfind]
 		print(userarea + userschool + usergrade + userclass)
@@ -465,7 +466,7 @@ def infocheck():
 	  {
 		"textCard": {
 		  "title": "입력한 정보가 맞는지 확인해 주세요",
-		  "description": "오류 발생, 재입력 버튼을 눌러 다시 확인해 주세요",
+		  "description": "오류 발생, 재입력 버튼을 눌러 다시 입력해 주세요",
 		"buttons": [
 			{
 			  "action": "block",
@@ -479,6 +480,10 @@ def infocheck():
 	]
   }
 }
+	endtime = datetime.utcnow().timestamp()
+	loadingtime = endtime - starttime
+	print(str(loadingtime) + "s 소요")
+	print(responseBody)
 	return responesebody
 
 @app.route('/check', methods = ['POST'])
