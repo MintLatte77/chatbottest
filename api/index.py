@@ -401,7 +401,7 @@ def infocheck():
 				'Type' : 'json',
 				'pIndex' : '1',
 				'pSize' : '100',
-				'ATPT_OFCDC_SC_CODE' : area,
+				'ATPT_OFCDC_SC_CODE' : userareacode,
 				'SD_SCHUL_CODE' : schoolcode,
 				'AY' : '2024'
 			}
