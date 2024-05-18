@@ -131,7 +131,7 @@ def sche():
 	
 	
 	try:
-		useridtable = userIdData.all(formula=match({"userID":userID}))
+		useridtable = UserIdData.all(formula=match({"userID":userID}))
 		print(useridtable)
 		id1 = useridtable[0]['id']
 		schedulename = []
@@ -163,7 +163,7 @@ def sche():
 	}
 		else:
 			print("school")
-			for a in userIdData.all():
+			for a in UserIdData.all():
 				if id1 == a['id']:
 					data = a['fields']
 					if data['schoolcode'] == "S":
@@ -344,14 +344,14 @@ def infocheck():
 		id1 = useridtable[0]['id']
 		if useridtable == 0 or useridtable == "false" or useridtable == "" or useridtable == "NaN" or useridtable == []:
 			Newdata = {'userID': userID, 'Educode': "", 'schoolcode': "", 'schooltype':"", 'schoolname':'', 'gradecode': 0, 'classcode': 0}
-			userIdData.create(Newdata)
+			UserIdData.create(Newdata)
 			print(Newdata)
 		elif userID == olderid:
-			userIdData.update(id1, {'userID': userID, 'Educode': "", 'schoolcode': "", 'schooltype':"", 'schoolname':'', 'gradecode': 0, 'classcode': 0}, replace=True)
+			UserIdData.update(id1, {'userID': userID, 'Educode': "", 'schoolcode': "", 'schooltype':"", 'schoolname':'', 'gradecode': 0, 'classcode': 0}, replace=True)
 			print(olderid + " Updated!")
 	except:
 		Newdata = {'userID': userID, 'Educode': "", 'schoolcode': "", 'schooltype':"", 'schoolname':'', 'gradecode': 0, 'classcode': 0}
-		userIdData.create(Newdata)
+		UserIdData.create(Newdata)
 		print(Newdata)
 		
 	try:
@@ -419,7 +419,7 @@ def infocheck():
 						elif schooltype == "고등학교":
 							type = "his"
 						
-						userIdData.update(id1, {'Educode': area, 'schoolcode': schoolcode, 'schooltype': type, 'schoolname':school, 'gradecode': grade, 'classcode': class1}, replace=True)
+						UserIdData.update(id1, {'Educode': area, 'schoolcode': schoolcode, 'schooltype': type, 'schoolname':school, 'gradecode': grade, 'classcode': class1}, replace=True)
 						break
 				if state == 0:
 					print("No Grade or Class")
@@ -519,8 +519,8 @@ def timetable():
 	userID = body['userRequest']['user']['id']
 	numb = 0
 	try:
-		useridtable = userIdData.all(formula=match({"userID":userID}))
-		print(userIdData.all())
+		useridtable = UserIdData.all(formula=match({"userID":userID}))
+		print(UserIdData.all())
 		id1 = useridtable[0]['id']
 		print(id1)
 		if useridtable == 0 or useridtable == "false" or useridtable == "" or useridtable == "NaN" or useridtable == []:
@@ -549,7 +549,7 @@ def timetable():
 			
 			print("Find Info")
 			print(useridtable)
-			for a in userIdData.all():
+			for a in UserIdData.all():
 				print(a)
 				if id1 == a['id']:
 					data = a['fields']
