@@ -437,7 +437,7 @@ def infocheck():
 	  {
 		"textCard": {
 		  "title": "입력한 정보가 맞는지 확인해 주세요",
-		  "description": area + " " + school + " " + strgrade + "학년 " + strclass1 + "반"
+		  "description": area + " " + school + " " + strgrade + "학년 " + strclass1 + "반",
 		"buttons": [
 			{
 			  "action": "block",
