@@ -335,7 +335,25 @@ def info():
 def infocheck():
 	body = request.get_json()
 	userinfo = body['userRequest']['utterance']
+	userID = body['userRequest']['user']['id']
 	print(userinfo)
+	try:
+		useridtable = userIdData.all(formula=match({"userID":userID}))
+		print(useridtable)
+		olderid = useridtable[0]['fields']['userID']
+		id1 = useridtable[0]['id']
+		if useridtable == 0 or useridtable == "false" or useridtable == "" or useridtable == "NaN" or useridtable == []:
+			Newdata = {'userID': userID, 'Educode': "", 'schoolcode': "", 'schooltype':"", 'schoolname':'', 'gradecode': 0, 'classcode': 0}
+			userIdData.create(Newdata)
+			print(Newdata)
+		elif userID == olderid:
+			userIdData.update(id1, {'userID': userID, 'Educode': "", 'schoolcode': "", 'schooltype':"", 'schoolname':'', 'gradecode': 0, 'classcode': 0}, replace=True)
+			print(olderid + " Updated!")
+	except:
+		Newdata = {'userID': userID, 'Educode': "", 'schoolcode': "", 'schooltype':"", 'schoolname':'', 'gradecode': 0, 'classcode': 0}
+		userIdData.create(Newdata)
+		print(Newdata)
+		
 	try:
 		schoolfind = userinfo.find("학교")
 		gradefind = userinfo.find("학년")
@@ -363,9 +381,55 @@ def infocheck():
 		print(contents)
 		contentstext = response.text
 		find = contentstext.find('해당하는 데이터가 없습니다.')
-
-		
-	
+		if find == -1:
+			area = contents['schoolInfo'][0]['row'][0]['LCTN_SC_NM']
+			school = contents['schoolInfo'][0]['row'][0]['SCHUL_NM']
+			schoolcode = contents['schoolInfo'][0]['row'][0]['SD_SCHUL_CODE']
+			schooltype = contents['schoolInfo'][0]['row'][0]['SCHUL_KND_SC_NM']
+			
+			params = {
+				'KEY' : NEIS_Key,
+				'Type' : 'json',
+				'pIndex' : '1',
+				'pSize' : '100',
+				'ATPT_OFCDC_SC_CODE' : area,
+				'SD_SCHUL_CODE' : schoolcode,
+				'AY' : '2024'
+			}
+			response = requests.get('https://open.neis.go.kr/hub/schoolInfo', params=params)
+			contents = response.json()
+			print(contents)
+			contentstext = response.text
+			find = contentstext.find('해당하는 데이터가 없습니다.')
+			if find == -1:
+				state = 0
+				for a in contents['classInfo'][0]['row']:
+					agrade = a['GRADE']
+					aclass = a['CLASS_NM']
+					if agrade == usergrade[0] and aclass == userclass[0]:
+						state = 1
+						strgrade = usergrade[0]
+						strclass1 = userclass[0]
+						grade = int(usergrade[0])
+						class1 = int(userclass[0])
+						if schooltype == "초등학교":
+							type = "els"
+						elif schooltype == "중학교":
+							type = "mis"
+						elif schooltype == "고등학교":
+							type = "his"
+						
+						userIdData.update(id1, {'Educode': area, 'schoolcode': schoolcode, 'schooltype': type, 'schoolname':school, 'gradecode': grade, 'classcode': class1}, replace=True)
+						break
+				if state == 0:
+					print("No Grade or Class")
+					raise Exception("No Grade or Class")
+			else:
+				print("Can't find Grade")
+				raise Exception("Can't find Grade")
+		else:
+			print("Can't find School")
+			raise Exception("Can't find School")
 		responesebody = {
   "version": "2.0",
   "template": {
@@ -373,17 +437,17 @@ def infocheck():
 	  {
 		"textCard": {
 		  "title": "입력한 정보가 맞는지 확인해 주세요",
-		  "description": userarea + userschool + usergrade + userclass,
+		  "description": area + " " + school + " " + strgrade + "학년 " + strclass1 + "반"
 		"buttons": [
 			{
 			  "action": "block",
 			  "label": "맞아요!",
-			  "blockId" : "65faaca1a64303558477aa63"
+			  "blockId" : "664870174b66e33a2480f5b2"
 			},
 			{
 			  "action": "block",
 			  "label": "아니에요",
-			  "blockId" : "65faa5ef091618695a7fee9c"
+			  "blockId" : "66486e1826296c3bea93d1c0"
 			}
 		]
 		}
@@ -401,17 +465,12 @@ def infocheck():
 	  {
 		"textCard": {
 		  "title": "입력한 정보가 맞는지 확인해 주세요",
-		  "description": "오류 발생, 아니에요 버튼을 눌러 다시 확인해 주세요",
+		  "description": "오류 발생, 재입력 버튼을 눌러 다시 확인해 주세요",
 		"buttons": [
 			{
 			  "action": "block",
-			  "label": "맞아요!",
-			  "blockId" : "65faaca1a64303558477aa63"
-			},
-			{
-			  "action": "block",
-			  "label": "아니에요",
-			  "blockId" : "65faa5ef091618695a7fee9c"
+			  "label": "재입력",
+			  "blockId" : "66486e1826296c3bea93d1c0"
 			}
 		]
 		}
