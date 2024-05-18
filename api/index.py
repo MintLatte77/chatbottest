@@ -382,7 +382,9 @@ def infocheck():
 		contents = response.json()
 		print(contents)
 		contentstext = response.text
+		print(contentstext)
 		find = contentstext.find('해당하는 데이터가 없습니다.')
+		print(find)
 		print(contents['schoolInfo'][0]['row'][0])
 		if find == -1:
 			area = contents['schoolInfo'][0]['row'][0]['LCTN_SC_NM']
