@@ -113,7 +113,7 @@ def test():
 			'pIndex' : '1',
 			'pSize' : '100',
 			'ATPT_OFCDC_SC_CODE' : 'H10',
-			'SCHUL_NM' : '언양고등학교'
+			'SCHUL_NM' : '언양고'
 		}
 	response = requests.get('https://open.neis.go.kr/hub/schoolInfo', params=params)
 	contents = response.json()
