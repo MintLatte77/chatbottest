@@ -366,6 +366,7 @@ def infocheck():
 		userschool = userinfo[3:schoolfind+2]
 		usergrade = userinfo[gradefind-1:gradefind]
 		userclass = userinfo[classfind-1:classfind]
+		userareacode = areacode[userarea]
 		print(userarea + userschool + usergrade + userclass)
 
 		userareacode = areacode[userarea]
@@ -374,7 +375,7 @@ def infocheck():
 			'Type' : 'json',
 			'pIndex' : '1',
 			'pSize' : '100',
-			'ATPT_OFCDC_SC_CODE' : userarea,
+			'ATPT_OFCDC_SC_CODE' : userareacode,
 			'SCHUL_NM' : userschool
 		}
 		response = requests.get('https://open.neis.go.kr/hub/schoolInfo', params=params)
