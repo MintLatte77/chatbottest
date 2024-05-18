@@ -412,6 +412,7 @@ def infocheck():
 			if find == -1:
 				state = 0
 				for a in contents['classInfo'][1]['row']:
+					print(a)
 					agrade = a['GRADE']
 					aclass = a['CLASS_NM']
 					if agrade == usergrade[0] and aclass == userclass[0]:
