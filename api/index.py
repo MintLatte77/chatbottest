@@ -385,9 +385,13 @@ def infocheck():
 		find = contentstext.find('해당하는 데이터가 없습니다.')
 		if find == -1:
 			area = contents['schoolInfo'][0]['row'][0]['LCTN_SC_NM']
+			print(area)
 			school = contents['schoolInfo'][0]['row'][0]['SCHUL_NM']
+			print(school)
 			schoolcode = contents['schoolInfo'][0]['row'][0]['SD_SCHUL_CODE']
+			print(schoolcode)
 			schooltype = contents['schoolInfo'][0]['row'][0]['SCHUL_KND_SC_NM']
+			print(schooltype)
 			
 			params = {
 				'KEY' : NEIS_Key,
