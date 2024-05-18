@@ -316,7 +316,7 @@ def agree():
 	return responesebody
 @app.route('/info', methods = ['POST'])
 def info():
-	responsebody = {
+	responesebody = {
   "version": "2.0",
   "template": {
     "outputs": [
