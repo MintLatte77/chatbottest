@@ -109,6 +109,7 @@ def test():
 	starttime = datetime.utcnow().timestamp()
 	body = request.get_json()
 	userID = body['userRequest']['user']['id'] # ID 조회
+	print(userID)
 	UserData = UserIdData.all(formula=match({"userID": userID, "Educode": '-', "schoolcode": '-', "schoolname": '-'}, match_any=True))
 	if UserData == 0 or UserData == "false" or UserData == "" or UserData == "NaN" or UserData == []:
 		print("Can't Search Data")
