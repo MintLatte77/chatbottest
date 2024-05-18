@@ -378,7 +378,7 @@ def infocheck():
 			'ATPT_OFCDC_SC_CODE' : userareacode,
 			'SCHUL_NM' : userschool
 		}
-		response = requests.get('https://open.neis.go.kr/hub/classInfo', params=params)
+		response = requests.get('https://open.neis.go.kr/hub/schoolInfo', params=params)
 		contents = response.json()
 		print(contents)
 		contentstext = response.text
@@ -405,7 +405,7 @@ def infocheck():
 				'SD_SCHUL_CODE' : schoolcode,
 				'AY' : '2024'
 			}
-			response = requests.get('https://open.neis.go.kr/hub/schoolInfo', params=params)
+			response = requests.get('https://open.neis.go.kr/hub/classInfo', params=params)
 			contents = response.json()
 			print(contents)
 			contentstext = response.text
