@@ -46,6 +46,7 @@ Sschedule = Table(airtable_token, scheduleID, Samnam)
 UserIdBase = 'appehbq0HhoF3Rk62'
 UserIdTable = 'tblm8yAPlQ3wzjAKp'
 UserIdData = Table(airtable_token, UserIdBase, UserIdTable)
+areacode = {'서울':'B10', '부산':'C10', '대구':'D10', '인천':'E10', '광주':'F10', '대전':'G10', '울산':'H10', '세종':'I10', '경기':'J10', '강원':'K10', '충북':'M10', '충남':'N10', '전북':'P10', '전남':'Q10', '경북':'R10', '경남':'S10', '제주':'T10'}
 
 # @app.route('/service', methods = ["POST"])
 # 	body = request.get_json()
@@ -104,77 +105,20 @@ def testmeal():
             }]
 	return output
 
-@app.route('/test', methods = ['POST']) # 급식 테스트!!
+@app.route('/test')
 def test():
-	starttime = datetime.utcnow().timestamp()
-	body = request.get_json()
-	userID = body['userRequest']['user']['id'] # ID 조회
-	print(userID)
-	UserData = UserIdData.all(formula=match({"userID": userID, "Educode": '-', "schoolcode": '-', "schoolname": '-'}, match_any=True))
-	if UserData == 0 or UserData == "false" or UserData == "" or UserData == "NaN" or UserData == []:
-		print("Can't Search Data")
-		raise Exception("Can't Search Data")
-	else:
-		Educode = UserData[0]['fields']['Educode']
-		schoolcode = UserData[0]['fields']['schoolcode']
-		schoolname = UserData[0]['fields']['schoolname']
-		
-		mealdict = {}
-		output = []
-		params = {
-		'KEY' : NEIS_Key,
-		'Type' : 'json',
-		'pIndex' : '1',
-		'pSize' : '100',
-		'ATPT_OFCDC_SC_CODE' : Educode,
-		'SD_SCHUL_CODE' : schoolcode,
-		'MLSV_FROM_YMD' : day,
-		'MLSV_TO_YMD' : day_2
+	params = {
+			'KEY' : service_key,
+			'Type' : 'json',
+			'pIndex' : '1',
+			'pSize' : '100',
+			'ATPT_OFCDC_SC_CODE' : 'H10',
+			'SCHUL_NM' : '언양고등학교'
 		}
-		
-		response = requests.get(NEISmealurl, params=params)
-		contentstext = response.text
-		contents = response.json()
-		
-		find = contentstext.find('해당하는 데이터가 없습니다.')
-		
-		if find == -1:
-			count = int(contents['mealServiceDietInfo'][0]['head'][0]['list_total_count'])
-			for a in range(0, count):
-				mealday = str(contents['mealServiceDietInfo'][1]['row'][a]['MLSV_YMD'])
-				mealcontents = contents['mealServiceDietInfo'][1]['row'][a]['DDISH_NM']
-				mealcontent = "\n".join(mealcontents.split('<br/>'))
-				mealdict[mealday] = mealcontent
-			mealdata = dict(sorted(mealdict.items()))
-			for key, value in mealdata.items():
-				keymonth = key[4:6]
-				keyday = key[6:8]
-				output.append({"title":keymonth + "월 " + keyday + "일" + " " + schoolname + " 급식", "description" : value})
-					
-		else:
-			output = [{
-	              "title": date + " " + schoolname + " 급식",
-	              "description": "급식이 없어요!"
-	            }]
-	responseBody = {
-	  "version": "2.0",
-	  "template": {
-	    "outputs": [
-	      {
-	        "carousel": {
-	          "type": "textCard",
-	          "items": output
-	        }
-	      }
-	    ]
-	  }
-	}
-				
-	endtime = datetime.utcnow().timestamp()
-	loadingtime = endtime - starttime
-	print(str(loadingtime) + "s 소요")
-	print(responseBody)
-	return responseBody
+	response = requests.get('https://open.neis.go.kr/hub/schoolInfo', params=params)
+	contents = response.json()
+	print(contents)
+	return contents
 
 
 @app.route('/sche', methods = ['POST'])
@@ -344,9 +288,8 @@ def sche():
 			
 
 # 동의서 작성
-
-@app.route('/agree1', methods = ['POST'])
-def agree1():
+@app.route('/agree', methods = ['POST'])
+def agree():
 	responesebody = {
   "version": "2.0",
   "template": {
@@ -354,12 +297,12 @@ def agree1():
 	  {
 		"textCard": {
 		  "title": "개인정보 수집 및 이용 동의서",
-		  "description": "\'오늘 급식 뭐임\'(이하 \'서비스\')은 급식, 시간표, 학사 일정 확인 등을 위해 「개인정보 보호법」 제 15조 1항에 따라 보유 기간(25년 2월 28일)까지 사용자의 개인정보(암호화된 사용자 ID, 학교, 학년, 반)를 수집 및 이용합니다. 사용자는 서비스 이용에 필요한 최소한의 개인정보 수집 및 이용에 동의하지 않을 수 있으나, 동의를 거부 할 경우 서비스 이용이 불가합니다.\n아래 동의 버튼 클릭 시 해당 내용에 동의한 것으로 간주됩니다.",
+		  "description": "\'오늘 급식 뭐임\'(이하 \'서비스\')은 급식, 시간표, 학사 일정 확인 등을 위해 「개인정보 보호법」 제 15조 1항에 따라 보유 기간(25년 2월 28일)까지 사용자의 개인정보(암호화된 사용자 ID, 지역, 학교, 학년, 반)를 수집 및 이용합니다. 사용자는 서비스 이용에 필요한 최소한의 개인정보 수집 및 이용에 동의하지 않을 수 있으나, 동의를 거부 할 경우 서비스 이용이 불가합니다.\n아래 동의 버튼 클릭 시 해당 내용에 동의한 것으로 간주됩니다.",
 		"buttons": [
 			{
 			  "action": "block",
 			  "label": "동의",
-			  "blockId" : "65faa5ef091618695a7fee9c"
+			  "blockId" : "66486e1826296c3bea93d1c0"
 			}
 		]
 		}
@@ -369,270 +312,63 @@ def agree1():
   }
 }
 	return responesebody
-
-@app.route('/agree2', methods = ['POST'])
-def agree2():
-	body = request.get_json()
-	userID = body['userRequest']['user']['id']
-	
-	try:
-		useridtable = userIdData.all(formula=match({"userID":userID}))
-		print(useridtable)
-		olderid = useridtable[0]['fields']['userID']
-		id1 = useridtable[0]['id']
-		if useridtable == 0 or useridtable == "false" or useridtable == "" or useridtable == "NaN" or useridtable == []:
-			Newdata = {'userID': userID, 'schoolcode': "N", 'gradecode': 0, 'classcode': 0}
-			userIdData.create(Newdata)
-			print(Newdata)
-		elif userID == olderid:
-			userIdData.update(id1, {'userID': userID, 'schoolcode': "N", 'gradecode': 0, 'classcode': 0}, replace=True)
-			print(olderid + " Updated!")
-	except:
-		Newdata = {'userID': userID, 'schoolcode': "N", 'gradecode': 0, 'classcode': 0}
-		userIdData.create(Newdata)
-		print(Newdata)
-
-
-	
-	responesebody = {
+@app.route('/info', methods = ['POST'])
+def info():
+	responsebody = {
   "version": "2.0",
   "template": {
-	"outputs": [
-	{
-		"basicCard": {
-			"title": "학교를 입력해 주세요",
-			"description": "현재 삼남중학교, 언양고등학교만 지원합니다. \n학교 추가를 바라신다면 상담직원 연결을 눌러주세요.",
-			"thumbnail": {
-				"imageUrl": "https://cdn.discordapp.com/attachments/1021364751541997659/1219962349981798431/253206e9ece97e04.png?ex=660d357a&is=65fac07a&hm=7849e04bb18f371d63d376a6b1f64f434683fe9b433dd5cd770167a8d5a58716&"
-			}
-		}
-	}
-	],
-	"quickReplies": [
-		{
-			"label": "삼남중학교",
-			"action": "block",
-			"messageText": "삼남중학교",
-			"blockId": "65faa603e8b2137164330ae3"
-		},
-		{
-			"messageText": "언양고등학교",
-			"action": "block",
-			"label": "언양고등학교",
-			"blockId": "65faa603e8b2137164330ae3"
-		}
-					]
-	}
-}
-	return responesebody
-
-@app.route('/school', methods = ['POST'])
-def school():
-	body = request.get_json()
-	userschool = body['userRequest']['utterance']
-	userID = body['userRequest']['user']['id']
-	useridtable = userIdData.all(formula=match({"userID":userID}))
-	print(useridtable)
-	id1 = useridtable[0]['id']
-	for a in userIdData.all():
-		if id1 == a['id']:
-			if userschool == "삼남중학교":
-				userIdData.update(id1, {"schoolcode": "S"})
-			elif userschool == "언양고등학교":
-				userIdData.update(id1, {"schoolcode": "E"})
-			else:
-				userIdData.update(id1, {"schoolcode": "0"})
-	responesebody = {
-  "version": "2.0",
-  "template": {
-	"outputs": [
-	  {
-		"basicCard": {
-		  "title": "학년을 입력해 주세요",
-		  "thumbnail": {
-				"imageUrl": "https://cdn.discordapp.com/attachments/1021364751541997659/1221000642148040714/57fb83ef84578e09.png?ex=6610fc76&is=65fe8776&hm=bb260ef938a1bb6b49e575f2eb93cc6eed7e0c78710b93dd3ae44b15186b4fee&"
-}
-
-		} 
-	  }
-	],
-	"quickReplies": [
-	  {
-		"messageText": "1학년",
-		"action": "block",
-		"label": "1학년",
-	"blockId": "65faa61da0a1dd2d9e02e80e"
-	  },
-	  {
-		"messageText": "2학년",
-		"action": "block",
-		"label": "2학년",
-		"blockId": "65faa61da0a1dd2d9e02e80e"
-	  },
-	{
-		"messageText": "3학년",
-		"action": "block",
-		"label": "3학년",
-		"blockId": "65faa61da0a1dd2d9e02e80e"
-	  }
-	]
-  }
-}
-	return responesebody
-	return useridtable
-
-@app.route('/grade', methods = ['POST'])
-def grade():
-	body = request.get_json()
-	usergrade = body['userRequest']['utterance']
-	userID = body['userRequest']['user']['id']
-	useridtable = userIdData.all(formula=match({"userID":userID}))
-	print(useridtable)
-	id1 = useridtable[0]['id']
-	for a in userIdData.all():
-		if id1 == a['id']:
-			if usergrade == "1학년":
-				userIdData.update(id1, {"gradecode": 1})
-			elif usergrade == "2학년":
-				userIdData.update(id1, {"gradecode": 2})
-			elif usergrade == "3학년":
-				userIdData.update(id1, {"gradecode": 3})
-			else:
-				userIdData.update(id1, {"gradecode": 0})
-	responesebody = {
-  "version": "2.0",
-  "template": {
-	"outputs": [
-	  {
-		"basicCard": {
-		  "title": "반을 입력해 주세요",
-"thumbnail": {
-				"imageUrl": "https://cdn.discordapp.com/attachments/1021364751541997659/1221000654944735323/26087c387327723a.png?ex=6610fc79&is=65fe8779&hm=7146b0b50cae00c853f129746ea8e27400348a76042c924b1bb82781d608e129&"
-		  }
-		} 
-	  }
-	],
-	"quickReplies": [
-	  {
-		"messageText": "1반",
-		"action": "block",
-		"label": "1반",
-		"blockId": "65faa630d7cbb10c92facd52"
-	  },
-	{
-		"messageText": "2반",
-		"action": "block",
-		"label": "2반",
-		"blockId": "65faa630d7cbb10c92facd52"
-	  },
-	{
-		"messageText": "3반",
-		"action": "block",
-		"label": "3반",
-		"blockId": "65faa630d7cbb10c92facd52"
-	  },
-	{
-		"messageText": "4반",
-		"action": "block",
-		"label": "4반",
-		"blockId": "65faa630d7cbb10c92facd52"
-	  },
-	{
-		"messageText": "5반",
-		"action": "block",
-		"label": "5반",
-		"blockId": "65faa630d7cbb10c92facd52"
-	  },
-	{
-		"messageText": "6반",
-		"action": "block",
-		"label": "6반",
-		"blockId": "65faa630d7cbb10c92facd52"
-	  },
-	{
-		"messageText": "7반",
-		"action": "block",
-		"label": "7반",
-		"blockId": "65faa630d7cbb10c92facd52"
-	  },
-	{
-		"messageText": "8반",
-		"action": "block",
-		"label": "8반",
-		"blockId": "65faa630d7cbb10c92facd52"
-	  },
-	{
-		"messageText": "9반",
-		"action": "block",
-		"label": "9반",
-		"blockId": "65faa630d7cbb10c92facd52"
-	  }
-	  
-	]
+    "outputs": [
+      {
+        "textCard": {
+          "title": "챗봇을 사용하기 전에, 사용자 정보를 입력해 주세요.",
+          "description": "사용자 정보는 다음과 같은 형식으로 입력해 주세요.\n xx(지역) xx학교 x학년 x반\n예) 울산 언양고등학교 1학년 5반"
+        }
+      }
+    ]
   }
 }
 	return responesebody
 
-@app.route('/class1', methods = ['POST'])
-def class1():
+@app.route('/infocheck', methods = ['POST'])
+def infocheck():
 	body = request.get_json()
-	userclass = body['userRequest']['utterance']
-	userID = body['userRequest']['user']['id']
-	useridtable = userIdData.all(formula=match({"userID":userID}))
-	id1 = useridtable[0]['id']
+	userinfo = body['userRequest']['utterance']
+	print(userinfo)
 	try:
-		for a in userIdData.all():
-			if id1 == a['id']:
-				data = a['fields']
-				uclass = userclass
-				if userclass == "1반":
-					userIdData.update(id1, {"classcode": 1})
-				elif userclass == "2반":
-					userIdData.update(id1, {"classcode": 2})
-				elif userclass == "3반":
-					userIdData.update(id1, {"classcode": 3})
-				elif userclass == "4반":
-					userIdData.update(id1, {"classcode": 4})
-				elif userclass == "5반":
-					userIdData.update(id1, {"classcode": 5})
-				elif userclass == "6반":
-					userIdData.update(id1, {"classcode": 6})
-				elif userclass == "7반":
-					userIdData.update(id1, {"classcode": 7})
-				elif userclass == "8반":
-					userIdData.update(id1, {"classcode": 8})
-				elif userclass == "9반":
-					userIdData.update(id1, {"classcode": 9})
-				else:
-					userIdData.update(id1, {"classcode": 0})
+		schoolfind = userinfo.find("학교")
+		gradefind = userinfo.find("학년")
+		classfind = userinfo.find("반")
+		if schoolfind == -1 or gradefind == -1 or classfind == -1:
+			print("wrong format")
+			raise Exception("wrong format")
+		userarea = userinfo[0:1]
+		userschool = userinfo[3:schoolfind]
+		usergrade = userinfo[gradefind-1:gradefind]
+		userclass = userinfo[classfind-1:classfind]
+		print(userarea + userschool + usergrade + userclass)
 
-				if data['schoolcode'] == "S":
-					uschool = "삼남중학교 "
-				elif data['schoolcode'] == "E":
-					uschool = "언양고등학교 "
-				else:
-					uschool = "지원하지 않는 학교 "
-
-				if data['gradecode'] == 1:
-					ugrade = "1학년 "
-				elif data['gradecode'] == 2:
-					ugrade = "2학년 "
-				elif data['gradecode'] == 3:
-					ugrade = "3학년 "
-				else:
-					ugrade = "지원하지 않는 학년 "
-
-				description = str(uschool) + str(ugrade) + str(uclass)
-				print(description)
-
-				responesebody = {
+		userareacode = areacode[userarea]
+		params = {
+			'KEY' : service_key,
+			'Type' : 'json',
+			'pIndex' : '1',
+			'pSize' : '100',
+			'ATPT_OFCDC_SC_CODE' : area,
+			'SCHUL_NM' : userschool
+		}
+		response = requests.get('https://open.neis.go.kr/hub/schoolInfo', params=params)
+		contents = response.json()
+		print(contents)
+		
+	
+	responesebody = {
   "version": "2.0",
   "template": {
 	"outputs": [
 	  {
 		"textCard": {
 		  "title": "입력한 정보가 맞는지 확인해 주세요",
-		  "description": description,
+		  "description": userarea + userschool + usergrade + userclass,
 		"buttons": [
 			{
 			  "action": "block",
@@ -680,8 +416,6 @@ def class1():
 	]
   }
 }
-	
-	
 	return responesebody
 
 @app.route('/check', methods = ['POST'])
@@ -1009,6 +743,7 @@ def meal():
 	starttime = datetime.utcnow().timestamp()
 	body = request.get_json()
 	userID = body['userRequest']['user']['id'] # ID 조회
+	print(userID)
 	try:
 		UserData = UserIdData.all(formula=match({"userID": userID, "Educode": '-', "schoolcode": '-', "schoolname": '-'}, match_any=True))
 		if UserData == 0 or UserData == "false" or UserData == "" or UserData == "NaN" or UserData == []:
@@ -1022,16 +757,16 @@ def meal():
 			mealdict = {}
 			output = []
 			params = {
-		'KEY' : NEIS_Key,
-		'Type' : 'json',
-		'pIndex' : '1',
-		'pSize' : '100',
-		'ATPT_OFCDC_SC_CODE' : Educode,
-		'SD_SCHUL_CODE' : schoolcode,
-		'MLSV_FROM_YMD' : day,
-		'MLSV_TO_YMD' : day_2
-		}
-		
+			'KEY' : NEIS_Key,
+			'Type' : 'json',
+			'pIndex' : '1',
+			'pSize' : '100',
+			'ATPT_OFCDC_SC_CODE' : Educode,
+			'SD_SCHUL_CODE' : schoolcode,
+			'MLSV_FROM_YMD' : day,
+			'MLSV_TO_YMD' : day_2
+			}
+			
 			response = requests.get(NEISmealurl, params=params)
 			contentstext = response.text
 			contents = response.json()
@@ -1053,47 +788,28 @@ def meal():
 						
 			else:
 				output = [{
-	              "title": date + " " + schoolname + " 급식",
-	              "description": "급식이 없어요!"
-	            }]
-		responseBody = {
-	  "version": "2.0",
-	  "template": {
-	    "outputs": [
-	      {
-	        "carousel": {
-	          "type": "textCard",
-	          "items": output
-	        }
-	      }
-	    ]
-	  }
-	}
-	except:
-		print("Can't find info")
-		responseBody = {
-		"version": "2.0",
-		"template": {
-			"outputs": [
-				{
-					"textCard": {
-		  				"title": date + " 급식",
-		  				"description": "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요." ,
-		  				"buttons": [
-			{
-			  "action": "message",
-			  "label": "사용자 등록하기",
-			  "messageText": "사용자 등록하기"
-			}
-									]
-								}
+		              "title": date + " " + schoolname + " 급식",
+		              "description": "급식이 없어요!"
+		           		 }]
+				responseBody = {
+	  			"version": "2.0",
+	  			"template": {
+	    			"outputs": [
+	    			  {
+	    				"carousel": {
+	    				"type": "textCard",
+	  			        "items": output
+	  					}
+	 			     }
+	    						]
+	  						}
 				}
-						]
-		}
-	}
+	except:
+		
 	
 				
 	endtime = datetime.utcnow().timestamp()
 	loadingtime = endtime - starttime
 	print(str(loadingtime) + "s 소요")
 	print(responseBody)
+	return responseBody
