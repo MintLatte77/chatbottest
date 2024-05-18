@@ -483,7 +483,7 @@ def infocheck():
 	endtime = datetime.utcnow().timestamp()
 	loadingtime = endtime - starttime
 	print(str(loadingtime) + "s 소요")
-	print(responseBody)
+	print(responsebody)
 	return responesebody
 
 @app.route('/check', methods = ['POST'])
