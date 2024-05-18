@@ -431,7 +431,7 @@ def infocheck():
 		else:
 			print("Can't find School")
 			raise Exception("Can't find School")
-		responesebody = {
+		responsebody = {
   "version": "2.0",
   "template": {
 	"outputs": [
@@ -459,7 +459,7 @@ def infocheck():
 }
 
 	except:
-		responesebody = {
+		responsebody = {
   "version": "2.0",
   "template": {
 	"outputs": [
@@ -484,7 +484,7 @@ def infocheck():
 	loadingtime = endtime - starttime
 	print(str(loadingtime) + "s 소요")
 	print(responsebody)
-	return responesebody
+	return responsebody
 
 @app.route('/check', methods = ['POST'])
 def check():
