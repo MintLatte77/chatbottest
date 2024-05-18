@@ -804,7 +804,27 @@ def meal():
 	  						}
 				}
 	except:
-		
+		print("Can't find info")
+		responseBody = {
+		"version": "2.0",
+		"template": {
+			"outputs": [
+				{
+					"textCard": {
+		  				"title": date + " 시간표",
+		  				"description": "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요." ,
+		  				"buttons": [
+			{
+			  "action": "message",
+			  "label": "사용자 등록하기",
+			  "messageText": "사용자 등록하기"
+			}
+									]
+								}
+				}
+						]
+		}
+	}
 	
 				
 	endtime = datetime.utcnow().timestamp()
