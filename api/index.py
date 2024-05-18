@@ -338,7 +338,7 @@ def infocheck():
 	userID = body['userRequest']['user']['id']
 	print(userinfo)
 	try:
-		useridtable = userIdData.all(formula=match({"userID":userID}))
+		useridtable = UserIdData.all(formula=match({"userID":userID}))
 		print(useridtable)
 		olderid = useridtable[0]['fields']['userID']
 		id1 = useridtable[0]['id']
