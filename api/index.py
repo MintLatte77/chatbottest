@@ -374,7 +374,7 @@ def infocheck():
 			'Type' : 'json',
 			'pIndex' : '1',
 			'pSize' : '100',
-			'ATPT_OFCDC_SC_CODE' : area,
+			'ATPT_OFCDC_SC_CODE' : userarea,
 			'SCHUL_NM' : userschool
 		}
 		response = requests.get('https://open.neis.go.kr/hub/schoolInfo', params=params)
