@@ -47,6 +47,8 @@ UserIdBase = 'appehbq0HhoF3Rk62'
 UserIdTable = 'tblm8yAPlQ3wzjAKp'
 UserIdData = Table(airtable_token, UserIdBase, UserIdTable)
 areacode = {'서울':'B10', '부산':'C10', '대구':'D10', '인천':'E10', '광주':'F10', '대전':'G10', '울산':'H10', '세종':'I10', '경기':'J10', '강원':'K10', '충북':'M10', '충남':'N10', '전북':'P10', '전남':'Q10', '경북':'R10', '경남':'S10', '제주':'T10'}
+newweeklist = {'0':'','1':'M','2':'T','3':'W','4':'H','5':'F','6':'','7':''}
+UserTimeData = Table(airtable_token, UserIdBase, 'tblacWgSp8Z9x4Crw')
 
 # @app.route('/service', methods = ["POST"])
 # 	body = request.get_json()
@@ -105,31 +107,147 @@ def testmeal():
             }]
 	return output
 
-@app.route('/test')
+@app.route('/test', methods = ['POST'])
 def test():
-	params = {
+	starttime = datetime.utcnow().timestamp()
+	body = request.get_json()
+	userID = body['userRequest']['user']['id'] # ID 조회
+	print(userID)
+	try:
+		UserData = UserIdData.all(formula=match({"userID": userID, "Educode": '-', "schoolcode": '-', "schooltype":'-', "schoolname": '-', "gradecode": '-', "classcode": '-', "tablecode": '-', "timetableshow": '-'}, match_any=True))
+		if UserData == 0 or UserData == "false" or UserData == "" or UserData == "NaN" or UserData == []:
+			print("Can't Search Data")
+			raise Exception("Can't Search Data")
+		else:
+			Educode = UserData[0]['fields']['Educode']
+			schoolcode = UserData[0]['fields']['schoolcode']
+			schooltype = UserData[0]['fields']['schooltype']
+			schoolname = UserData[0]['fields']['schoolname']
+			gradecode = UserData[0]['fields']['gradecode']
+			classcode = UserData[0]['fields']['classcode']
+			tablecode = UserData[0]['fields']['tablecode']
+			timetableshow = UserData[0]['fields']['timetableshow']
+
+			timetablelink = 'https://open.neis.go.kr/hub/'+schooltype+'Timetable'
+			
+			Monday = timedelta(days=1-int(week))
+			datetime_kst_M = datetime_kst + Monday
+			day_M = datetime_kst_M.strftime("%Y%m%d")
+
+			Tuesday = timedelta(days=2-int(week))
+			datetime_kst_T = datetime_kst + Tuesday
+			day_T = datetime_kst_T.strftime("%Y%m%d")
+
+			Wednesday = timedelta(days=3-int(week))
+			datetime_kst_W = datetime_kst + Wednesday
+			day_W = datetime_kst_W.strftime("%Y%m%d")
+
+			Thursday = timedelta(days=4-int(week))
+			datetime_kst_H = datetime_kst + Thursday
+			day_H = datetime_kst_H.strftime("%Y%m%d")
+
+			Friday = timedelta(days=5-int(week))
+			datetime_kst_F = datetime_kst + Friday
+			day_F = datetime_kst_F.strftime("%Y%m%d")
+
+			Weeklist = {day_M:'M', day_T:'T', day_W:'W', day_H:'H', day_F:'F'}
+			
+			output = []
+			params = {
 			'KEY' : NEIS_Key,
 			'Type' : 'json',
 			'pIndex' : '1',
 			'pSize' : '100',
-			'ATPT_OFCDC_SC_CODE' : 'H10',
-			'SCHUL_NM' : '언양고'
+			'ATPT_OFCDC_SC_CODE' : Educode,
+			'SD_SCHUL_CODE' : schoolcode,
+			'AY' : '2024',
+			'SEM' : '1',
+			'GRADE' : gradecode,
+			'CLASS_NM' : classcode,
+			'TI_FROM_YMD' : day_M,
+			'TI_TO_YMD' : day_F
+			}
+			
+			response = requests.get(timetablelink, params=params)
+			contentstext = response.text
+			contents = response.json()
+			
+			find = contentstext.find('해당하는 데이터가 없습니다.')
+			
+			if find == -1:
+				contentslist = contents[schooltype+'Timetable'][1]['row']
+				for a in contentslist:
+					Weekday = a['ALL_TI_YMD']
+					Weekdayfind = Weeklist[a]
+					class_time = Weeldayfind + a['PERIO']
+					UserTimeData.all(formula=match({"Code": tablecode,class_time:'-'}, match_any=True))
+					UserTimeData.update(tablecode, {class_time:a['ITRT_CNTNT']})
+					print(class_time+" "+a['ITRT_CNTNT'])
+				responsebody = {
+  "version": "2.0",
+  "template": {
+	"outputs": [
+	  {
+		"textCard": {
+		  "title": "업데이트 완료",
+		  "description": "업데이트 완료, ",
+		"buttons": [
+			{
+			  "action": "block",
+			  "label": "재입력",
+			  "blockId" : "66486e1826296c3bea93d1c0"
+			},
+			{
+			  "action": "block",
+			  "label": "오늘 급식 뭐임?",
+			  "blockId" : "65f6ee3a58611458d29a92c2"
+			},
+			{
+			  "action": "block",
+			  "label": "오늘 시간표 뭐임?",
+			  "blockId" : "65fa21294fc74f623ccfa55a"
+			}
+		]
 		}
-	response = requests.get('https://open.neis.go.kr/hub/schoolInfo', params=params)
-	contents = response.json()
-	print(contents)
-	contentstext = response.text
-	find = contentstext.find('해당하는 데이터가 없습니다.')
-	return contents
-
+		  
+	  }
+	]
+  }
+}
+			else:
+				print("Can't Search time")
+				raise Exception("Can't Search time")
+	except:
+		responseBody = {
+		"version": "2.0",
+		"template": {
+			"outputs": [
+				{
+					"textCard": {
+		  				"title": date + " 학사일정",
+		  				"description": "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요." ,
+		  				"buttons": [
+			{
+			  "action": "message",
+			  "label": "사용자 등록하기",
+			  "messageText": "사용자 등록하기"
+			}
+									]
+								}
+				}
+						]
+		}
+	}
+				
+					
+				
+	return
 
 @app.route('/sche', methods = ['POST'])
 def sche():
 	body = request.get_json()
 	userID = body['userRequest']['user']['id']
 	scheN = 0
-	
-	
 	try:
 		useridtable = UserIdData.all(formula=match({"userID":userID}))
 		print(useridtable)
@@ -344,14 +462,14 @@ def infocheck():
 		olderid = useridtable[0]['fields']['userID']
 		id1 = useridtable[0]['id']
 		if useridtable == 0 or useridtable == "false" or useridtable == "" or useridtable == "NaN" or useridtable == []:
-			Newdata = {'userID': userID, 'Educode': "", 'schoolcode': "", 'schooltype':"", 'schoolname':'', 'gradecode': 0, 'classcode': 0}
+			Newdata = {'userID': userID, 'Educode': "", 'schoolcode': "", 'schooltype':"", 'schoolname':'', 'gradecode': 0, 'classcode': 0, 'timetableshow': 3}
 			UserIdData.create(Newdata)
 			print(Newdata)
 		elif userID == olderid:
-			UserIdData.update(id1, {'userID': userID, 'Educode': "", 'schoolcode': "", 'schooltype':"", 'schoolname':'', 'gradecode': 0, 'classcode': 0}, replace=True)
+			UserIdData.update(id1, {'userID': userID, 'Educode': "", 'schoolcode': "", 'schooltype':"", 'schoolname':'', 'gradecode': 0, 'classcode': 0, 'timetableshow': 3}, replace=True)
 			print(olderid + " Updated!")
 	except:
-		Newdata = {'userID': userID, 'Educode': "", 'schoolcode': "", 'schooltype':"", 'schoolname':'', 'gradecode': 0, 'classcode': 0}
+		Newdata = {'userID': userID, 'Educode': "", 'schoolcode': "", 'schooltype':"", 'schoolname':'', 'gradecode': 0, 'classcode': 0, 'timetableshow': 3}
 		UserIdData.create(Newdata)
 		print(Newdata)
 		
