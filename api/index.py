@@ -893,7 +893,7 @@ def newtimetable():
 	body = request.get_json()
 	userID = body['userRequest']['user']['id'] # ID 조회
 	print(userID)
-	try:
+	
 		UserData = UserIdData.all(formula=match({"userID": userID, "Educode": '-', "schoolcode": '-', "schooltype":'-', "schoolname": '-', "gradecode": '-', "classcode": '-'}, match_any=True))
 		if UserData == 0 or UserData == "false" or UserData == "" or UserData == "NaN" or UserData == []:
 			print("Can't Search Data")
@@ -1003,7 +1003,7 @@ def newtimetable():
                 },
                 {
                   "title": "1교시",
-                  "description": MTW_1
+                  "description": str(MTW_1)
                 },
                 {
                   "title": "2교시",
@@ -1053,8 +1053,8 @@ def newtimetable():
   }
 }
 				
-	except:
-		responseBody = {
+	
+		# responseBody = {
   "version": "2.0",
   "template": {
 	"outputs": [
