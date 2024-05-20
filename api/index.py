@@ -987,8 +987,8 @@ def newtimetable():
 						for y in range(0, len(unpure_subject_list)-4):
 							del unpure_subject_list[4]
 					if len(unpure_subject_list) == 2:
-						unpure_subject_list.insert(-10,"  ")
-						unpure_subject_list.insert(10,"  ")
+						unpure_subject_list.insert(-10,"   ")
+						unpure_subject_list.insert(10,"   ")
 					if len(unpure_subject_list) == 3:
 						unpure_subject_list.insert(-10," ")
 						unpure_subject_list.insert(10," ")
