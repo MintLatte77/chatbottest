@@ -1053,37 +1053,7 @@ def newtimetable():
 }
 				
 	
-		# responseBody = {
-  "version": "2.0",
-  "template": {
-	"outputs": [
-	  {
-		"textCard": {
-		  "title": "오류 발생",
-		  "description": "오류 발생, 정보를 입력하고 싶다면 \'입력\' 버튼을, 급식이나 시간표를 조회하시려면 \'오늘 급식 뭐임?\' 또는 \'오늘 시간표 뭐임?\' 버튼을 눌러주세요.",
-		"buttons": [
-			{
-			  "action": "block",
-			  "label": "재입력",
-			  "blockId" : "66486e1826296c3bea93d1c0"
-			},
-			{
-			  "action": "block",
-			  "label": "오늘 급식 뭐임?",
-			  "blockId" : "65f6ee3a58611458d29a92c2"
-			},
-			{
-			  "action": "block",
-			  "label": "오늘 시간표 뭐임?",
-			  "blockId" : "65fa21294fc74f623ccfa55a"
-			}
-		]
-		}
-		  
-	  }
-	]
-  }
-}
+		
 	endtime = datetime.utcnow().timestamp()
 	loadingtime = endtime - starttime
 	print(str(loadingtime) + "s 소요")
