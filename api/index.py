@@ -752,7 +752,7 @@ def timetable():
 	userID = body['userRequest']['user']['id'] # ID 조회
 	print(userID)
 	try:
-		UserData = UserIdData.all(formula=match({"userID": userID, "Educode": '-', "schoolcode": '-', "schooltype":'-', "schoolname": '-', "gradecode": '-', "classcode": '-', "schoolname": '-', 'M1':'-','M2':'-','M3':'-','M4':'-','M5':'-','M6':'-','M7':'-','T1':'-','T2':'-','T3':'-','T4':'-','T5':'-','T6':'-','T7':'-','W1':'-','W2':'-','W3':'-','W4':'-','W5':'-','W6':'-','W7':'-','H1':'-','H2':'-','H3':'-','H4':'-','H5':'-','H6':'-','H7':'-','F1':'-','F2':'-','F3':'-','F4':'-','F5':'-','F6':'-','F7':'-'}, match_any=True))
+		UserData = UserIdData.all(formula=match({"userID": userID, "Educode": '-', "schoolcode": '-', "schooltype":'-', "schoolname": '-', "gradecode": '-', "classcode": '-', 'M1':'-','M2':'-','M3':'-','M4':'-','M5':'-','M6':'-','M7':'-','T1':'-','T2':'-','T3':'-','T4':'-','T5':'-','T6':'-','T7':'-','W1':'-','W2':'-','W3':'-','W4':'-','W5':'-','W6':'-','W7':'-','H1':'-','H2':'-','H3':'-','H4':'-','H5':'-','H6':'-','H7':'-','F1':'-','F2':'-','F3':'-','F4':'-','F5':'-','F6':'-','F7':'-'}, match_any=True))
 		if UserData == 0 or UserData == "false" or UserData == "" or UserData == "NaN" or UserData == []:
 			print("Can't Search Data")
 			raise Exception("Can't Search Data")
@@ -894,14 +894,18 @@ def newtimetable():
 	userID = body['userRequest']['user']['id'] # ID 조회
 	print(userID)
 	try:
-		UserData = UserIdData.all(formula=match({"userID": userID, "schoolname": '-', 'gradecode': 0, 'classcode': 0, 'M1':'-','M2':'-','M3':'-','M4':'-','M5':'-','M6':'-','M7':'-','T1':'-','T2':'-','T3':'-','T4':'-','T5':'-','T6':'-','T7':'-','W1':'-','W2':'-','W3':'-','W4':'-','W5':'-','W6':'-','W7':'-','H1':'-','H2':'-','H3':'-','H4':'-','H5':'-','H6':'-','H7':'-','F1':'-','F2':'-','F3':'-','F4':'-','F5':'-','F6':'-','F7':'-'}, match_any=True))
+		UserData = UserIdData.all(formula=match({"userID": userID, "Educode": '-', "schoolcode": '-', "schooltype":'-', "schoolname": '-', "gradecode": '-', "classcode": '-'}, match_any=True))
 		if UserData == 0 or UserData == "false" or UserData == "" or UserData == "NaN" or UserData == []:
 			print("Can't Search Data")
 			raise Exception("Can't Search Data")
 		else:
+			Educode = UserData[0]['fields']['Educode']
+			schoolcode = UserData[0]['fields']['schoolcode']
+			schooltype = UserData[0]['fields']['schooltype']
 			schoolname = UserData[0]['fields']['schoolname']
-			schoolname = UserData[0]['fields']['gradecode']
-			schoolname = UserData[0]['fields']['classcode']
+			gradecode = UserData[0]['fields']['gradecode']
+			classcode = UserData[0]['fields']['classcode']
+			  
 			timetabledict = {'M1':'','M2':'','M3':'','M4':'','M5':'','M6':'','M7':'','T1':'','T2':'','T3':'','T4':'','T5':'','T6':'','T7':'','W1':'','W2':'','W3':'','W4':'','W5':'','W6':'','W7':'','H1':'','H2':'','H3':'','H4':'','H5':'','H6':'','H7':'','F1':'','F2':'','F3':'','F4':'','F5':'','F6':'','F7':''}
 			
 			datetime_kst_M = datetime_kst + Monday
@@ -1041,7 +1045,7 @@ def newtimetable():
   }
 }
 	except:
-		responsebody = {
+		responseBody = {
   "version": "2.0",
   "template": {
 	"outputs": [
