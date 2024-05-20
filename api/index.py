@@ -269,7 +269,7 @@ def test():
     "outputs": [
       {
         "carousel": {
-          "type": "itemcard",
+          "type": "itemCard",
           "items": [
             {
               "title": "1학년 5반 5월 20일 시간표",
