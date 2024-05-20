@@ -984,8 +984,7 @@ def newtimetable():
 						for y in range(0, len(unpure_subject_list[x])-4):
 							del unpure_subject_list[5]
 					print(unpure_subject_list)
-					"".join(unpure_subject_list)
-					pured_subject = unpure_subject_list
+					pured_subject = "".join(unpure_subject_list)
 					print(class_time+" "+pured_subject)
 					updatedict = {class_time : pured_subject}
 					timetabledict.update(updatedict)
