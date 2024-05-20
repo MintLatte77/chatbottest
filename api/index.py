@@ -280,8 +280,8 @@ def test():
               "title": "5교시 과학탐구 과학탐구 과학탐구\n6교시 과학탐구 과학탐구 과학탐구\n7교시 과학탐구 과학탐구 과학탐구",
               "itemList": [
                 {
-                  "title": " 요일",
-                  "description": " 월요일    화요일    수요일 "
+                  "title": "　요일",
+                  "description": " 월요일　 　화요일　 　수요일 "
                 },
                 {
                   "title": "1교시",
@@ -306,8 +306,8 @@ def test():
               "title": "5교시 과학탐구 과학탐구\n6교시 과학탐구 과학탐구\n7교시 과학탐구 과학탐구",
               "itemList": [
                 {
-                  "title": " 요일",
-                  "description": " 목요일    금요일 "
+                  "title": "　요일",
+                  "description": " 목요일　 　금요일 "
                 },
                 {
                   "title": "1교시",
