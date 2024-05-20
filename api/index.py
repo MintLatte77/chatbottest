@@ -899,13 +899,16 @@ def newtimetable():
 			print("Can't Search Data")
 			raise Exception("Can't Search Data")
 		else:
+			
 			Educode = UserData[0]['fields']['Educode']
 			schoolcode = UserData[0]['fields']['schoolcode']
 			schooltype = UserData[0]['fields']['schooltype']
 			schoolname = UserData[0]['fields']['schoolname']
 			gradecode = UserData[0]['fields']['gradecode']
 			classcode = UserData[0]['fields']['classcode']
-			  
+			print("Loading userinfo")
+			
+			
 			timetabledict = {'M1':'','M2':'','M3':'','M4':'','M5':'','M6':'','M7':'','T1':'','T2':'','T3':'','T4':'','T5':'','T6':'','T7':'','W1':'','W2':'','W3':'','W4':'','W5':'','W6':'','W7':'','H1':'','H2':'','H3':'','H4':'','H5':'','H6':'','H7':'','F1':'','F2':'','F3':'','F4':'','F5':'','F6':'','F7':''}
 			
 			datetime_kst_M = datetime_kst + Monday
@@ -927,6 +930,8 @@ def newtimetable():
 			datetime_kst_F = datetime_kst + Friday
 			day_F = datetime_kst_F.strftime("%Y%m%d")
 
+			print("weekdays are available")
+			
 			Weeklist = {day_M:'M', day_T:'T', day_W:'W', day_H:'H', day_F:'F'}
 			
 			output = []
@@ -948,7 +953,8 @@ def newtimetable():
 			response = requests.get(timetablelink, params=params)
 			contentstext = response.text
 			contents = response.json()
-	
+			print("load succesful")
+			
 			find = contentstext.find('해당하는 데이터가 없습니다.')
 			
 			if find == -1:
@@ -972,7 +978,7 @@ def newtimetable():
 				HF_3 = timetabledict['H3'] + " " + timetabledict['F3']
 				HF_4 = timetabledict['H4'] + " " + timetabledict['F4']
 				HF_567 = timetabledict['H5'] + " " + timetabledict['F5'] + "\n" + timetabledict['H6'] + " " + timetabledict['F6'] + "\n" + timetabledict['F7'] + " " + timetabledict['F7']
-			
+				print("ready to response")
 				responseBody = {
   "version": "2.0",
   "template": {
@@ -1076,6 +1082,10 @@ def newtimetable():
 	]
   }
 }
+	endtime = datetime.utcnow().timestamp()
+	loadingtime = endtime - starttime
+	print(str(loadingtime) + "s 소요")
+	print(responseBody)
 	return responseBody
 
 @app.route('/meal', methods = ["POST"])
