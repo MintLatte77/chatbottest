@@ -965,9 +965,13 @@ def newtimetable():
 					class_time = Weekdayfind + a['PERIO']
 					unpure_subject = a['ITRT_CNTNT']
 					unpure_subject_list = list(unpure_subject)
+					dellist = []
 					for x in range(0, len(unpure_subject_list)):
 						if unpure_subject_list[x] == "(" or unpure_subject_list[x] == ")" or unpure_subject_list[x] == "[" or unpure_subject_list[x] == "]" or unpure_subject_list[x] == " " or unpure_subject_list[x] == "와" or unpure_subject_list[x] == "과":
-							del unpure_subject_list[x]
+							dellist.append(x)
+						dellist_r = reversed(dellist)
+						for y in dellist_r:
+							del unpure_subject_list[y]
 						if len(unpure_subject_list[x]) == 2:
 							unpure_subject_list.insert(-10,"　")
 							unpure_subject_list.insert(10,"　")
