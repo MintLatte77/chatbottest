@@ -908,9 +908,9 @@ def newtimetable():
 			classcode = UserData[0]['fields']['classcode']
 			print("Loading userinfo")
 			
-			
 			timetabledict = {'M1':'','M2':'','M3':'','M4':'','M5':'','M6':'','M7':'','T1':'','T2':'','T3':'','T4':'','T5':'','T6':'','T7':'','W1':'','W2':'','W3':'','W4':'','W5':'','W6':'','W7':'','H1':'','H2':'','H3':'','H4':'','H5':'','H6':'','H7':'','F1':'','F2':'','F3':'','F4':'','F5':'','F6':'','F7':''}
-			
+
+			Monday = timedelta(days=1-int(week))
 			datetime_kst_M = datetime_kst + Monday
 			day_M = datetime_kst_M.strftime("%Y%m%d")
 
