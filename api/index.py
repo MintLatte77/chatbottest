@@ -297,6 +297,7 @@ def test():
 	]
 	}
 	}
+	return responsebody
 
 @app.route('/sche', methods = ['POST'])
 def sche():
