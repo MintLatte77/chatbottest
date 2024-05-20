@@ -256,7 +256,8 @@ def test():
 			Weekdayfind = Weeklist[Weekday]
 			class_time = Weekdayfind + a['PERIO']
 			print(class_time+" "+a['ITRT_CNTNT'])
-			timetabledict.update(class_time = a['ITRT_CNTNT'])
+			updatedict = {class_time : a['ITRT_CNTNT']}
+			timetabledict.update(updatedict)
 
 	return timetabledict
 
