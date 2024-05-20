@@ -963,21 +963,37 @@ def newtimetable():
 					Weekday = a['ALL_TI_YMD']
 					Weekdayfind = Weeklist[Weekday]
 					class_time = Weekdayfind + a['PERIO']
-					print(class_time+" "+a['ITRT_CNTNT'])
-					updatedict = {class_time : a['ITRT_CNTNT']}
+					unpure_subject = a['ITRT_CNTNT']
+					unpure_subject_list = list(unpure_subject)
+					for x in range(0, unpure_subject_list):
+						if unpure_subject_list[x] == "(" or unpure_subject_list[x] == ")" or unpure_subject_list[x] == "[" or unpure_subject_list[x] == "]" or unpure_subject_list[x] == " " or unpure_subject_list[x] == "와" or unpure_subject_list[x] == "과":
+							del unpure_subject_list[x]
+						if len(unpure_subject_list[x]) == 2:
+							unpure_subject_list.insert(-10,"　")
+							unpure_subject_list.insert(10,"　")
+						if len(unpure_subject_list[x]) == 3:
+							unpure_subject_list.insert(-10," ")
+							unpure_subject_list.insert(10," ")
+						if len(unpure_subject_list[x]) > 4:
+							for y in range(0, len(unpure_subject_list[x])-4):
+								del unpure_subject_list[5]
+					"".join(unpure_subject_list)
+					pured_subject = unpure_subject_list
+					print(class_time+" "+pured_subject)
+					updatedict = {class_time : pured_subject}
 					timetabledict.update(updatedict)
 				
 				MTW_1 = timetabledict['M1'] + " " + timetabledict['T1'] + " " + timetabledict['W1']
 				MTW_2 = timetabledict['M2'] + " " + timetabledict['T2'] + " " + timetabledict['W2']
 				MTW_3 = timetabledict['M3'] + " " + timetabledict['T3'] + " " + timetabledict['W3']
 				MTW_4 = timetabledict['M4'] + " " + timetabledict['T4'] + " " + timetabledict['W4']
-				MTW_567 = timetabledict['M5'] + " " + timetabledict['T5'] + " " + timetabledict['W5'] + "\n" + timetabledict['M6'] + " " + timetabledict['T6'] + " " + timetabledict['W6'] + "\n" + timetabledict['M7'] + " " + timetabledict['T7'] + " " + timetabledict['W7']
+				MTW_567 = "5교시 " + timetabledict['M5'] + " " + timetabledict['T5'] + " " + timetabledict['W5'] + "\n6교시 " + timetabledict['M6'] + " " + timetabledict['T6'] + " " + timetabledict['W6'] + "\n7교시 " + timetabledict['M7'] + " " + timetabledict['T7'] + " " + timetabledict['W7']
 
 				HF_1 = timetabledict['H1'] + " " + timetabledict['F1']
 				HF_2 = timetabledict['H2'] + " " + timetabledict['F2']
 				HF_3 = timetabledict['H3'] + " " + timetabledict['F3']
 				HF_4 = timetabledict['H4'] + " " + timetabledict['F4']
-				HF_567 = timetabledict['H5'] + " " + timetabledict['F5'] + "\n" + timetabledict['H6'] + " " + timetabledict['F6'] + "\n" + timetabledict['F7'] + " " + timetabledict['F7']
+				HF_567 = "5교시 " + timetabledict['H5'] + " " + timetabledict['F5'] + "\n" + timetabledict['H6'] + " " + timetabledict['F6'] + "\n7교시 " + timetabledict['F7'] + " " + timetabledict['F7']
 				
 				title = schoolname + " " + str(gradecode) + "학년 " + str(classcode) + "반 " + date + " NEIS 시간표"
 				print("ready to response")
