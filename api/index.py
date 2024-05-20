@@ -894,48 +894,47 @@ def newtimetable():
 	userID = body['userRequest']['user']['id'] # ID 조회
 	print(userID)
 	
-		UserData = UserIdData.all(formula=match({"userID": userID, "Educode": '-', "schoolcode": '-', "schooltype":'-', "schoolname": '-', "gradecode": '-', "classcode": '-'}, match_any=True))
-		if UserData == 0 or UserData == "false" or UserData == "" or UserData == "NaN" or UserData == []:
-			print("Can't Search Data")
-			raise Exception("Can't Search Data")
-		else:
-			
-			Educode = UserData[0]['fields']['Educode']
-			schoolcode = UserData[0]['fields']['schoolcode']
-			schooltype = UserData[0]['fields']['schooltype']
-			schoolname = UserData[0]['fields']['schoolname']
-			gradecode = UserData[0]['fields']['gradecode']
-			classcode = UserData[0]['fields']['classcode']
-			print("Loading userinfo")
-			
-			timetabledict = {'M1':'　　　　','M2':'　　　　','M3':'　　　　','M4':'　　　　','M5':'　　　　','M6':'　　　　','M7':'　　　　','T1':'　　　　','T2':'　　　　','T3':'　　　　','T4':'　　　　','T5':'　　　　','T6':'　　　　','T7':'　　　　','W1':'　　　　','W2':'　　　　','W3':'　　　　','W4':'　　　　','W5':'　　　　','W6':'　　　　','W7':'　　　　','H1':'　　　　','H2':'　　　　','H3':'　　　　','H4':'　　　　','H5':'　　　　','H6':'　　　　','H7':'　　　　','F1':'　　　　','F2':'　　　　','F3':'　　　　','F4':'　　　　','F5':'　　　　','F6':'　　　　','F7':'　　　　'}
-
-			Monday = timedelta(days=1-int(week))
-			datetime_kst_M = datetime_kst + Monday
-			day_M = datetime_kst_M.strftime("%Y%m%d")
-
-			Tuesday = timedelta(days=2-int(week))
-			datetime_kst_T = datetime_kst + Tuesday
-			day_T = datetime_kst_T.strftime("%Y%m%d")
-
-			Wednesday = timedelta(days=3-int(week))
-			datetime_kst_W = datetime_kst + Wednesday
-			day_W = datetime_kst_W.strftime("%Y%m%d")
-
-			Thursday = timedelta(days=4-int(week))
-			datetime_kst_H = datetime_kst + Thursday
-			day_H = datetime_kst_H.strftime("%Y%m%d")
+	UserData = UserIdData.all(formula=match({"userID": userID, "Educode": '-', "schoolcode": '-', "schooltype":'-', "schoolname": '-', "gradecode": '-', "classcode": '-'}, match_any=True))
+	if UserData == 0 or UserData == "false" or UserData == "" or UserData == "NaN" or UserData == []:
+		print("Can't Search Data")
+		raise Exception("Can't Search Data")
+	else:
 		
-			Friday = timedelta(days=5-int(week))
-			datetime_kst_F = datetime_kst + Friday
-			day_F = datetime_kst_F.strftime("%Y%m%d")
+		Educode = UserData[0]['fields']['Educode']
+		schoolcode = UserData[0]['fields']['schoolcode']
+		schooltype = UserData[0]['fields']['schooltype']
+		schoolname = UserData[0]['fields']['schoolname']
+		gradecode = UserData[0]['fields']['gradecode']
+		classcode = UserData[0]['fields']['classcode']
+		print("Loading userinfo")
+		
+		timetabledict = {'M1':'　　　　','M2':'　　　　','M3':'　　　　','M4':'　　　　','M5':'　　　　','M6':'　　　　','M7':'　　　　','T1':'　　　　','T2':'　　　　','T3':'　　　　','T4':'　　　　','T5':'　　　　','T6':'　　　　','T7':'　　　　','W1':'　　　　','W2':'　　　　','W3':'　　　　','W4':'　　　　','W5':'　　　　','W6':'　　　　','W7':'　　　　','H1':'　　　　','H2':'　　　　','H3':'　　　　','H4':'　　　　','H5':'　　　　','H6':'　　　　','H7':'　　　　','F1':'　　　　','F2':'　　　　','F3':'　　　　','F4':'　　　　','F5':'　　　　','F6':'　　　　','F7':'　　　　'}
+		Monday = timedelta(days=1-int(week))
+		datetime_kst_M = datetime_kst + Monday
+		day_M = datetime_kst_M.strftime("%Y%m%d")
 
-			print("weekdays are available")
+		Tuesday = timedelta(days=2-int(week))
+		datetime_kst_T = datetime_kst + Tuesday
+		day_T = datetime_kst_T.strftime("%Y%m%d")
+
+		Wednesday = timedelta(days=3-int(week))
+		datetime_kst_W = datetime_kst + Wednesday
+		day_W = datetime_kst_W.strftime("%Y%m%d")
+
+		Thursday = timedelta(days=4-int(week))
+		datetime_kst_H = datetime_kst + Thursday
+		day_H = datetime_kst_H.strftime("%Y%m%d")
+		
+		Friday = timedelta(days=5-int(week))
+		datetime_kst_F = datetime_kst + Friday
+		day_F = datetime_kst_F.strftime("%Y%m%d")
+
+		print("weekdays are available")
+		
+		Weeklist = {day_M:'M', day_T:'T', day_W:'W', day_H:'H', day_F:'F'}
+		timetablelink = 'https://open.neis.go.kr/hub/'+schooltype+'Timetable'
 			
-			Weeklist = {day_M:'M', day_T:'T', day_W:'W', day_H:'H', day_F:'F'}
-			timetablelink = 'https://open.neis.go.kr/hub/'+schooltype+'Timetable'
-			
-			params = {
+		params = {
 			'KEY' : NEIS_Key,
 			'Type' : 'json',
 			'pIndex' : '1',
@@ -950,38 +949,38 @@ def newtimetable():
 			'TI_TO_YMD' : day_F
 			}
 			
-			response = requests.get(timetablelink, params=params)
-			contentstext = response.text
-			contents = response.json()
-			print("load succesful")
+		response = requests.get(timetablelink, params=params)
+		contentstext = response.text
+		contents = response.json()
+		print("load succesful")
 			
-			find = contentstext.find('해당하는 데이터가 없습니다.')
+		find = contentstext.find('해당하는 데이터가 없습니다.')
 			
-			if find == -1:
-				contentslist = contents[schooltype+'Timetable'][1]['row']
-				for a in contentslist:
-					Weekday = a['ALL_TI_YMD']
-					Weekdayfind = Weeklist[Weekday]
-					class_time = Weekdayfind + a['PERIO']
-					print(class_time+" "+a['ITRT_CNTNT'])
-					updatedict = {class_time : a['ITRT_CNTNT']}
-					timetabledict.update(updatedict)
-				
-				MTW_1 = timetabledict['M1'] + " " + timetabledict['T1'] + " " + timetabledict['W1']
-				MTW_2 = timetabledict['M2'] + " " + timetabledict['T2'] + " " + timetabledict['W2']
-				MTW_3 = timetabledict['M3'] + " " + timetabledict['T3'] + " " + timetabledict['W3']
-				MTW_4 = timetabledict['M4'] + " " + timetabledict['T4'] + " " + timetabledict['W4']
-				MTW_567 = timetabledict['M5'] + " " + timetabledict['T5'] + " " + timetabledict['W5'] + "\n" + timetabledict['M6'] + " " + timetabledict['T6'] + " " + timetabledict['W6'] + "\n" + timetabledict['M7'] + " " + timetabledict['T7'] + " " + timetabledict['W7']
+		if find == -1:
+			contentslist = contents[schooltype+'Timetable'][1]['row']
+			for a in contentslist:
+				Weekday = a['ALL_TI_YMD']
+				Weekdayfind = Weeklist[Weekday]
+				class_time = Weekdayfind + a['PERIO']
+				print(class_time+" "+a['ITRT_CNTNT'])
+				updatedict = {class_time : a['ITRT_CNTNT']}
+				timetabledict.update(updatedict)
+			
+			MTW_1 = timetabledict['M1'] + " " + timetabledict['T1'] + " " + timetabledict['W1']
+			MTW_2 = timetabledict['M2'] + " " + timetabledict['T2'] + " " + timetabledict['W2']
+			MTW_3 = timetabledict['M3'] + " " + timetabledict['T3'] + " " + timetabledict['W3']
+			MTW_4 = timetabledict['M4'] + " " + timetabledict['T4'] + " " + timetabledict['W4']
+			MTW_567 = timetabledict['M5'] + " " + timetabledict['T5'] + " " + timetabledict['W5'] + "\n" + timetabledict['M6'] + " " + timetabledict['T6'] + " " + timetabledict['W6'] + "\n" + timetabledict['M7'] + " " + timetabledict['T7'] + " " + timetabledict['W7']
 
-				HF_1 = timetabledict['H1'] + " " + timetabledict['F1']
-				HF_2 = timetabledict['H2'] + " " + timetabledict['F2']
-				HF_3 = timetabledict['H3'] + " " + timetabledict['F3']
-				HF_4 = timetabledict['H4'] + " " + timetabledict['F4']
-				HF_567 = timetabledict['H5'] + " " + timetabledict['F5'] + "\n" + timetabledict['H6'] + " " + timetabledict['F6'] + "\n" + timetabledict['F7'] + " " + timetabledict['F7']
-				
-				title = schoolname + " " + gradecode + "학년 " + classcode + "반 " + date + " NEIS 시간표"
-				print("ready to response")
-				responseBody = {
+			HF_1 = timetabledict['H1'] + " " + timetabledict['F1']
+			HF_2 = timetabledict['H2'] + " " + timetabledict['F2']
+			HF_3 = timetabledict['H3'] + " " + timetabledict['F3']
+			HF_4 = timetabledict['H4'] + " " + timetabledict['F4']
+			HF_567 = timetabledict['H5'] + " " + timetabledict['F5'] + "\n" + timetabledict['H6'] + " " + timetabledict['F6'] + "\n" + timetabledict['F7'] + " " + timetabledict['F7']
+			
+			title = schoolname + " " + gradecode + "학년 " + classcode + "반 " + date + " NEIS 시간표"
+			print("ready to response")
+			responseBody = {
   "version": "2.0",
   "template": {
     "outputs": [
