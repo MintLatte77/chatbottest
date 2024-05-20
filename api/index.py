@@ -200,7 +200,7 @@ def test1():
 				
 	return
 
-@app.route('/test', methods = ['POST'])
+@app.route('/test')
 def test():
 	timetablelink = 'https://open.neis.go.kr/hub/'+'his'+'Timetable'
 	timetabledict = {'M1':'','M2':'','M3':'','M4':'','M5':'','M6':'','M7':'','T1':'','T2':'','T3':'','T4':'','T5':'','T6':'','T7':'','W1':'','W2':'','W3':'','W4':'','W5':'','W6':'','W7':'','H1':'','H2':'','H3':'','H4':'','H5':'','H6':'','H7':'','F1':'','F2':'','F3':'','F4':'','F5':'','F6':'','F7':''}
