@@ -71,7 +71,7 @@ def test1():
 	userID = body['userRequest']['user']['id'] # ID 조회
 	print(userID)
 	try:
-		UserData = UserIdData.all(formula=match({"userID": userID, "Educode": '-', "schoolcode": '-', "schooltype":'-', "schoolname": '-', "gradecode": '-', "classcode": '-', "tablecode": '-', "timetableshow": '-'}, match_any=True))
+		UserData = UserIdData.all(formula=match({"userID": userID, "Educode": '-', "schoolcode": '-', "schooltype":'-', "schoolname": '-', "gradecode": '-', "classcode": '-', "tablecode": '-'}, match_any=True))
 		if UserData == 0 or UserData == "false" or UserData == "" or UserData == "NaN" or UserData == []:
 			print("Can't Search Data")
 			raise Exception("Can't Search Data")
@@ -83,7 +83,7 @@ def test1():
 			gradecode = UserData[0]['fields']['gradecode']
 			classcode = UserData[0]['fields']['classcode']
 			tablecode = UserData[0]['fields']['tablecode']
-			timetableshow = UserData[0]['fields']['timetableshow']
+			
 
 			timetablelink = 'https://open.neis.go.kr/hub/'+schooltype+'Timetable'
 			
@@ -281,7 +281,7 @@ def test():
               "itemList": [
                 {
                   "title": "　요일",
-                  "description": " 월요일　 　화요일　 　수요일 "
+                  "description": " 월요일   화요일   수요일 "
                 },
                 {
                   "title": "1교시",
@@ -307,7 +307,7 @@ def test():
               "itemList": [
                 {
                   "title": "　요일",
-                  "description": " 목요일　 　금요일 "
+                  "description": " 목요일   금요일 "
                 },
                 {
                   "title": "1교시",
@@ -555,14 +555,14 @@ def infocheck():
 		olderid = useridtable[0]['fields']['userID']
 		id1 = useridtable[0]['id']
 		if useridtable == 0 or useridtable == "false" or useridtable == "" or useridtable == "NaN" or useridtable == []:
-			Newdata = {'userID': userID, 'Educode': "", 'schoolcode': "", 'schooltype':"", 'schoolname':'', 'gradecode': 0, 'classcode': 0, 'timetableshow': 3}
+			Newdata = {'userID': userID, 'Educode': "", 'schoolcode': "", 'schooltype':"", 'schoolname':'', 'gradecode': 0, 'classcode': 0, 'M1':'　　　　','M2':'　　　　','M3':'　　　　','M4':'　　　　','M5':'　　　　','M6':'　　　　','M7':'　　　　','T1':'　　　　','T2':'　　　　','T3':'　　　　','T4':'　　　　','T5':'　　　　','T6':'　　　　','T7':'　　　　','W1':'　　　　','W2':'　　　　','W3':'　　　　','W4':'　　　　','W5':'　　　　','W6':'　　　　','W7':'　　　　','H1':'　　　　','H2':'　　　　','H3':'　　　　','H4':'　　　　','H5':'　　　　','H6':'　　　　','H7':'　　　　','F1':'　　　　','F2':'　　　　','F3':'　　　　','F4':'　　　　','F5':'　　　　','F6':'　　　　','F7':'　　　　'}
 			UserIdData.create(Newdata)
 			print(Newdata)
 		elif userID == olderid:
-			UserIdData.update(id1, {'userID': userID, 'Educode': "", 'schoolcode': "", 'schooltype':"", 'schoolname':'', 'gradecode': 0, 'classcode': 0, 'timetableshow': 3}, replace=True)
+			UserIdData.update(id1, {'userID': userID, 'Educode': "", 'schoolcode': "", 'schooltype':"", 'schoolname':'', 'gradecode': 0, 'classcode': 0, 'M1':'　　　　','M2':'　　　　','M3':'　　　　','M4':'　　　　','M5':'　　　　','M6':'　　　　','M7':'　　　　','T1':'　　　　','T2':'　　　　','T3':'　　　　','T4':'　　　　','T5':'　　　　','T6':'　　　　','T7':'　　　　','W1':'　　　　','W2':'　　　　','W3':'　　　　','W4':'　　　　','W5':'　　　　','W6':'　　　　','W7':'　　　　','H1':'　　　　','H2':'　　　　','H3':'　　　　','H4':'　　　　','H5':'　　　　','H6':'　　　　','H7':'　　　　','F1':'　　　　','F2':'　　　　','F3':'　　　　','F4':'　　　　','F5':'　　　　','F6':'　　　　','F7':'　　　　'}, replace=True)
 			print(olderid + " Updated!")
 	except:
-		Newdata = {'userID': userID, 'Educode': "", 'schoolcode': "", 'schooltype':"", 'schoolname':'', 'gradecode': 0, 'classcode': 0, 'timetableshow': 3}
+		Newdata = {'userID': userID, 'Educode': "", 'schoolcode': "", 'schooltype':"", 'schoolname':'', 'gradecode': 0, 'classcode': 0, 'M1':'　　　　','M2':'　　　　','M3':'　　　　','M4':'　　　　','M5':'　　　　','M6':'　　　　','M7':'　　　　','T1':'　　　　','T2':'　　　　','T3':'　　　　','T4':'　　　　','T5':'　　　　','T6':'　　　　','T7':'　　　　','W1':'　　　　','W2':'　　　　','W3':'　　　　','W4':'　　　　','W5':'　　　　','W6':'　　　　','W7':'　　　　','H1':'　　　　','H2':'　　　　','H3':'　　　　','H4':'　　　　','H5':'　　　　','H6':'　　　　','H7':'　　　　','F1':'　　　　','F2':'　　　　','F3':'　　　　','F4':'　　　　','F5':'　　　　','F6':'　　　　','F7':'　　　　'}
 		UserIdData.create(Newdata)
 		print(Newdata)
 		
@@ -747,292 +747,331 @@ def check():
 
 @app.route('/timetable', methods = ["POST"])
 def timetable():
-	descr = ""
-	timetablelist = []
+	starttime = datetime.utcnow().timestamp()
 	body = request.get_json()
-	userID = body['userRequest']['user']['id']
-	numb = 0
+	userID = body['userRequest']['user']['id'] # ID 조회
+	print(userID)
 	try:
-		useridtable = UserIdData.all(formula=match({"userID":userID}))
-		print(UserIdData.all())
-		id1 = useridtable[0]['id']
-		print(id1)
-		if useridtable == 0 or useridtable == "false" or useridtable == "" or useridtable == "NaN" or useridtable == []:
-			print("Not Existed!")
-			responseBody = {
-		"version": "2.0",
-		"template": {
-			"outputs": [
-				{
-					"textCard": {
-		  				"title": date + " 시간표",
-		  				"description": "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요." ,
-		  				"buttons": [
-			{
-			  "action": "message",
-			  "label": "사용자 등록하기",
-			  "messageText": "사용자 등록하기"
-			}
-									]
-								}
-				}
-						]
-		}
-	}
+		UserData = UserIdData.all(formula=match({"userID": userID, "Educode": '-', "schoolcode": '-', "schooltype":'-', "schoolname": '-', "gradecode": '-', "classcode": '-', "schoolname": '-', 'M1':'-','M2':'-','M3':'-','M4':'-','M5':'-','M6':'-','M7':'-','T1':'-','T2':'-','T3':'-','T4':'-','T5':'-','T6':'-','T7':'-','W1':'-','W2':'-','W3':'-','W4':'-','W5':'-','W6':'-','W7':'-','H1':'-','H2':'-','H3':'-','H4':'-','H5':'-','H6':'-','H7':'-','F1':'-','F2':'-','F3':'-','F4':'-','F5':'-','F6':'-','F7':'-'}, match_any=True))
+		if UserData == 0 or UserData == "false" or UserData == "" or UserData == "NaN" or UserData == []:
+			print("Can't Search Data")
+			raise Exception("Can't Search Data")
 		else:
+			Educode = UserData[0]['fields']['Educode']
+			schoolcode = UserData[0]['fields']['schoolcode']
+			schooltype = UserData[0]['fields']['schooltype']
+			schoolname = UserData[0]['fields']['schoolname']
+			gradecode = UserData[0]['fields']['gradecode']
+			classcode = UserData[0]['fields']['classcode']
 			
-			print("Find Info")
-			print(useridtable)
-			for a in UserIdData.all():
-				print(a)
-				if id1 == a['id']:
-					data = a['fields']
-					print(data)
-					if data['schoolcode'] == "S":
-						user_school_code = '7501030'
-						NEIStime ="https://open.neis.go.kr/hub/misTimetable"
-					elif data['schoolcode'] == "E":
-						user_school_code = '7480188'
-						NEIStime = "https://open.neis.go.kr/hub/hisTimetable"
-					else:
-						user_school_code = '7501030'
-						NEIStime ="https://open.neis.go.kr/hub/misTimetable"
-					user_grade_code = str(data['gradecode'])
-					user_class_code = str(data['classcode'])
-					break
-			print(user_school_code + user_grade_code + user_class_code)
+			timetablelink = 'https://open.neis.go.kr/hub/'+schooltype+'Timetable'
 			
+			timetabledict = {'M1':'','M2':'','M3':'','M4':'','M5':'','M6':'','M7':'','T1':'','T2':'','T3':'','T4':'','T5':'','T6':'','T7':'','W1':'','W2':'','W3':'','W4':'','W5':'','W6':'','W7':'','H1':'','H2':'','H3':'','H4':'','H5':'','H6':'','H7':'','F1':'','F2':'','F3':'','F4':'','F5':'','F6':'','F7':''}
+			for a in timetabledict.keys():
+				newdict = {a : UserData[0]['fields'][a]}
+				timetabledict.update(newdict)
+			MTW_1 = timetabledict['M1'] + " " + timetabledict['T1'] + " " + timetabledict['W1']
+			MTW_2 = timetabledict['M2'] + " " + timetabledict['T2'] + " " + timetabledict['W2']
+			MTW_3 = timetabledict['M3'] + " " + timetabledict['T3'] + " " + timetabledict['W3']
+			MTW_4 = timetabledict['M4'] + " " + timetabledict['T4'] + " " + timetabledict['W4']
+			MTW_567 = timetabledict['M5'] + " " + timetabledict['T5'] + " " + timetabledict['W5'] + "\n" + timetabledict['M6'] + " " + timetabledict['T6'] + " " + timetabledict['W6'] + "\n" + timetabledict['M7'] + " " + timetabledict['T7'] + " " + timetabledict['W7']
+
+			HF_1 = timetabledict['H1'] + " " + timetabledict['F1']
+			HF_2 = timetabledict['H2'] + " " + timetabledict['F2']
+			HF_3 = timetabledict['H3'] + " " + timetabledict['F3']
+			HF_4 = timetabledict['H4'] + " " + timetabledict['F4']
+			HF_567 = timetabledict['H5'] + " " + timetabledict['F5'] + "\n" + timetabledict['H6'] + " " + timetabledict['F6'] + "\n" + timetabledict['F7'] + " " + timetabledict['F7']
+			
+			responseBody = {
+  "version": "2.0",
+  "template": {
+    "outputs": [
+	    {
+            "simpleText": {
+                "text": schoolname + " " + gradecode + "학년 " + classcode + "반 " + date + " 시간표"
+            }
+          },
+      {
+        "carousel": {
+          "type": "itemCard",
+          "items": [
+            {
+              "title": MTW_567,
+              "itemList": [
+                {
+                  "title": "　요일",
+                  "description": " 월요일   화요일   수요일 "
+                },
+                {
+                  "title": "1교시",
+                  "description": MTW_1
+                },
+                {
+                  "title": "2교시",
+                  "description": MTW_2
+                },
+                {
+                  "title": "3교시",
+                  "description": MTW_3
+                },
+                {
+                  "title": "4교시",
+                  "description": MTW_4
+                }
+              ],
+              "itemListAlignment": "left"
+            },
+            {
+              "title": HF_567,
+              "itemList": [
+                {
+                  "title": "　요일",
+                  "description": " 목요일   금요일 "
+                },
+                {
+                  "title": "1교시",
+                  "description": HF_1
+                },
+                {
+                  "title": "2교시",
+                  "description": HF_2
+                },
+                {
+                  "title": "3교시",
+                  "description": HF_3
+                },
+                {
+                  "title": "4교시",
+                  "description": HF_4
+                }
+              ],
+              "itemListAlignment": "left"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
+	except:
+		responsebody = {
+  "version": "2.0",
+  "template": {
+	"outputs": [
+	  {
+		"textCard": {
+		  "title": "오류 발생",
+		  "description": "오류 발생, 정보를 입력하고 싶다면 \'입력\' 버튼을, 급식이나 시간표를 조회하시려면 \'오늘 급식 뭐임?\' 또는 \'오늘 시간표 뭐임?\' 버튼을 눌러주세요.",
+		"buttons": [
+			{
+			  "action": "block",
+			  "label": "재입력",
+			  "blockId" : "66486e1826296c3bea93d1c0"
+			},
+			{
+			  "action": "block",
+			  "label": "오늘 급식 뭐임?",
+			  "blockId" : "65f6ee3a58611458d29a92c2"
+			},
+			{
+			  "action": "block",
+			  "label": "오늘 시간표 뭐임?",
+			  "blockId" : "65fa21294fc74f623ccfa55a"
+			}
+		]
+		}
+		  
+	  }
+	]
+  }
+}
+	return responseBody
+
+@app.route('/newtimetable', methods = ["POST"])
+def newtimetable():
+	starttime = datetime.utcnow().timestamp()
+	body = request.get_json()
+	userID = body['userRequest']['user']['id'] # ID 조회
+	print(userID)
+	try:
+		UserData = UserIdData.all(formula=match({"userID": userID, "schoolname": '-', 'gradecode': 0, 'classcode': 0, 'M1':'-','M2':'-','M3':'-','M4':'-','M5':'-','M6':'-','M7':'-','T1':'-','T2':'-','T3':'-','T4':'-','T5':'-','T6':'-','T7':'-','W1':'-','W2':'-','W3':'-','W4':'-','W5':'-','W6':'-','W7':'-','H1':'-','H2':'-','H3':'-','H4':'-','H5':'-','H6':'-','H7':'-','F1':'-','F2':'-','F3':'-','F4':'-','F5':'-','F6':'-','F7':'-'}, match_any=True))
+		if UserData == 0 or UserData == "false" or UserData == "" or UserData == "NaN" or UserData == []:
+			print("Can't Search Data")
+			raise Exception("Can't Search Data")
+		else:
+			schoolname = UserData[0]['fields']['schoolname']
+			schoolname = UserData[0]['fields']['gradecode']
+			schoolname = UserData[0]['fields']['classcode']
+			timetabledict = {'M1':'','M2':'','M3':'','M4':'','M5':'','M6':'','M7':'','T1':'','T2':'','T3':'','T4':'','T5':'','T6':'','T7':'','W1':'','W2':'','W3':'','W4':'','W5':'','W6':'','W7':'','H1':'','H2':'','H3':'','H4':'','H5':'','H6':'','H7':'','F1':'','F2':'','F3':'','F4':'','F5':'','F6':'','F7':''}
+			
+			datetime_kst_M = datetime_kst + Monday
+			day_M = datetime_kst_M.strftime("%Y%m%d")
+
+			Tuesday = timedelta(days=2-int(week))
+			datetime_kst_T = datetime_kst + Tuesday
+			day_T = datetime_kst_T.strftime("%Y%m%d")
+
+			Wednesday = timedelta(days=3-int(week))
+			datetime_kst_W = datetime_kst + Wednesday
+			day_W = datetime_kst_W.strftime("%Y%m%d")
+
+			Thursday = timedelta(days=4-int(week))
+			datetime_kst_H = datetime_kst + Thursday
+			day_H = datetime_kst_H.strftime("%Y%m%d")
+		
+			Friday = timedelta(days=5-int(week))
+			datetime_kst_F = datetime_kst + Friday
+			day_F = datetime_kst_F.strftime("%Y%m%d")
+
+			Weeklist = {day_M:'M', day_T:'T', day_W:'W', day_H:'H', day_F:'F'}
+			
+			output = []
 			params = {
-			'KEY' : service_key,
+			'KEY' : NEIS_Key,
 			'Type' : 'json',
 			'pIndex' : '1',
 			'pSize' : '100',
-			'ATPT_OFCDC_SC_CODE' : edu_code,
-			'SD_SCHUL_CODE' : user_school_code,
+			'ATPT_OFCDC_SC_CODE' : 'H10',
+			'SD_SCHUL_CODE' : '7480188',
 			'AY' : '2024',
 			'SEM' : '1',
-			'ALL_TI_YMD' : day,
-			'GRADE' : user_grade_code,
-			'CLASS_NM' : user_class_code
+			'GRADE' : '1',
+			'CLASS_NM' : '5',
+			'TI_FROM_YMD' : day_M,
+			'TI_TO_YMD' : day_F
 			}
-
-			print(NEIStime)
-			response = requests.get(NEIStime, params=params)
-			contents = response.json()
-			print(contents)
-			findtext = response.text
-			timenum = 0
 			
-
-			#시간표 미제공 날짜 구별
-			find = findtext.find('해당하는 데이터가 없습니다.')
-			print(find)
-
-			weekstr = str(week)
-			weekday = weeklist.get(weekstr, "월요")
-
+			response = requests.get(timetablelink, params=params)
+			contentstext = response.text
+			contents = response.json()
+	
+			find = contentstext.find('해당하는 데이터가 없습니다.')
 			
 			if find == -1:
-				if NEIStime == "https://open.neis.go.kr/hub/hisTimetable":
-					time = contents['hisTimetable'][1]['row']
-					if  week == 3:
-						timenumb = 6
-					else:
-						timenumb = 7
-
-					for n in range(0,timenumb):
-						try:
-							print(timenum)
-							timecheck = int(time[timenum]['PERIO'])
-							print("Now")
-							print(timecheck)
-						except:
-							timecheck = 0
-	
-						if not(timecheck == n + 1):
-							timetablelist.append('선택')
-							print("선택과목")
-						else:
-							timetablelist.append(time[timenum]['ITRT_CNTNT'])
-							print(time[timenum]['ITRT_CNTNT'])
-							timenum += 1
-						print(timetablelist)
-							
+				contentslist = contents['his'+'Timetable'][1]['row']
+				for a in contentslist:
+					Weekday = a['ALL_TI_YMD']
+					Weekdayfind = Weeklist[Weekday]
+					class_time = Weekdayfind + a['PERIO']
+					print(class_time+" "+a['ITRT_CNTNT'])
+					updatedict = {class_time : a['ITRT_CNTNT']}
+					timetabledict.update(updatedict)
 				
-				elif NEIStime == "https://open.neis.go.kr/hub/misTimetable":
-					time = contents['misTimetable'][1]['row']
-					for a in time:
-						timetablelist.append(a['ITRT_CNTNT'])
+				MTW_1 = timetabledict['M1'] + " " + timetabledict['T1'] + " " + timetabledict['W1']
+				MTW_2 = timetabledict['M2'] + " " + timetabledict['T2'] + " " + timetabledict['W2']
+				MTW_3 = timetabledict['M3'] + " " + timetabledict['T3'] + " " + timetabledict['W3']
+				MTW_4 = timetabledict['M4'] + " " + timetabledict['T4'] + " " + timetabledict['W4']
+				MTW_567 = timetabledict['M5'] + " " + timetabledict['T5'] + " " + timetabledict['W5'] + "\n" + timetabledict['M6'] + " " + timetabledict['T6'] + " " + timetabledict['W6'] + "\n" + timetabledict['M7'] + " " + timetabledict['T7'] + " " + timetabledict['W7']
+
+				HF_1 = timetabledict['H1'] + " " + timetabledict['F1']
+				HF_2 = timetabledict['H2'] + " " + timetabledict['F2']
+				HF_3 = timetabledict['H3'] + " " + timetabledict['F3']
+				HF_4 = timetabledict['H4'] + " " + timetabledict['F4']
+				HF_567 = timetabledict['H5'] + " " + timetabledict['F5'] + "\n" + timetabledict['H6'] + " " + timetabledict['F6'] + "\n" + timetabledict['F7'] + " " + timetabledict['F7']
 			
-
-			print(weekday == "일")
-			print(weekday == "토")
-			print(not(find == -1))
-			if weekday == "일" or weekday == "토" or not(find == -1):
 				responseBody = {
-		"version": "2.0",
-		"template": {
-			"outputs": [
-				{
-					"textCard": {
-		  				"title": date + " 시간표",
-		  				"description": "오늘은 시간표가 없어요!"
-								}
-				}
-						]
-		}
-	}
-				print(responseBody)
-			else:
-				print(timetablelist)
-				if user_school_code == "7480188" and user_grade_code == '1' and user_class_code == '5':
-					timetablelist = []
-					teacherlist = []
-					passing_timetable = {timetab: teacher for timetab, teacher in timetabledict.items() if not(timetab.find(weekday) == -1)}
-					for key in passing_timetable:
-						timetablelist.append(key[3:])
-	
-					for value in passing_timetable.values():
-						teacherlist.append(value)
-
-					print(timetablelist)
-					print(teacherlist)
-					
-					responseBody = {
   "version": "2.0",
   "template": {
-	"outputs": [
-	  {
-		"itemCard":{
-			  "head": {
-				"title": "1학년 5반 " + date + " 시간표" 
-			  	},
-			  	"itemList": [
-				{
-				"title": '1교시',
-				"description": timetablelist[0] + ' | ' + teacherlist[0]
-				},
-				{
-				"title": '2교시',
-				"description": timetablelist[1] + ' | ' + teacherlist[1]
-				},
-				{
-				"title": '3교시',
-				"description": timetablelist[2] + ' | ' + teacherlist[2]
-				},
-				{
-				"title": '4교시',
-				"description": timetablelist[3] + ' | ' + teacherlist[3]
-				},
-				{
-				"title": '5교시',
-				"description": timetablelist[4] + ' | ' + teacherlist[4]
-				},
-				{
-				"title": '6교시',
-				"description": timetablelist[5] + ' | ' + teacherlist[5]
-				},
-				{
-				"title": '7교시',
-				"description": timetablelist[6] + ' | ' + teacherlist[6]
-				}
-			  ],
-			  "itemListAlignment": "left"
-		}
-	  }
-	]
-	}
-	}
-				else:
-					print("Not 1-5")
-					if NEIStime == "https://open.neis.go.kr/hub/hisTimetable":
-						numb = timenum
-					else:
-						numb = contents['misTimetable'][0]['head'][0]['list_total_count']
-					print(numb)
-					numb7 = 8 - int(numb)
-
-					print(numb7)
-					
-					if not(numb7 == 0):
-						print("numb is not 7")
-						for a in range(0, numb7):
-							timecode = str(numb + a + 1)
-							app = "오늘은 " + timecode + "교시가 없어요"
-							print(app)
-							timetablelist.append(app)
-				
-					print(timetablelist)
-					responseBody = {
-  "version": "2.0",
-  "template": {
-	"outputs": [
-	  {
-		"itemCard":{
-			  "head": {
-				"title": user_grade_code + "학년 " + user_class_code + "반 " + date + " 시간표" 
-			  	},
-			  	"itemList": [
-				{
-				"title": '1교시',
-				"description": timetablelist[0]
-				},
-				{
-				"title": '2교시',
-				"description": timetablelist[1]
-				},
-				{
-				"title": '3교시',
-				"description": timetablelist[2]
-				},
-				{
-				"title": '4교시',
-				"description": timetablelist[3]
-				},
-				{
-				"title": '5교시',
-				"description": timetablelist[4]
-				},
-				{
-				"title": '6교시',
-				"description": timetablelist[5]
-				},
-				{
-				"title": '7교시',
-				"description": timetablelist[6]
-				}
-			  ],
-			  "itemListAlignment": "left"
-		}
-	  }
-	]
-	}
-	}			
-					print(responseBody)
-					
+    "outputs": [
+	    {
+            "simpleText": {
+                "text": schoolname + " " + gradecode + "학년 " + classcode + "반 " + date + " NEIS 시간표"
+            }
+          },
+      {
+        "carousel": {
+          "type": "itemCard",
+          "items": [
+            {
+              "title": MTW_567,
+              "itemList": [
+                {
+                  "title": "　요일",
+                  "description": " 월요일   화요일   수요일 "
+                },
+                {
+                  "title": "1교시",
+                  "description": MTW_1
+                },
+                {
+                  "title": "2교시",
+                  "description": MTW_2
+                },
+                {
+                  "title": "3교시",
+                  "description": MTW_3
+                },
+                {
+                  "title": "4교시",
+                  "description": MTW_4
+                }
+              ],
+              "itemListAlignment": "left"
+            },
+            {
+              "title": HF_567,
+              "itemList": [
+                {
+                  "title": "　요일",
+                  "description": " 목요일   금요일 "
+                },
+                {
+                  "title": "1교시",
+                  "description": HF_1
+                },
+                {
+                  "title": "2교시",
+                  "description": HF_2
+                },
+                {
+                  "title": "3교시",
+                  "description": HF_3
+                },
+                {
+                  "title": "4교시",
+                  "description": HF_4
+                }
+              ],
+              "itemListAlignment": "left"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
 	except:
-		print("Can't find info")
-		responseBody = {
-		"version": "2.0",
-		"template": {
-			"outputs": [
-				{
-					"textCard": {
-		  				"title": date + " 시간표",
-		  				"description": "먼저 사용자 등록을 통해 정보를 등록해 주세요! \n밑의 사용자 등록하기 메뉴를 통해 등록하거나 \'사용자 등록하기\'를 입력하세요." ,
-		  				"buttons": [
+		responsebody = {
+  "version": "2.0",
+  "template": {
+	"outputs": [
+	  {
+		"textCard": {
+		  "title": "오류 발생",
+		  "description": "오류 발생, 정보를 입력하고 싶다면 \'입력\' 버튼을, 급식이나 시간표를 조회하시려면 \'오늘 급식 뭐임?\' 또는 \'오늘 시간표 뭐임?\' 버튼을 눌러주세요.",
+		"buttons": [
 			{
-			  "action": "message",
-			  "label": "사용자 등록하기",
-			  "messageText": "사용자 등록하기"
+			  "action": "block",
+			  "label": "재입력",
+			  "blockId" : "66486e1826296c3bea93d1c0"
+			},
+			{
+			  "action": "block",
+			  "label": "오늘 급식 뭐임?",
+			  "blockId" : "65f6ee3a58611458d29a92c2"
+			},
+			{
+			  "action": "block",
+			  "label": "오늘 시간표 뭐임?",
+			  "blockId" : "65fa21294fc74f623ccfa55a"
 			}
-									]
-								}
-				}
-						]
+		]
 		}
-	}
-	
+		  
+	  }
+	]
+  }
+}
 	return responseBody
 
 @app.route('/meal', methods = ["POST"])
