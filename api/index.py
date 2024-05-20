@@ -933,19 +933,19 @@ def newtimetable():
 			print("weekdays are available")
 			
 			Weeklist = {day_M:'M', day_T:'T', day_W:'W', day_H:'H', day_F:'F'}
+			timetablelink = 'https://open.neis.go.kr/hub/'+schooltype+'Timetable'
 			
-			output = []
 			params = {
 			'KEY' : NEIS_Key,
 			'Type' : 'json',
 			'pIndex' : '1',
 			'pSize' : '100',
-			'ATPT_OFCDC_SC_CODE' : 'H10',
-			'SD_SCHUL_CODE' : '7480188',
+			'ATPT_OFCDC_SC_CODE' : Educode,
+			'SD_SCHUL_CODE' : schoolcode,
 			'AY' : '2024',
 			'SEM' : '1',
-			'GRADE' : '1',
-			'CLASS_NM' : '5',
+			'GRADE' : gradecode,
+			'CLASS_NM' : classcode,
 			'TI_FROM_YMD' : day_M,
 			'TI_TO_YMD' : day_F
 			}
@@ -958,7 +958,7 @@ def newtimetable():
 			find = contentstext.find('해당하는 데이터가 없습니다.')
 			
 			if find == -1:
-				contentslist = contents['his'+'Timetable'][1]['row']
+				contentslist = contents[schooltype+'Timetable'][1]['row']
 				for a in contentslist:
 					Weekday = a['ALL_TI_YMD']
 					Weekdayfind = Weeklist[Weekday]
