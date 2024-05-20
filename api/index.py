@@ -974,14 +974,14 @@ def newtimetable():
 					for y in dellist_r:
 						del unpure_subject_list[y]
 					print(unpure_subject_list)
-					if len(unpure_subject_list[x]) == 2:
+					if len(unpure_subject_list) == 2:
 						unpure_subject_list.insert(-10,"　")
 						unpure_subject_list.insert(10,"　")
-					if len(unpure_subject_list[x]) == 3:
+					if len(unpure_subject_list) == 3:
 						unpure_subject_list.insert(-10," ")
 						unpure_subject_list.insert(10," ")
-					if len(unpure_subject_list[x]) > 4:
-						for y in range(0, len(unpure_subject_list[x])-4):
+					if len(unpure_subject_list) > 4:
+						for y in range(0, len(unpure_subject_list)-4):
 							del unpure_subject_list[5]
 					print(unpure_subject_list)
 					pured_subject = "".join(unpure_subject_list)
