@@ -967,7 +967,15 @@ def newtimetable():
 					unpure_subject_list = list(unpure_subject)
 					dellist = []
 					for x in range(0, len(unpure_subject_list)):
-						if unpure_subject_list[x] == "(" or unpure_subject_list[x] == ")" or unpure_subject_list[x] == "[" or unpure_subject_list[x] == "]" or unpure_subject_list[x] == " " or unpure_subject_list[x] == "와" or unpure_subject_list[x] == "과":
+						if unpure_subject_list[x] == "와 " or unpure_subject_list[x] == "과 ":
+							dellist.append(x)
+							dellist.append(x+1)
+					dellist_r = reversed(dellist)
+					print(dellist_r)
+					for y in dellist_r:
+						del unpure_subject_list[y]
+					for x in range(0, len(unpure_subject_list)):
+						if unpure_subject_list[x] == "(" or unpure_subject_list[x] == ")" or unpure_subject_list[x] == "[" or unpure_subject_list[x] == "]" or unpure_subject_list[x] == " ":
 							dellist.append(x)
 					dellist_r = reversed(dellist)
 					print(dellist_r)
@@ -975,7 +983,7 @@ def newtimetable():
 						del unpure_subject_list[y]
 					print(unpure_subject_list)
 					if len(unpure_subject_list) > 4:
-						for y in range(0, len(unpure_subject_list)-4):
+						for y in range(0, len(unpure_subject_list)-3):
 							del unpure_subject_list[5]
 					if len(unpure_subject_list) == 2:
 						unpure_subject_list.insert(-10,"　")
