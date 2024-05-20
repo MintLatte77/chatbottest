@@ -253,7 +253,7 @@ def test():
 		contentslist = contents['his'+'Timetable'][1]['row']
 		for a in contentslist:
 			Weekday = a['ALL_TI_YMD']
-			Weekdayfind = Weeklist[a]
+			Weekdayfind = Weeklist[Weekday]
 			class_time = Weekdayfind + a['PERIO']
 			print(class_time+" "+a['ITRT_CNTNT'])
 			timetabledict.update(class_time = a['ITRT_CNTNT'])
