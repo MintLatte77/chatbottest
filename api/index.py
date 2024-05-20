@@ -267,12 +267,17 @@ def test():
   "version": "2.0",
   "template": {
     "outputs": [
+	    {
+            "simpleText": {
+                "text": "1학년 5반 5월 20일 시간표"
+            }
+          },
       {
         "carousel": {
           "type": "itemCard",
           "items": [
             {
-              "title": "1학년 5반 5월 20일 시간표",
+              "title": "5교시 과학탐구 과학탐구 과학탐구\n6교시 과학탐구 과학탐구 과학탐구\n7교시 과학탐구 과학탐구 과학탐구",
               "itemList": [
                 {
                   "title": "요일",
@@ -295,11 +300,10 @@ def test():
                   "description": "과학탐구 과학탐구 과학탐구"
                 }
               ],
-              "itemListAlignment": "left",
-              "description": "5교시 과학탐구 과학탐구 과학탐구\n6교시 과학탐구 과학탐구 과학탐구\n7교시 과학탐구 과학탐구 과학탐구"
+              "itemListAlignment": "left"
             },
             {
-              "title": "1학년 5반 5월 20일 시간표",
+              "title": "5교시 과학탐구 과학탐구\n6교시 과학탐구 과학탐구\n7교시 과학탐구 과학탐구",
               "itemList": [
                 {
                   "title": "요일",
@@ -322,8 +326,7 @@ def test():
                   "description": "과학탐구 과학탐구"
                 }
               ],
-              "itemListAlignment": "left",
-              "description": "5교시 과학탐구 과학탐구\n6교시 과학탐구 과학탐구\n7교시 과학탐구 과학탐구"
+              "itemListAlignment": "left"
             }
           ]
         }
