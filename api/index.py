@@ -987,8 +987,8 @@ def newtimetable():
 						for y in range(0, len(unpure_subject_list)-4):
 							del unpure_subject_list[4]
 					if len(unpure_subject_list) == 2:
-						unpure_subject_list.insert(-10,"　")
-						unpure_subject_list.insert(10,"　")
+						unpure_subject_list.insert(-10,"ㅤ")
+						unpure_subject_list.insert(10,"ㅤ")
 					if len(unpure_subject_list) == 3:
 						unpure_subject_list.insert(-10," ")
 						unpure_subject_list.insert(10," ")
@@ -1009,7 +1009,7 @@ def newtimetable():
 				HF_2 = timetabledict['H2'] + " " + timetabledict['F2']
 				HF_3 = timetabledict['H3'] + " " + timetabledict['F3']
 				HF_4 = timetabledict['H4'] + " " + timetabledict['F4']
-				HF_567 = "5교시 " + timetabledict['H5'] + " " + timetabledict['F5'] + "\n" + timetabledict['H6'] + " " + timetabledict['F6'] + "\n7교시 " + timetabledict['F7'] + " " + timetabledict['F7']
+				HF_567 = "5교시 " + timetabledict['H5'] + " " + timetabledict['F5'] + "\n6교시 " + timetabledict['H6'] + " " + timetabledict['F6'] + "\n7교시 " + timetabledict['F7'] + " " + timetabledict['F7']
 				
 				title = schoolname + " " + str(gradecode) + "학년 " + str(classcode) + "반 " + date + " NEIS 시간표"
 				print("ready to response")
@@ -1030,8 +1030,8 @@ def newtimetable():
               "title": MTW_567,
               "itemList": [
                 {
-                  "title": "　요일",
-                  "description": " 월요일   화요일   수요일 "
+                  "title": "ㅤ요일",
+                  "description": " 월요일     화요일    수요일 "
                 },
                 {
                   "title": "1교시",
@@ -1056,8 +1056,8 @@ def newtimetable():
               "title": HF_567,
               "itemList": [
                 {
-                  "title": "　요일",
-                  "description": " 목요일   금요일 "
+                  "title": "ㅤ요일",
+                  "description": " 목요일    금요일 "
                 },
                 {
                   "title": "1교시",
