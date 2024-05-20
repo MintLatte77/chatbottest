@@ -268,31 +268,66 @@ def test():
   "template": {
 	"outputs": [
 	  {
-		"itemCard":{
-			  "head": {
-				"title": "1학년 5반 5월 20일 시간표" 
-			  	},
+		"carousel":{
+			"type" : "itemcard",
+			"items" : [
+			{
+				"title": "1학년 5반 5월 20일 시간표",
 			  	"itemList": [
 				{
+				"title": '요일',
+				"description": ' 월요일   화요일   수요일 '
+				},
+				{
 				"title": '1교시',
-				"description": '과학탐구 과학탐구 과학탐구 과학탐구 과학탐구'
+				"description": '과학탐구 과학탐구 과학탐구'
 				},
 				{
 				"title": '2교시',
-				"description": '과학탐 과학탐 과학탐 과학탐 과학탐'
+				"description": '과학탐구 과학탐구 과학탐구'
 				},
 				{
 				"title": '3교시',
-				"description": '과학탐구실험 과학탐구실험 과학탐구실험 과학탐구실험 과학탐구실험'
+				"description": '과학탐구 과학탐구 과학탐구'
 				},
 				{
 				"title": '4교시',
-				"description": '과학탐구실험 과학탐구실험 과학탐구실험 과학탐구실험 과학탐구실험'
+				"description": '과학탐구 과학탐구 과학탐구'
 				}
 			  ],
 			  "itemListAlignment": "left",
-			"description" : '5교시 과학탐구실험 과학탐구실험 과학탐구실험 과학탐구실험 과학탐구실험\n6교시 과학탐구실험 과학탐구실험 과학탐구실험 과학탐구실험 과학탐구실험\n7교시 과학탐구실험 과학탐구실험 과학탐구실험 과학탐구실험 과학탐구실험'
+			"description" : '5교시 과학탐구 과학탐구 과학탐구\n6교시 과학탐구 과학탐구 과학탐구\n7교시 과학탐구 과학탐구 과학탐구'
+		},
+		{
+				"title": "1학년 5반 5월 20일 시간표",
+			  	"itemList": [
+				{
+				"title": '요일',
+				"description": ' 목요일   금요일 '
+				},
+				{
+				"title": '1교시',
+				"description": '과학탐구 과학탐구'
+				},
+				{
+				"title": '2교시',
+				"description": '과학탐구 과학탐구'
+				},
+				{
+				"title": '3교시',
+				"description": '과학탐구 과학탐구'
+				},
+				{
+				"title": '4교시',
+				"description": '과학탐구 과학탐구'
+				}
+			  ],
+			  "itemListAlignment": "left",
+			"description" : '5교시 과학탐구 과학탐구\n6교시 과학탐구 과학탐구\n7교시 과학탐구 과학탐구'
 		}
+			]
+			
+				
 	  }
 	]
 	}
