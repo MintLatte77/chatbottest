@@ -262,9 +262,9 @@ def test2():
 			updatedict = {class_time : a['ITRT_CNTNT']}
 			timetabledict.update(updatedict)
 		tablesources = [[timetabledict['M1'], timetabledict['T1'], timetabledict['W1'], timetabledict['H1'], timetabledict['F1']], [timetabledict['M2'], timetabledict['T2'], timetabledict['W2'], timetabledict['H2'], timetabledict['F2']], [timetabledict['M3'], timetabledict['T3'], timetabledict['W3'], timetabledict['H3'], timetabledict['F3']], [timetabledict['M4'], timetabledict['T4'], timetabledict['W4'], timetabledict['H4'], timetabledict['F4']], [timetabledict['M5'], timetabledict['T5'], timetabledict['W5'], timetabledict['H5'], timetabledict['F5']], [timetabledict['M6'], timetabledict['T6'], timetabledict['W6'], timetabledict['H6'], timetabledict['F6']], [timetabledict['M7'], timetabledict['T7'], timetabledict['W7'], timetabledict['H7'], timetabledict['F7']]]
-		# timetable = pandas
+		timetable = pandas.DataFrame(tablesources, index=['1교시', '2교시', '3교시', '4교시', '5교시', '6교시', '7교시'], columns=['월요알', '화요알', '수요일', '목요일', '금요일'])
 
-	return timetabledict
+	return timetable
 
 @app.route('/test', methods = ['POST'])
 def test():
