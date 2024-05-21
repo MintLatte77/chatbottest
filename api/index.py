@@ -914,22 +914,27 @@ def newtimetable():
 			Monday = timedelta(days=1-int(week))
 			datetime_kst_M = datetime_kst + Monday
 			day_M = datetime_kst_M.strftime("%Y%m%d")
+			date_M = datetime_kst_M.strftime("%m월 %d일 월요일 시간표")
 
 			Tuesday = timedelta(days=2-int(week))
 			datetime_kst_T = datetime_kst + Tuesday
 			day_T = datetime_kst_T.strftime("%Y%m%d")
+			date_T = datetime_kst_T.strftime("%m월 %d일 화요일 시간표")
 
 			Wednesday = timedelta(days=3-int(week))
 			datetime_kst_W = datetime_kst + Wednesday
 			day_W = datetime_kst_W.strftime("%Y%m%d")
+			date_W = datetime_kst_W.strftime("%m월 %d일 수요일 시간표")
 
 			Thursday = timedelta(days=4-int(week))
 			datetime_kst_H = datetime_kst + Thursday
 			day_H = datetime_kst_H.strftime("%Y%m%d")
+			date_H = datetime_kst_H.strftime("%m월 %d일 목요일 시간표")
 		
 			Friday = timedelta(days=5-int(week))
 			datetime_kst_F = datetime_kst + Friday
 			day_F = datetime_kst_F.strftime("%Y%m%d")
+			date_F = datetime_kst_F.strftime("%m월 %d일 금요일 시간표")
 
 			print("weekdays are available")
 			
@@ -964,49 +969,16 @@ def newtimetable():
 					Weekday = a['ALL_TI_YMD']
 					Weekdayfind = Weeklist[Weekday]
 					class_time = Weekdayfind + a['PERIO']
-					unpure_subject = a['ITRT_CNTNT']
-					unpure_subject_list = list(unpure_subject)
-					dellist = []
-					for x in range(0, len(unpure_subject_list)):
-						if unpure_subject_list[x] == "와" or unpure_subject_list[x] == "과":
-							if unpure_subject_list[x+1] == " ":
-								dellist.append(x)
-								dellist.append(x+1)
-					dellist_r = reversed(dellist)
-					print(dellist_r)
-					for y in dellist_r:
-						del unpure_subject_list[y]
-					for x in range(0, len(unpure_subject_list)):
-						if unpure_subject_list[x] == "(" or unpure_subject_list[x] == ")" or unpure_subject_list[x] == "[" or unpure_subject_list[x] == "]" or unpure_subject_list[x] == " ":
-							dellist.append(x)
-					dellist_r = reversed(dellist)
-					print(dellist_r)
-					for y in dellist_r:
-						del unpure_subject_list[y]
-					print(unpure_subject_list)
-					if len(unpure_subject_list) > 4:
-						for y in range(0, len(unpure_subject_list)-4):
-							del unpure_subject_list[4]
-					if len(unpure_subject_list) == 2:
-						unpure_subject_list.insert(-10,"ᅟ")
-						unpure_subject_list.insert(10,"ᅟ")
-					if len(unpure_subject_list) == 3:
-						unpure_subject_list.insert(-10,"  ")
-						unpure_subject_list.insert(10,"  ")
-					
-					print(unpure_subject_list)
-					pured_subject = "".join(unpure_subject_list)
-					print(class_time+" "+pured_subject)
-					updatedict = {class_time : pured_subject}
+					subject = a['ITRT_CNTNT']
+					print(class_time+" "+subject)
+					updatedict = {class_time : subject}
 					timetabledict.update(updatedict)
 				
-				MTW = "1교시 | " + timetabledict['M1'] + " | " + timetabledict['T1'] + " | " + timetabledict['W1'] + " |\n2교시 | " + timetabledict['M2'] + " | " + timetabledict['T2'] + " | " + timetabledict['W2'] + " |\n3교시 | " + timetabledict['M3'] + " | " + timetabledict['T3'] + " | " + timetabledict['W3'] + " |\n4교시 | " + timetabledict['M4'] + " | " + timetabledict['T4'] + " | " + timetabledict['W4'] + " |\n5교시 | " + timetabledict['M5'] + " | " + timetabledict['T5'] + " | " + timetabledict['W5'] + " |\n6교시 | " + timetabledict['M6'] + " | " + timetabledict['T6'] + " | " + timetabledict['W6'] + " |\n7교시 | " + timetabledict['M7'] + " | " + timetabledict['T7'] + " | " + timetabledict['W7'] + " |"
-
-				HF_1 = timetabledict['H1'] + " " + timetabledict['F1']
-				HF_2 = timetabledict['H2'] + " " + timetabledict['F2']
-				HF_3 = timetabledict['H3'] + " " + timetabledict['F3']
-				HF_4 = timetabledict['H4'] + " " + timetabledict['F4']
-				HF_567 = "5교시 " + timetabledict['H5'] + " " + timetabledict['F5'] + "\n6교시 " + timetabledict['H6'] + " " + timetabledict['F6'] + "\n7교시 " + timetabledict['F7'] + " " + timetabledict['F7']
+				M_67 = "6교시 " + timetabledict['M6'] + "\n7교시 " + timetabledict['M7']
+				T_67 = "6교시 " + timetabledict['T6'] + "\n7교시 " + timetabledict['T7']
+				W_67 = "6교시 " + timetabledict['W6'] + "\n7교시 " + timetabledict['W7']
+				H_67 = "6교시 " + timetabledict['H6'] + "\n7교시 " + timetabledict['H7']
+				F_67 = "6교시 " + timetabledict['F6'] + "\n7교시 " + timetabledict['F7']
 				
 				title = schoolname + " " + str(gradecode) + "학년 " + str(classcode) + "반 " + date + " NEIS 시간표"
 				print("ready to response")
@@ -1015,20 +987,35 @@ def newtimetable():
   "template": {
     "outputs": [
 	    {
-            "simpleText": {
-                "text": title
-            }
-          },
-      {
         "carousel": {
           "type": "itemCard",
           "items": [
             {
-              "title": MTW,
+		"imageTitle": {
+                "title": date_M
+              },
+		"title" : M_67,
+              "description": "다른 요일의 시간표를 보시려면 왼쪽이나 오른쪽으로 드래그 해 주세요",
               "itemList": [
                 {
-                  "title": "ㅤ요일",
-                  "description": "|    월요일    |    화요일    |    수요일    |"
+                  "title": "1교시",
+                  "description": timetabledict['M1']
+                },
+		{
+                  "title": "2교시",
+                  "description": timetabledict['M2']
+                },
+		{
+                  "title": "3교시",
+                  "description": timetabledict['M3']
+                },
+		{
+                  "title": "4교시",
+                  "description": timetabledict['M4']
+                },
+		{
+                  "title": "5교시",
+                  "description": timetabledict['M5']
                 }
               ],
               "itemListAlignment": "left"
