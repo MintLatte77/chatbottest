@@ -991,8 +991,8 @@ def newtimetable():
 						unpure_subject_list.insert(-10,"ᅟ")
 						unpure_subject_list.insert(10,"ᅟ")
 					if len(unpure_subject_list) == 3:
-						unpure_subject_list.insert(-10," ")
-						unpure_subject_list.insert(10," ")
+						unpure_subject_list.insert(-10,"  ")
+						unpure_subject_list.insert(10,"  ")
 					
 					print(unpure_subject_list)
 					pured_subject = "".join(unpure_subject_list)
@@ -1028,7 +1028,7 @@ def newtimetable():
               "itemList": [
                 {
                   "title": "ㅤ요일",
-                  "description": "|  월요일  |  화요일  |  수요일  |"
+                  "description": "|    월요일    |    화요일    |    수요일    |"
                 }
               ],
               "itemListAlignment": "left"
