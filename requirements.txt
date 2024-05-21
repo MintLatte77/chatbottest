@@ -2,3 +2,5 @@ Flask==3.0.0
 datetime==5.4
 requests==2.31.0
 pyairtable==2.3.2
+pandas==2.2.2
+dataframe_image==0.2.3
