@@ -1000,11 +1000,7 @@ def newtimetable():
 					updatedict = {class_time : pured_subject}
 					timetabledict.update(updatedict)
 				
-				MTW_1 = "| " + timetabledict['M1'] + " | " + timetabledict['T1'] + " | " + timetabledict['W1'] + " |"
-				MTW_2 = "| " + timetabledict['M2'] + " | " + timetabledict['T2'] + " | " + timetabledict['W2'] + " |"
-				MTW_3 = "| " + timetabledict['M3'] + " | " + timetabledict['T3'] + " | " + timetabledict['W3'] + " |"
-				MTW_4 = "| " + timetabledict['M4'] + " | " + timetabledict['T4'] + " | " + timetabledict['W4'] + " |"
-				MTW_567 = "5교시| " + timetabledict['M5'] + " | " + timetabledict['T5'] + " | " + timetabledict['W5'] + " |\n6교시| " + timetabledict['M6'] + " | " + timetabledict['T6'] + " | " + timetabledict['W6'] + " |\n7교시| " + timetabledict['M7'] + " | " + timetabledict['T7'] + " | " + timetabledict['W7'] + " |"
+				MTW = "1교시 | " + timetabledict['M1'] + " | " + timetabledict['T1'] + " | " + timetabledict['W1'] + " |\n2교시 | " + timetabledict['M2'] + " | " + timetabledict['T2'] + " | " + timetabledict['W2'] + " |\n3교시 | " + timetabledict['M3'] + " | " + timetabledict['T3'] + " | " + timetabledict['W3'] + " |\n4교시 | " + timetabledict['M4'] + " | " + timetabledict['T4'] + " | " + timetabledict['W4'] + " |\n5교시 | " + timetabledict['M5'] + " | " + timetabledict['T5'] + " | " + timetabledict['W5'] + " |\n6교시 | " + timetabledict['M6'] + " | " + timetabledict['T6'] + " | " + timetabledict['W6'] + " |\n7교시 | " + timetabledict['M7'] + " | " + timetabledict['T7'] + " | " + timetabledict['W7'] + " |"
 
 				HF_1 = timetabledict['H1'] + " " + timetabledict['F1']
 				HF_2 = timetabledict['H2'] + " " + timetabledict['F2']
@@ -1028,27 +1024,11 @@ def newtimetable():
           "type": "itemCard",
           "items": [
             {
-              "title": MTW_567,
+              "title": MTW,
               "itemList": [
                 {
                   "title": "ㅤ요일",
                   "description": "|  월요일  |  화요일  |  수요일  |"
-                },
-                {
-                  "title": "1교시",
-                  "description": MTW_1
-                },
-                {
-                  "title": "2교시",
-                  "description": MTW_2
-                },
-                {
-                  "title": "3교시",
-                  "description": MTW_3
-                },
-                {
-                  "title": "4교시",
-                  "description": MTW_4
                 }
               ],
               "itemListAlignment": "left"
