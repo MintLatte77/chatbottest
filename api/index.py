@@ -51,7 +51,8 @@ UserIdTable = 'tblm8yAPlQ3wzjAKp'
 UserIdData = Table(airtable_token, UserIdBase, UserIdTable)
 areacode = {'서울':'B10', '부산':'C10', '대구':'D10', '인천':'E10', '광주':'F10', '대전':'G10', '울산':'H10', '세종':'I10', '경기':'J10', '강원':'K10', '충북':'M10', '충남':'N10', '전북':'P10', '전남':'Q10', '경북':'R10', '경남':'S10', '제주':'T10'}
 newweeklist = {'0':'','1':'M','2':'T','3':'W','4':'H','5':'F','6':'','7':''}
-UserTimeData = Table(airtable_token, UserIdBase, 'tblacWgSp8Z9x4Crw')
+newtimelistkr = {'0':'','1':'월','2':'화','3':'수','4':'목','5':'금','6':'','7':''}
+userTimeData = Table(airtable_token, UserIdBase, 'tblacWgSp8Z9x4Crw')
 nweek = newweeklist[str(week)]
 nweek_1 = newweeklist[str(datetime_kst_1.strftime("%w"))]
 nweek_2 = newweeklist[str(datetime_kst_2.strftime("%w"))]
@@ -841,7 +842,12 @@ def timetable():
 				W_67 = "6교시 " + timetabledict['W6'] + "\n7교시 " + timetabledict['W7']
 				H_67 = "6교시 " + timetabledict['H6'] + "\n7교시 " + timetabledict['H7']
 				F_67 = "6교시 " + timetabledict['F6'] + "\n7교시 " + timetabledict['F7']
-				
+
+				items = []
+				nweeklist = [nweek, nweek_1, nweek_2]
+				nweeklist = [n for n in nweeklist if n]
+				for a in nweeklist:
+					
 				title = schoolname + " " + str(gradecode) + "학년 " + str(classcode) + "반 " + date + " NEIS 시간표"
 				print("ready to response")
 				responseBody = {
