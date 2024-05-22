@@ -1021,27 +1021,31 @@ def newtimetable():
               "itemListAlignment": "left"
             },
             {
-              "title": HF_567,
+		"imageTitle": {
+                "title": date_M
+              },
+		"title" : T_67,
+              "description": "다른 요일의 시간표를 보시려면 왼쪽이나 오른쪽으로 드래그 해 주세요",
               "itemList": [
                 {
-                  "title": "ㅤ요일",
-                  "description": " 목요일    금요일 "
-                },
-                {
                   "title": "1교시",
-                  "description": HF_1
+                  "description": timetabledict['T1']
                 },
-                {
+		{
                   "title": "2교시",
-                  "description": HF_2
+                  "description": timetabledict['T2']
                 },
-                {
+		{
                   "title": "3교시",
-                  "description": HF_3
+                  "description": timetabledict['T3']
                 },
-                {
+		{
                   "title": "4교시",
-                  "description": HF_4
+                  "description": timetabledict['T4']
+                },
+		{
+                  "title": "5교시",
+                  "description": timetabledict['T5']
                 }
               ],
               "itemListAlignment": "left"
