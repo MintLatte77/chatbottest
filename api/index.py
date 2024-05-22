@@ -52,9 +52,9 @@ UserIdData = Table(airtable_token, UserIdBase, UserIdTable)
 areacode = {'서울':'B10', '부산':'C10', '대구':'D10', '인천':'E10', '광주':'F10', '대전':'G10', '울산':'H10', '세종':'I10', '경기':'J10', '강원':'K10', '충북':'M10', '충남':'N10', '전북':'P10', '전남':'Q10', '경북':'R10', '경남':'S10', '제주':'T10'}
 newweeklist = {'0':'','1':'M','2':'T','3':'W','4':'H','5':'F','6':'','7':''}
 UserTimeData = Table(airtable_token, UserIdBase, 'tblacWgSp8Z9x4Crw')
-nweek = newweeklist[week]
-nweek_1 = newweeklist[int(datetime_kst_1.strftime("%w"))]
-nweek_2 = newweeklist[int(datetime_kst_2.strftime("%w"))]
+nweek = newweeklist[str(week)]
+nweek_1 = newweeklist[str(datetime_kst_1.strftime("%w"))]
+nweek_2 = newweeklist[str(datetime_kst_2.strftime("%w"))]
 
 # @app.route('/service', methods = ["POST"])
 # 	body = request.get_json()
