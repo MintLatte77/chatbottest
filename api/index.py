@@ -1022,7 +1022,7 @@ def newtimetable():
             },
             {
 		"imageTitle": {
-                "title": date_M
+                "title": date_T
               },
 		"title" : T_67,
               "description": "다른 요일의 시간표를 보시려면 왼쪽이나 오른쪽으로 드래그 해 주세요",
@@ -1046,6 +1046,96 @@ def newtimetable():
 		{
                   "title": "5교시",
                   "description": timetabledict['T5']
+                }
+              ],
+              "itemListAlignment": "left"
+            },
+	{
+		"imageTitle": {
+                "title": date_W
+              },
+		"title" : W_67,
+              "description": "다른 요일의 시간표를 보시려면 왼쪽이나 오른쪽으로 드래그 해 주세요",
+              "itemList": [
+                {
+                  "title": "1교시",
+                  "description": timetabledict['W1']
+                },
+		{
+                  "title": "2교시",
+                  "description": timetabledict['W2']
+                },
+		{
+                  "title": "3교시",
+                  "description": timetabledict['W3']
+                },
+		{
+                  "title": "4교시",
+                  "description": timetabledict['W4']
+                },
+		{
+                  "title": "5교시",
+                  "description": timetabledict['W5']
+                }
+              ],
+              "itemListAlignment": "left"
+            },
+		  {
+		"imageTitle": {
+                "title": date_H
+              },
+		"title" : H_67,
+              "description": "다른 요일의 시간표를 보시려면 왼쪽이나 오른쪽으로 드래그 해 주세요",
+              "itemList": [
+                {
+                  "title": "1교시",
+                  "description": timetabledict['H1']
+                },
+		{
+                  "title": "2교시",
+                  "description": timetabledict['H2']
+                },
+		{
+                  "title": "3교시",
+                  "description": timetabledict['H3']
+                },
+		{
+                  "title": "4교시",
+                  "description": timetabledict['H4']
+                },
+		{
+                  "title": "5교시",
+                  "description": timetabledict['H5']
+                }
+              ],
+              "itemListAlignment": "left"
+            },
+		  {
+		"imageTitle": {
+                "title": date_F
+              },
+		"title" : F_67,
+              "description": "다른 요일의 시간표를 보시려면 왼쪽이나 오른쪽으로 드래그 해 주세요",
+              "itemList": [
+                {
+                  "title": "1교시",
+                  "description": timetabledict['F1']
+                },
+		{
+                  "title": "2교시",
+                  "description": timetabledict['F2']
+                },
+		{
+                  "title": "3교시",
+                  "description": timetabledict['F3']
+                },
+		{
+                  "title": "4교시",
+                  "description": timetabledict['F4']
+                },
+		{
+                  "title": "5교시",
+                  "description": timetabledict['F5']
                 }
               ],
               "itemListAlignment": "left"
