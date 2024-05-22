@@ -750,7 +750,6 @@ def check():
 }
 	return responesebody
 
-
 @app.route('/timetable', methods = ["POST"])
 def timetable():
 	starttime = datetime.utcnow().timestamp()
@@ -758,97 +757,247 @@ def timetable():
 	userID = body['userRequest']['user']['id'] # ID 조회
 	print(userID)
 	try:
-		UserData = UserIdData.all(formula=match({"userID": userID, "Educode": '-', "schoolcode": '-', "schooltype":'-', "schoolname": '-', "gradecode": '-', "classcode": '-', 'M1':'-','M2':'-','M3':'-','M4':'-','M5':'-','M6':'-','M7':'-','T1':'-','T2':'-','T3':'-','T4':'-','T5':'-','T6':'-','T7':'-','W1':'-','W2':'-','W3':'-','W4':'-','W5':'-','W6':'-','W7':'-','H1':'-','H2':'-','H3':'-','H4':'-','H5':'-','H6':'-','H7':'-','F1':'-','F2':'-','F3':'-','F4':'-','F5':'-','F6':'-','F7':'-'}, match_any=True))
+		UserData = UserIdData.all(formula=match({"userID": userID, "Educode": '-', "schoolcode": '-', "schooltype":'-', "schoolname": '-', "gradecode": '-', "classcode": '-'}, match_any=True))
 		if UserData == 0 or UserData == "false" or UserData == "" or UserData == "NaN" or UserData == []:
 			print("Can't Search Data")
 			raise Exception("Can't Search Data")
 		else:
+			
 			Educode = UserData[0]['fields']['Educode']
 			schoolcode = UserData[0]['fields']['schoolcode']
 			schooltype = UserData[0]['fields']['schooltype']
 			schoolname = UserData[0]['fields']['schoolname']
 			gradecode = UserData[0]['fields']['gradecode']
 			classcode = UserData[0]['fields']['classcode']
+			print("Loading userinfo")
 			
+			timetabledict = {'M1':'　　　　','M2':'　　　　','M3':'　　　　','M4':'　　　　','M5':'　　　　','M6':'　　　　','M7':'　　　　','T1':'　　　　','T2':'　　　　','T3':'　　　　','T4':'　　　　','T5':'　　　　','T6':'　　　　','T7':'　　　　','W1':'　　　　','W2':'　　　　','W3':'　　　　','W4':'　　　　','W5':'　　　　','W6':'　　　　','W7':'　　　　','H1':'　　　　','H2':'　　　　','H3':'　　　　','H4':'　　　　','H5':'　　　　','H6':'　　　　','H7':'　　　　','F1':'　　　　','F2':'　　　　','F3':'　　　　','F4':'　　　　','F5':'　　　　','F6':'　　　　','F7':'　　　　'}
+
+			Monday = timedelta(days=1-int(week))
+			datetime_kst_M = datetime_kst + Monday
+			day_M = datetime_kst_M.strftime("%Y%m%d")
+			date_M = datetime_kst_M.strftime("%m월 %d일 월요일 시간표")
+
+			Tuesday = timedelta(days=2-int(week))
+			datetime_kst_T = datetime_kst + Tuesday
+			day_T = datetime_kst_T.strftime("%Y%m%d")
+			date_T = datetime_kst_T.strftime("%m월 %d일 화요일 시간표")
+
+			Wednesday = timedelta(days=3-int(week))
+			datetime_kst_W = datetime_kst + Wednesday
+			day_W = datetime_kst_W.strftime("%Y%m%d")
+			date_W = datetime_kst_W.strftime("%m월 %d일 수요일 시간표")
+
+			Thursday = timedelta(days=4-int(week))
+			datetime_kst_H = datetime_kst + Thursday
+			day_H = datetime_kst_H.strftime("%Y%m%d")
+			date_H = datetime_kst_H.strftime("%m월 %d일 목요일 시간표")
+		
+			Friday = timedelta(days=5-int(week))
+			datetime_kst_F = datetime_kst + Friday
+			day_F = datetime_kst_F.strftime("%Y%m%d")
+			date_F = datetime_kst_F.strftime("%m월 %d일 금요일 시간표")
+
+			print("weekdays are available")
+			
+			Weeklist = {day_M:'M', day_T:'T', day_W:'W', day_H:'H', day_F:'F'}
 			timetablelink = 'https://open.neis.go.kr/hub/'+schooltype+'Timetable'
 			
-			timetabledict = {'M1':'','M2':'','M3':'','M4':'','M5':'','M6':'','M7':'','T1':'','T2':'','T3':'','T4':'','T5':'','T6':'','T7':'','W1':'','W2':'','W3':'','W4':'','W5':'','W6':'','W7':'','H1':'','H2':'','H3':'','H4':'','H5':'','H6':'','H7':'','F1':'','F2':'','F3':'','F4':'','F5':'','F6':'','F7':''}
-			for a in timetabledict.keys():
-				newdict = {a : UserData[0]['fields'][a]}
-				timetabledict.update(newdict)
-			MTW_1 = timetabledict['M1'] + " " + timetabledict['T1'] + " " + timetabledict['W1']
-			MTW_2 = timetabledict['M2'] + " " + timetabledict['T2'] + " " + timetabledict['W2']
-			MTW_3 = timetabledict['M3'] + " " + timetabledict['T3'] + " " + timetabledict['W3']
-			MTW_4 = timetabledict['M4'] + " " + timetabledict['T4'] + " " + timetabledict['W4']
-			MTW_567 = timetabledict['M5'] + " " + timetabledict['T5'] + " " + timetabledict['W5'] + "\n" + timetabledict['M6'] + " " + timetabledict['T6'] + " " + timetabledict['W6'] + "\n" + timetabledict['M7'] + " " + timetabledict['T7'] + " " + timetabledict['W7']
-
-			HF_1 = timetabledict['H1'] + " " + timetabledict['F1']
-			HF_2 = timetabledict['H2'] + " " + timetabledict['F2']
-			HF_3 = timetabledict['H3'] + " " + timetabledict['F3']
-			HF_4 = timetabledict['H4'] + " " + timetabledict['F4']
-			HF_567 = timetabledict['H5'] + " " + timetabledict['F5'] + "\n" + timetabledict['H6'] + " " + timetabledict['F6'] + "\n" + timetabledict['F7'] + " " + timetabledict['F7']
+			params = {
+			'KEY' : NEIS_Key,
+			'Type' : 'json',
+			'pIndex' : '1',
+			'pSize' : '100',
+			'ATPT_OFCDC_SC_CODE' : Educode,
+			'SD_SCHUL_CODE' : schoolcode,
+			'AY' : '2024',
+			'SEM' : '1',
+			'GRADE' : gradecode,
+			'CLASS_NM' : classcode,
+			'TI_FROM_YMD' : day_M,
+			'TI_TO_YMD' : day_F
+			}
 			
-			responseBody = {
+			response = requests.get(timetablelink, params=params)
+			contentstext = response.text
+			contents = response.json()
+			print("load succesful")
+			
+			find = contentstext.find('해당하는 데이터가 없습니다.')
+			
+			if find == -1:
+				contentslist = contents[schooltype+'Timetable'][1]['row']
+				for a in contentslist:
+					Weekday = a['ALL_TI_YMD']
+					Weekdayfind = Weeklist[Weekday]
+					class_time = Weekdayfind + a['PERIO']
+					subject = a['ITRT_CNTNT']
+					print(class_time+" "+subject)
+					updatedict = {class_time : subject}
+					timetabledict.update(updatedict)
+				
+				M_67 = "6교시 " + timetabledict['M6'] + "\n7교시 " + timetabledict['M7']
+				T_67 = "6교시 " + timetabledict['T6'] + "\n7교시 " + timetabledict['T7']
+				W_67 = "6교시 " + timetabledict['W6'] + "\n7교시 " + timetabledict['W7']
+				H_67 = "6교시 " + timetabledict['H6'] + "\n7교시 " + timetabledict['H7']
+				F_67 = "6교시 " + timetabledict['F6'] + "\n7교시 " + timetabledict['F7']
+				
+				title = schoolname + " " + str(gradecode) + "학년 " + str(classcode) + "반 " + date + " NEIS 시간표"
+				print("ready to response")
+				responseBody = {
   "version": "2.0",
   "template": {
     "outputs": [
 	    {
-            "simpleText": {
-                "text": schoolname + " " + gradecode + "학년 " + classcode + "반 " + date + " 시간표"
-            }
-          },
-      {
         "carousel": {
           "type": "itemCard",
           "items": [
             {
-              "title": MTW_567,
+		"imageTitle": {
+                "title": date_M
+              },
+		"title" : M_67,
+              "description": "다른 요일의 시간표를 보시려면 왼쪽이나 오른쪽으로 드래그 해 주세요",
               "itemList": [
                 {
-                  "title": "　요일",
-                  "description": " 월요일   화요일   수요일 "
-                },
-                {
                   "title": "1교시",
-                  "description": MTW_1
+                  "description": timetabledict['M1']
                 },
-                {
+		{
                   "title": "2교시",
-                  "description": MTW_2
+                  "description": timetabledict['M2']
                 },
-                {
+		{
                   "title": "3교시",
-                  "description": MTW_3
+                  "description": timetabledict['M3']
                 },
-                {
+		{
                   "title": "4교시",
-                  "description": MTW_4
+                  "description": timetabledict['M4']
+                },
+		{
+                  "title": "5교시",
+                  "description": timetabledict['M5']
                 }
               ],
               "itemListAlignment": "left"
             },
             {
-              "title": HF_567,
+		"imageTitle": {
+                "title": date_T
+              },
+		"title" : T_67,
+              "description": "다른 요일의 시간표를 보시려면 왼쪽이나 오른쪽으로 드래그 해 주세요",
               "itemList": [
                 {
-                  "title": "　요일",
-                  "description": " 목요일   금요일 "
+                  "title": "1교시",
+                  "description": timetabledict['T1']
                 },
+		{
+                  "title": "2교시",
+                  "description": timetabledict['T2']
+                },
+		{
+                  "title": "3교시",
+                  "description": timetabledict['T3']
+                },
+		{
+                  "title": "4교시",
+                  "description": timetabledict['T4']
+                },
+		{
+                  "title": "5교시",
+                  "description": timetabledict['T5']
+                }
+              ],
+              "itemListAlignment": "left"
+            },
+	{
+		"imageTitle": {
+                "title": date_W
+              },
+		"title" : W_67,
+              "description": "다른 요일의 시간표를 보시려면 왼쪽이나 오른쪽으로 드래그 해 주세요",
+              "itemList": [
                 {
                   "title": "1교시",
-                  "description": HF_1
+                  "description": timetabledict['W1']
                 },
-                {
+		{
                   "title": "2교시",
-                  "description": HF_2
+                  "description": timetabledict['W2']
                 },
-                {
+		{
                   "title": "3교시",
-                  "description": HF_3
+                  "description": timetabledict['W3']
                 },
-                {
+		{
                   "title": "4교시",
-                  "description": HF_4
+                  "description": timetabledict['W4']
+                },
+		{
+                  "title": "5교시",
+                  "description": timetabledict['W5']
+                }
+              ],
+              "itemListAlignment": "left"
+            },
+		  {
+		"imageTitle": {
+                "title": date_H
+              },
+		"title" : H_67,
+              "description": "다른 요일의 시간표를 보시려면 왼쪽이나 오른쪽으로 드래그 해 주세요",
+              "itemList": [
+                {
+                  "title": "1교시",
+                  "description": timetabledict['H1']
+                },
+		{
+                  "title": "2교시",
+                  "description": timetabledict['H2']
+                },
+		{
+                  "title": "3교시",
+                  "description": timetabledict['H3']
+                },
+		{
+                  "title": "4교시",
+                  "description": timetabledict['H4']
+                },
+		{
+                  "title": "5교시",
+                  "description": timetabledict['H5']
+                }
+              ],
+              "itemListAlignment": "left"
+            },
+		  {
+		"imageTitle": {
+                "title": date_F
+              },
+		"title" : F_67,
+              "description": "다른 요일의 시간표를 보시려면 왼쪽이나 오른쪽으로 드래그 해 주세요",
+              "itemList": [
+                {
+                  "title": "1교시",
+                  "description": timetabledict['F1']
+                },
+		{
+                  "title": "2교시",
+                  "description": timetabledict['F2']
+                },
+		{
+                  "title": "3교시",
+                  "description": timetabledict['F3']
+                },
+		{
+                  "title": "4교시",
+                  "description": timetabledict['F4']
+                },
+		{
+                  "title": "5교시",
+                  "description": timetabledict['F5']
                 }
               ],
               "itemListAlignment": "left"
@@ -859,8 +1008,9 @@ def timetable():
     ]
   }
 }
+				
 	except:
-		responsebody = {
+		responseBody = {
   "version": "2.0",
   "template": {
 	"outputs": [
@@ -891,6 +1041,10 @@ def timetable():
 	]
   }
 }
+	endtime = datetime.utcnow().timestamp()
+	loadingtime = endtime - starttime
+	print(str(loadingtime) + "s 소요")
+	print(responseBody)
 	return responseBody
 
 @app.route('/newtimetable', methods = ["POST"])
