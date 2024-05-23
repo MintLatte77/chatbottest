@@ -757,6 +757,7 @@ def check():
 @app.route('/timetable', methods = ["POST"])
 def timetable():
 	starttime = datetime.utcnow().timestamp()
+	n = 0
 	body = request.get_json()
 	userID = body['userRequest']['user']['id'] # ID 조회
 	print(userID)
@@ -855,11 +856,10 @@ def timetable():
 					print(a[-1])
 					if not(a[-1] == ' '):
 						newweekkrlist.append(a)
-				for a, b in nweeklist, newweekkrlist:
-					
+				for a in nweeklist:
 					items.append({
 		"imageTitle": {
-                "title": b
+                "title": newweekkrlist[n]
 		},
 		"title" : "6교시 " + timetabledict[a+'6'] + "\n7교시 " + timetabledict[a+'7'],
               "description": "다른 요일의 시간표를 보시려면 왼쪽이나 오른쪽으로 드래그 해 주세요",
@@ -887,6 +887,7 @@ def timetable():
               ],
               "itemListAlignment": "left"
             })
+					n = n + 1
 				title = schoolname + " " + str(gradecode) + "학년 " + str(classcode) + "반 " + date + " NEIS 시간표"
 				print("ready to response")
 				responseBody = {
