@@ -56,9 +56,9 @@ userTimeData = Table(airtable_token, UserIdBase, 'tblacWgSp8Z9x4Crw')
 nweek = newweeklist[str(week)]
 nweek_1 = newweeklist[str(datetime_kst_1.strftime("%w"))]
 nweek_2 = newweeklist[str(datetime_kst_2.strftime("%w"))]
-nweekkr = str(int(datetime_kst.strftime("%m"))) + "월 "+ str(int(datetime_kst.strftime("%d"))) + "일" + newweeklistkr[str(week)]
-nweek_1kr = str(int(datetime_kst_1.strftime("%m"))) + "월 "+ str(int(datetime_kst_1.strftime("%d"))) + "일" + newweeklistkr[str(week)]
-nweek_2kr = str(int(datetime_kst_2.strftime("%m"))) + "월 "+ str(int(datetime_kst_2.strftime("%d"))) + "일" + newweeklistkr[str(week)]
+nweekkr = str(int(datetime_kst.strftime("%m"))) + "월 "+ str(int(datetime_kst.strftime("%d"))) + "일 " + newweeklistkr[str(week)]
+nweek_1kr = str(int(datetime_kst_1.strftime("%m"))) + "월 "+ str(int(datetime_kst_1.strftime("%d"))) + "일 " + newweeklistkr[str(week)]
+nweek_2kr = str(int(datetime_kst_2.strftime("%m"))) + "월 "+ str(int(datetime_kst_2.strftime("%d"))) + "일 " + newweeklistkr[str(week)]
 
 # @app.route('/service', methods = ["POST"])
 # 	body = request.get_json()
