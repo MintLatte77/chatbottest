@@ -850,7 +850,7 @@ def timetable():
 				nweeklist = [nweek, nweek_1, nweek_2]
 				nweekkrlist = [nweekkr, nweek_1kr, nweek_2kr]
 				nweeklist = [n for n in nweeklist if n]
-				nweekkrlist = [n for n in nweeklist if n[-1] != ' ']
+				nweekkrlist = [n for n in nweeklist if not(n[-1] == ' ')]
 				for a, b in nweeklist, nweekkrlist:
 					
 					items.append({
