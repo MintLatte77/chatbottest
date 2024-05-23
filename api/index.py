@@ -847,11 +847,15 @@ def timetable():
 				F_67 = "6교시 " + timetabledict['F6'] + "\n7교시 " + timetabledict['F7']
 
 				items = []
+				newweekkrlist = []
 				nweeklist = [nweek, nweek_1, nweek_2]
 				nweekkrlist = [nweekkr, nweek_1kr, nweek_2kr]
 				nweeklist = [n for n in nweeklist if n]
-				nweekkrlist = [n for n in nweekkrlist if not(n[-1] == ' ')]
-				for a, b in nweeklist, nweekkrlist:
+				for a in nweekkrlist:
+					print(a[-1])
+					if not(a[-1] == ' '):
+						newweekkrlist.append(a)
+				for a, b in nweeklist, newweekkrlist:
 					
 					items.append({
 		"imageTitle": {
