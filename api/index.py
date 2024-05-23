@@ -57,8 +57,8 @@ nweek = newweeklist[str(week)]
 nweek_1 = newweeklist[str(datetime_kst_1.strftime("%w"))]
 nweek_2 = newweeklist[str(datetime_kst_2.strftime("%w"))]
 nweekkr = str(int(datetime_kst.strftime("%m"))) + "월 "+ str(int(datetime_kst.strftime("%d"))) + "일 " + newweeklistkr[str(week)]
-nweek_1kr = str(int(datetime_kst_1.strftime("%m"))) + "월 "+ str(int(datetime_kst_1.strftime("%d"))) + "일 " + newweeklistkr[str(week)]
-nweek_2kr = str(int(datetime_kst_2.strftime("%m"))) + "월 "+ str(int(datetime_kst_2.strftime("%d"))) + "일 " + newweeklistkr[str(week)]
+nweek_1kr = str(int(datetime_kst_1.strftime("%m"))) + "월 "+ str(int(datetime_kst_1.strftime("%d"))) + "일 " + newweeklistkr[str(datetime_kst_1.strftime("%w"))]
+nweek_2kr = str(int(datetime_kst_2.strftime("%m"))) + "월 "+ str(int(datetime_kst_2.strftime("%d"))) + "일 " + newweeklistkr[str(datetime_kst_2.strftime("%w"))]
 
 # @app.route('/service', methods = ["POST"])
 # 	body = request.get_json()
@@ -848,11 +848,14 @@ def timetable():
 
 				items = []
 				nweeklist = [nweek, nweek_1, nweek_2]
+				nweekkrlist = [nweekkr, nweek_1kr, nweek_2kr]
 				nweeklist = [n for n in nweeklist if n]
-				for a in nweeklist:
+				nweekkrlist = [n for n in nweeklist if n[-1] != ' ']
+				for a, b in nweeklist, nweekkrlist:
+					
 					items.append({
 		"imageTitle": {
-                "title": nweekkr
+                "title": b
 		},
 		"title" : "6교시 " + timetabledict[a+'6'] + "\n7교시 " + timetabledict[a+'7'],
               "description": "다른 요일의 시간표를 보시려면 왼쪽이나 오른쪽으로 드래그 해 주세요",
